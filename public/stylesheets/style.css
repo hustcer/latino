@@ -1,0 +1,129 @@
+body {
+  padding: 50px;
+  font: 13px "微软雅黑", tahoma;
+  background-color: #FDFADA;
+  min-height:600px;
+}
+
+.dance-nav{clear: both;display: inline-block;float: right;overflow: hidden;margin:0 30px 20px;}
+.dance-nav .nav-links li{float: left;padding: 3px 15px;background: orange;margin: 0 3px;}
+.dance-nav .nav-links li a{color: #333;}
+.dance-nav .nav-links li a:hover{color: #00F;text-decoration:none;}
+
+.dw{width:1000px;margin: 0 auto;clear:both;}
+.comm-button {
+	border:1px solid #B83B1C;
+	background: orange;
+	cursor: pointer;
+	padding: 2px 10px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	-moz-box-shadow: 2px 2px 8px #000000;
+	-webkit-box-shadow: 2px 2px 8px #000000;
+	box-shadow: 2px 2px 8px #000000;
+}
+.comm-btn{
+	border:1px solid #B83B1C;
+	background: orange;
+	cursor: pointer;
+	padding: 1px 8px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	font-size: 12px;
+	display: inline-block;
+	height: 17px;
+	line-height: 17px;
+	color: #333;
+}
+a.comm-btn:hover{text-decoration:none;color:blue;}
+/*.hr-line{height:2px;line-height:2px;background-color:gray;}*/
+.latin-header{margin: 5px 50px 20px 290px;}
+.dance-content .header-title{font-size: 18px;margin: 0 0 12px;}
+.dance-content .welcome-msg{color:#999;font-size:12px;text-indent:2em;}
+.dance-content .content-header{margin: 0 150px 15px;}
+.dance-content .table-container{margin:9px 150px;}
+.dance-content .table-container table{width:600px;}
+.dance-content .table-container table th{text-align:right;vertical-align: top;width:100px;}
+.dance-content .table-container table tr{line-height:30px;}
+.dance-content .table-container table .em{font-size:14px;}
+.table-container .apply-btn {margin: 10px 50px 0 255px;}
+.table-container .quit-apply{margin: 0 10px;}
+
+.dance-content .apply-table-a{margin: 0 0 15px 5px;}
+.dance-content .apply-table-b{margin: 5px 0 10px 5px;}
+
+.dance-content .operation-info{
+	display: inline-block;
+	border: 1px solid silver;
+	padding: 4px 30px 4px 10px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.comm-input{margin: 0 9px;border:1px solid #B83B1C;width: 180px;
+	height: 16px;line-height: 20px;padding: 3px 6px;background-color: ghostWhite;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;}
+
+.course-tip{color: #999;font-size: 12px;display: inline-block;padding: 0px 11px;margin: 0 10px;
+	border: 1px solid silver;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;height: 20px;line-height: 20px;}
+.dance-content .course-wrapper{margin: 0 8px;line-height: 27px;clear:both;}
+.dance-content .gender-wrapper{margin: 0 8px;}
+.dance-content .depart-select{margin: 0 8px;}
+
+.dance-content .ui-combobox .result{width:172px;}
+.dance-content .ui-combobox-panel{border-top:0;}
+.dance-content .ui-combobox-panel .list{width:193px;}
+.dance-content .ui-combobox-item{line-height:20px;}
+.dance-content .ui-combobox-selected{background-color:white;color:#333;}
+
+#user-info table tr{line-height:24px;}
+#user-info table td{pading-left:12px;}
+
+.dancer-filter, .dancer-list{width:940px;margin: 0 30px 20px;border-bottom: 1px dashed gray;padding-bottom: 15px;}
+.dancer-filter table td{padding: 0 7px 0 0;}
+.dancer-filter #queryBtn{height: 20px;line-height: 14px;margin-left: 10px;}
+.dancer-filter #dancerID.comm-input{width:60px;margin: 0 3px;}
+
+.dancer-filter .dancerID-cell{width:125px;}
+.dancer-filter .department-cell{width:150px;}
+.dancer-filter .gender-cell{width:116px;}
+.dancer-filter .course-cell{width:165px;}
+.dancer-filter .status-cell{width:155px;}
+.dancer-filter .pay-cell{width:115px;}
+.dancer-filter label{line-height: 24px;}
+.dancer-filter .department-box, .dancer-filter .course-box{display: inline-block;}
+.dancer-filter .course-box .comm-select{width:116px;}
+.dancer-filter .department-box .comm-select{width:100px;}
+
+.dancer-list table{width:100%;}
+
+
+#list-content .content-header{margin: 0 30px 20px;border-bottom: 1px dashed gray;}
+#list-content .search-form{float: left;}
+#list-content .department-cell .ui-combobox .result {width: 75px;}
+#list-content .department-cell .ui-combobox-panel .list{width:96px;}
+#list-content .course-cell .ui-combobox .result {width: 95px;}
+#list-content .course-cell .ui-combobox-panel .list{width:116px;}
+#list-content .status-cell .ui-combobox .result {width: 65px;}
+#list-content .status-cell .ui-combobox-panel .list{width:86px;}
+
+.dancer-list table tr{line-height: 23px;height: 23px;}
+.dancer-list table th{background: silver;border-right: 1px solid gray;}
+.dancer-list .dancerID-header{width:65px;text-align:center;}
+.dancer-list .dancerName-header{width:75px;}
+.dancer-list .gender-header{width:60px;}
+.dancer-list .status-header{width:85px;}
+.dancer-list .pay-header{width:50px;}
+.dancer-list .email-header{width:200px;}
+.dancer-list .wangWang-header{width:95px;}
+.dancer-list .ext-header{width:65px;}
+.dancer-list .dept-header{width:100px;}
+

@@ -1,0 +1,62 @@
+
+header.dance-header.dw
+	#latin-header.latin-header
+		img(src='../images/latinheader.png')
+	nav.dance-nav#dance-nav
+		ul.nav-links
+			li.home: a(href="/") 首页
+			li.home: a(href="/list") 报名情况
+
+section.dance-content.dw#dance-content
+	.content-header
+		h1.header-title= title 
+
+	#user-info.table-container
+		table
+			tr
+				th
+					label 工号：
+				td	
+					#{dancer.dancerID}
+			tr
+				th
+					label 姓名：
+				td
+					#{dancer.dancerName}
+			tr
+				th
+					label 性别：
+				td
+					#{dancer.gender}
+			tr
+				th
+					label 邮箱：
+				td
+					#{dancer.email}
+			tr
+				th
+					label 旺旺：
+				td
+					#{dancer.wangWang}
+			tr
+				th
+					label 分机：
+				td
+					#{dancer.extNumber}
+			tr
+				th
+					label 部门：
+				td
+					#{dancer.department}
+			tr
+				th
+					label 支付宝：
+				td
+					#{dancer.alipayID}
+			tr
+				th
+					label 参加的培训：
+				td
+					#{dancer.courses}
+
+footer.dance-footer.dw					

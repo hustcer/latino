@@ -1,0 +1,94 @@
+
+
+header.dance-header.dw
+	#latin-header.latin-header
+		img(src='images/latinheader.png')
+	nav.dance-nav#dance-nav
+		ul.nav-links
+			li.home: a(href="/") 首页
+			li.home: a(href="/list") 报名情况
+
+section.dance-content.dw#dance-content
+	.content-header
+		h1.header-title= title 
+		p.welcome-msg 欢迎参加 #{title}，请您填写报名信息!
+
+	#apply-container.table-container
+		form(name="applyForm", id="applyForm", method="post", action="/apply")
+			table.apply-table-a
+				tbody
+					tr.em
+						th
+							label 工 号：
+						td	
+							input#dancerID.comm-input(type="text", name="dancerID")
+					tr.row-sep.em
+						th
+							label 报名班级：
+						td
+							#courseAWrapper.course-wrapper
+								input.comm-check(type="checkbox", value="#{cCourse.courseA.cValue}", name="courseA", id="courseA")
+								label(for="courseA", id="courseAName")&nbsp;#{cCourse.courseA.cName}
+
+							#courseBWrapper.course-wrapper
+								input.comm-check(type="checkbox", value="#{cCourse.courseB.cValue}", name="courseB", id="courseB")
+								label(for="courseB", id="courseBName")&nbsp;#{cCourse.courseB.cName}
+			//.hr-line
+
+			table.apply-table-b
+				tbody
+					tr
+						th
+							label 姓 名：
+						td
+							input#dancerName.comm-input(type="text", name="dancerName")
+					tr
+						th
+							label 性 别：
+						td
+							.gender-wrapper
+								input.comm-radio(type="radio", id="maleRadio", value="male", name="gender")
+								label(for="maleRadio")&nbsp;男 &nbsp;&nbsp;&nbsp;
+								
+								input.comm-radio(type="radio", id="femaleRadio", value="female", name="gender")
+								label(for="femaleRadio")&nbsp;女
+					tr
+						th
+							label 邮 箱：
+						td
+							input#email.comm-input(type="text", name="email")
+					tr
+						th
+							label 旺 旺：
+						td
+							input#wangWang.comm-input(type="text", name="wangWang")
+					tr
+						th
+							label 分 机：
+						td
+							input#extNumber.comm-input(type="text", name="extNumber")
+					tr
+						th
+							label 支付宝：
+						td
+							input#alipayID.comm-input(type="text", name="alipayID")
+					tr
+						th
+							label 部 门：
+						td
+							.depart-select
+								
+
+			button(class="apply-btn comm-button", id="apply-btn") 提&nbsp;交
+
+			if (!!showDancerLink)
+				.operation-info#operation-info
+					p 您的操作已经成功 
+						a(href="/user/" + dancerID,id="user-info-link")点此
+						&nbsp;查看个人详情, 或者
+						a(href="/",id="home-link")返回
+
+footer.dance-footer.dw
+
+script(src='/javascripts/user/dance-index-merge.js')
+
