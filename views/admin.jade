@@ -1,0 +1,117 @@
+
+header.dance-header.dw
+	#latin-header.latin-header
+		img(src='../images/latinheader.png')
+	nav.dance-nav#dance-nav
+		ul.nav-links
+			li: a(href="/") 首页
+			li: a(href="/list") 报名情况
+
+section.admin-content.dw#admin-content
+	.content-header
+		h1.header-title= title
+	nav.admin-bg-nav
+		ul.admin-links
+			li: a(href="#approve-apply") 报名审核通过
+			li: a(href="#course-pay") 报名设置缴费
+			li: a(href="#refuse-apply") 报名审核拒绝
+			li: a(href="#quit-approve") 退课审核通过
+			li: a(href="#course-refund") 报名设置退费
+			li: a(href="#") 管理会员信息
+
+	section.op-container#op-container
+		.admin-op#approve-apply
+			h3 报名审核通过操作
+			table
+				tbody
+					tr
+						td.dancerID-cell
+							label 工号：
+							input#dancerID.comm-input(type="text", name="dancerID")
+						td.course-cell	
+							label.fd-left 课程：
+							.course-box
+								select.comm-select(name="course")
+									option(value="") 请选择...
+									each course in courseList
+										option(value="#{course.courseVal}") #{course.courseName}
+						td
+							button(class="approveBtn comm-button", id="approveBtn") 审核通过
+
+		.admin-op#course-pay
+			h3 报名设置缴费操作
+			table
+				tbody
+					tr
+						td.dancerID-cell
+							label 工号：
+							input#dancerID.comm-input(type="text", name="dancerID")
+						td.course-cell	
+							label.fd-left 课程：
+							.course-box
+								select.comm-select(name="course")
+									option(value="") 请选择...
+									each course in courseList
+										option(value="#{course.courseVal}") #{course.courseName}
+						td
+							button(class="payBtn comm-button", id="payBtn") 设置缴费
+
+		.admin-op#refuse-apply
+			h3 报名审核拒绝操作
+			table
+				tbody
+					tr
+						td.dancerID-cell
+							label 工号：
+							input#dancerID.comm-input(type="text", name="dancerID")
+						td.course-cell	
+							label.fd-left 课程：
+							.course-box
+								select.comm-select(name="course")
+									option(value="") 请选择...
+									each course in courseList
+										option(value="#{course.courseVal}") #{course.courseName}
+						td
+							button(class="refuseBtn comm-button", id="refuseBtn") 审核拒绝
+
+		.admin-op#quit-approve
+			h3 退课审核通过操作
+			table
+				tbody
+					tr
+						td.dancerID-cell
+							label 工号：
+							input#dancerID.comm-input(type="text", name="dancerID")
+						td.course-cell	
+							label.fd-left 课程：
+							.course-box
+								select.comm-select(name="course")
+									option(value="") 请选择...
+									each course in courseList
+										option(value="#{course.courseVal}") #{course.courseName}
+						td
+							button(class="quitBtn comm-button", id="quitBtn") 审核拒绝
+
+
+		.admin-op#course-refund
+			h3 设置退费操作
+			table
+				tbody
+					tr
+						td.dancerID-cell
+							label 工号：
+							input#dancerID.comm-input(type="text", name="dancerID")
+						td.course-cell	
+							label.fd-left 课程：
+							.course-box
+								select.comm-select(name="course")
+									option(value="") 请选择...
+									each course in courseList
+										option(value="#{course.courseVal}") #{course.courseName}
+						td
+							button(class="refundBtn comm-button", id="refundBtn") 设置退费
+
+footer.dance-footer.dw				
+
+script(src='/javascripts/lib/fdev-min.js')
+script(src='/javascripts/user/admin.js')
