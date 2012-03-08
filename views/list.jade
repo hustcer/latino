@@ -1,11 +1,12 @@
 
 header.dance-header.dw
 	#latin-header.latin-header
-		img(src='images/latinheader.png')
+		img(src='../images/latinheader.png')
 	nav.dance-nav#dance-nav
 		ul.nav-links
-			li.home: a(href="/") 首页
-			li.home: a(href="/list") 报名情况
+			li: a(href="/") 首页
+			li: a(href="/list") 报名情况
+			li: a(href="/man") 会员管理
 
 section.dance-content.dw#list-content
 	.content-header
@@ -45,11 +46,11 @@ section.dance-content.dw#list-content
 						.status-box#status-box
 							select.comm-select(name="status", id="status")
 								option(value="") 请选择...
-								option(value="waiting") 报名审核
+								option(value="waiting") 等待审核
 								option(value="approved") 报名成功
 								option(value="refused") 报名失败
 								option(value="quitApplied") 申请退课
-								option(value="quit") 退课
+								option(value="quit") 已退课
 
 					td.pay-cell
 						label 缴费：
@@ -89,9 +90,11 @@ section.dance-content.dw#list-content
 							each course in dancer.courses
 								#{course.courseVal};
 						td 
-							课程状态
+							each course1 in dancer.courses
+								#{course1.status};
 						td 
-							缴费状态
+							each course2 in dancer.courses
+								#{course2.paid};
 						td 
 							#{dancer.email}
 						td 

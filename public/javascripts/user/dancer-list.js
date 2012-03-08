@@ -4,6 +4,7 @@
 */
 jQuery.namespace('dance.at.alibaba.list');             
 
+// TODO:输出信息格式化，默认查询当前开课课程信息
 jQuery(function($){
 
     var NS = dance.at.alibaba.list;
@@ -27,7 +28,6 @@ jQuery(function($){
 			this._initDepartmentList();
 			this._initCourseList();
 			this._initCourseStatus();
-
 		},
 		/**
 		 * DOM事件绑定
@@ -35,7 +35,6 @@ jQuery(function($){
 		_initHandler: function(){
 
 			this._queryHandler();
-
 		},
 		/**
 		 * 会员查询筛选
@@ -59,7 +58,13 @@ jQuery(function($){
 				    		html.push(data[i].courses[m].courseVal + ';');
 				    	};
 				    	html.push('</td><td>');
+				    	for (var m = 0,l = data[i].courses.length; m < l; m++) {
+				    		html.push(data[i].courses[m].status + ';');
+				    	};
 				    	html.push('</td><td>');
+				    	for (var m = 0,l = data[i].courses.length; m < l; m++) {
+				    		html.push(data[i].courses[m].paid + ';');
+				    	};
 				    	html.push('</td><td>');
 				    	html.push(data[i].email);
 				    	html.push('</td><td>');

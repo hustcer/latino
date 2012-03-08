@@ -9,17 +9,25 @@ var commonDancerOp = exports.commonDancerOp = {
 	 * @param dancerModel 	待插入的会员信息
 	 */
 	insertDancer: function(dancerModel, fn) {
-		console.log("You called latin binding method: insertDancer!");
-		console.info("New courses: A--" + dancerModel.courseA + " B--" + dancerModel.courseB);
 
-		var courseAddArray = [];
+		var courseAddArray = [], logMsg = '';
 		if( !!dancerModel.courseA ) {
 			// 新插入数据库的学员如果报名课程的话将其报名状态设为 waiting，待审核,且未付款
-			courseAddArray.push({courseVal:dancerModel.courseA,status:'waiting',paid:false});
+			courseAddArray.push({courseVal:dancerModel.courseA,status:'waiting',
+				gmtStatusChanged: new Date(),paid:false});
+
+			logMsg += 'A--' + dancerModel.courseA;
 		}
 		if( !!dancerModel.courseB ) {
 			// 新插入数据库的学员如果报名课程的话将其报名状态设为 waiting，待审核,且未付款
-			courseAddArray.push({courseVal:dancerModel.courseB,status:'waiting',paid:false});
+			courseAddArray.push({courseVal:dancerModel.courseB,status:'waiting',
+				gmtStatusChanged: new Date(),paid:false});
+
+			logMsg += ' B--' + dancerModel.courseB;
+		}
+
+		if(!!logMsg){
+			console.info("Add New Courses:", logMsg, 'for Member: ', dancerID);
 		}
 
 		delete dancerModel.courseA;
@@ -34,43 +42,64 @@ var commonDancerOp = exports.commonDancerOp = {
 	 * 更新会员dancerID的相关信息
 	 * @param dancerID 		待更新的会员的dancerID
 	 * @param dancerModel 	待更新的会员信息, 该model为前台用户提交的表单信息里面的数据
-	 * TODO:$addToSet 该方式报名有问题，会产生重复的课程却处于不同的状态
+	 * ATTENTION:$addToSet 方式报名有问题，会产生重复的课程却处于不同的状态
 	 */
 	updateDancerByID: function(dancerID, dancerModel, fn){
-		console.log("You called latin binding method: updateDancerByID!");
-		console.info("Update courses: A--" + dancerModel.courseA + " B--" + dancerModel.courseB);
 
-		var courseAddArray = [];
+		//console.log("Update Courses: A: s%,  B: s%", dancerModel.courseA, dancerModel.courseB);
+
+		var courseAddArray = [], self = this, logMsg = '';
 		if( !!dancerModel.courseA ) {
 			// 新插入数据库的学员如果报名课程的话将其报名状态设为 waiting，待审核,且未付款
 			courseAddArray.push({courseVal:dancerModel.courseA,status:'waiting',paid:false});
+			logMsg += 'A--' + dancerModel.courseA;
 		}
 		if( !!dancerModel.courseB ) {
 			// 新插入数据库的学员如果报名课程的话将其报名状态设为 waiting，待审核,且未付款
 			courseAddArray.push({courseVal:dancerModel.courseB,status:'waiting',paid:false});
+			logMsg += ' B--' + dancerModel.courseB;
 		}
 
-		console.info(courseAddArray);
+		if(!!logMsg){
+			console.info("Update Courses:", logMsg, 'for Member: ', dancerID);
+		}
 
-		this.update({'dancerID':dancerID}, { $set:{
-			'dancerName': 	dancerModel.dancerName,
-			'extNumber' : 	dancerModel.extNumber,
-			'email': 		dancerModel.email,
-			'wangWang': 	dancerModel.wangWang,
-			'gender': 		dancerModel.gender,
-			'alipayID': 	dancerModel.alipayID,
-			'department': 	dancerModel.department,
-			'gmtModified': 	new Date()
+		this.findOne({'dancerID':dancerID}, function(err, result) {
 
-		}, $addToSet:{
-			'courses':{$each: courseAddArray}	
-		}	}, fn);
+		    if (err) {
+		    	console.log('Find Dancer Failed While Updating Dancer Info!');
+		    	throw err;
+			}
+
+			result.dancerName = dancerModel.dancerName;
+			result.extNumber = dancerModel.extNumber;
+			result.email = dancerModel.email;
+			result.wangWang = dancerModel.wangWang;
+			result.gender = dancerModel.gender;
+			result.alipayID = dancerModel.alipayID;
+			result.department = dancerModel.department;
+
+			for (var i = result.courses.length - 1; i >= 0; i--) {
+				for (var j = courseAddArray.length - 1; j >= 0; j--) {
+
+					if (result.courses[i].courseVal === courseAddArray[j].courseVal) {
+						result.courses[i].status = 'waiting';
+						result.courses[i].gmtStatusChanged = new Date();
+
+					};
+				};
+			};
+
+			result.gmtModified = new Date();
+			self.save(result, fn);
+
+		});
 		
 	},
 	/**
 	 * 根据条件查询其基本会员信息，不含创建，修改时间，_id等
 	 * @param condition 	Json对象，待查询的会员所满足的条件
-	 *						eg. {dancerID:'29411', courses:'13R', payStatus.L1C:true}
+	 *						eg. {dancerID:'29411', 'courses.courseVal':'13R', 'courses.paid':true}
 	 */
 	findDancerByCondition: function(condition, fn){
 		this.find(condition, {gmtCreated:0, gmtModified:0, _id:0}).toArray(fn);
@@ -113,7 +142,7 @@ var commonDancerOp = exports.commonDancerOp = {
 	updateDancerPayStatus: function(dancerID, courseValue, isPaid, fn){
 
 		this.update({'dancerID':dancerID, 'courses.courseVal':courseValue}, {  $set:
-			{'courses.$.paid':isPaid, 'gmtModified': new Date()}
+			{'courses.$.paid':isPaid, 'courses.$.gmtPayChanged':new Date(), 'gmtModified': new Date()}
 
 		}, fn);
 	},
@@ -123,6 +152,7 @@ var commonDancerOp = exports.commonDancerOp = {
 	 * @param courseValue 	待设置的课程的值
 	 * @param status 		目前可能的状态有：
 	 *						waiting: 	会员刚申请报名，待审核；
+	 *						cancel: 	用户先申请报名，然后未及管理员审核就取消报名
 	 * 						approved: 	管理员审核通过，会员报名成功；
 	 *						refused: 	管理员审核不通过，会员报名失败；
 	 *						quitApplied:会员申请退课，等待管理员审批；
@@ -131,7 +161,7 @@ var commonDancerOp = exports.commonDancerOp = {
 	updateDancerCourseStatus: function(dancerID, courseValue, status, fn){
 
 		this.update({'dancerID':dancerID, 'courses.courseVal':courseValue}, {  $set:
-			{'courses.$.status':status, 'gmtModified': new Date()}
+			{'courses.$.status':status, 'courses.$.gmtStatusChanged':new Date(), 'gmtModified': new Date()}
 
 		}, fn);
 	}

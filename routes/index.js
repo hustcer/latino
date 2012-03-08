@@ -35,25 +35,28 @@ exports.apply = function(req, res){
 
 	db.latin.findDancerByID(dancerModel.dancerID, function(err, result) {
 	    if (err) throw err;
-	    // 会员不存在则插入会员信息
+	    
 	    // 之所以要把新插入会员和更新会员信息分开处理而不采用upsert模式，
 	    // 一方面是要设置会员创建时间，另一方面是为了明确操作逻辑，避免意外
+	    // 会员存在则更新会员信息
 	    if (!!result) {
 	    	db.latin.updateDancerByID(dancerModel.dancerID, dancerModel, function(err, result) {
 	    		if (err) throw err;
 	    		if (result) {
-	    			console.log(dancerModel.dancerName + ' updated!');
+	    			console.log('Dancer Infomation Updated With ID:',dancerModel.dancerID,
+	    						' DancerName:', dancerModel.dancerName);
 	    			
 	    		};
 	    	});
 			
-		// 会员存在则更新会员信息
+		// 会员不存在则插入会员信息
 	    }else{
 	    	db.latin.insertDancer(dancerModel, function(err, addResult) {
 			    if (err) throw err;
 
 			    if (addResult) {
-				    console.log(dancerModel.dancerName + ' Added!');
+				    console.log('New Dancer Added, With ID:',dancerModel.dancerID,
+	    						' DancerName:', dancerModel.dancerName);
 			    }
 			});
 	    }
@@ -97,7 +100,7 @@ exports.queryDancer = function(req, res){
  */
 exports.quitCourse = function(req, res){
 
-	console.log("applying course quiting with ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
+	console.log("Applying Course Quiting With dancerID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 
 	db.latin.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'quitApplied', function(err, result) {
 	    if (err) throw err;
@@ -127,7 +130,7 @@ exports.initdata = function(req, res){
 				wangWang: 	'hustcer' + i,
 				extNumber: 	'599' + i,
 				alipayID: 	'hustcer' + i + '@gmail.com',
-				department: i%2 === 0? 'Tech':'other'
+				department: i%2 === 0? 'tech':'other'
 			};
 
 			db.latin.insertDancer(dancerModel, function(err, addResult) {

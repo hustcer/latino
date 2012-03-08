@@ -3,7 +3,8 @@
  */
 var cCourse = exports.currentCourse = {
 	courseA:{cValue: "13RM", cName: "第13期伦巴提高班"},
-	courseB:{cValue: "13CB", cName: "第13期恰恰基础班"}
+	courseB:{cValue: "13CB", cName: "第13期恰恰基础班"},
+	locked:false
 };
 
 // key前面加L是因为key命名不可以以数字开始

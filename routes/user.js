@@ -28,7 +28,7 @@ exports.user = function(req, res, next){
 	  		result.courses = courseNames;
 
 	    	res.render('user', {
-		        title: 	'用户报名信息:',
+		        title: 	'用户拉丁培训信息',
 		        dancer: result
 		    });
 
@@ -47,7 +47,7 @@ exports.user = function(req, res, next){
  */
 exports.pay = function(req, res){
 
-	console.log("Set some course to be paid by user with ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
+	console.log("Set Some Course To Be Paid For User With ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 	
 	checkCourseStatus(req, res, 'approved', function(){
 		db.latin.updateDancerPayStatus(req.params.id, req.query.courseVal, true, function(err, result) {
@@ -66,11 +66,10 @@ exports.pay = function(req, res){
  */
 exports.unpay = function(req, res){
 
-	console.log("Set some course to be paid by user with ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
+	console.log("Set Some Course To Be Unpaid For User With ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 	
 	checkCourseStatus(req, res, 'quitApplied', function(){
 
-		console.log("Check Satisfied Executing Callback!");
 		db.latin.updateDancerPayStatus(req.params.id, req.query.courseVal, false, function(err, result) {
 		    if (err) throw err;
 
@@ -86,10 +85,9 @@ exports.unpay = function(req, res){
  */
 exports.approve = function(req, res){
 
-	console.log("approve course with ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
+	console.log("Approve Course With ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 	checkCourseStatus(req, res, 'waiting', function(){
 
-		console.log("Check Satisfied Executing Callback!");
 		db.latin.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'approved', function(err, result) {
 		    if (err) throw err;
 
@@ -108,7 +106,7 @@ exports.refuse = function(req, res){
 	console.log("Refuse Course With ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 
 	checkCourseStatus(req, res, 'waiting', function(){
-		console.log("Check Satisfied Executing Callback!");
+
 		db.latin.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'refused', function(err, result) {
 		    if (err) throw err;
 
@@ -130,7 +128,7 @@ exports.quit = function(req, res){
 	console.log("Quit Course With dancerID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 
 	checkCourseStatus(req, res, 'quitApplied', function(){
-		console.log("Check Satisfied Executing Callback!");
+
 		db.latin.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'quit', function(err, result) {
 		    if (err) throw err;
 
@@ -150,7 +148,6 @@ exports.quit = function(req, res){
  * @param callback 	满足期望状态后执行的回调
  */
 var checkCourseStatus = function(req, res, status, callback){
-	console.log("Check Course Status: " + status);
 
 	db.latin.findDancerByID(req.params.id, function(err, result){
 		if (err) throw err;
@@ -161,7 +158,8 @@ var checkCourseStatus = function(req, res, status, callback){
 				result.courses[i].status === status) {
 
 				satisfied = true;
-				console.log("Status Satisfied: " + status);
+				console.log("Course Status Satisfied With Status: " + status, 'For Dancer With ID:', req.params.id);
+				
 				callback();
 				break;
 			};

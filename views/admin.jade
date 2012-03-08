@@ -6,6 +6,7 @@ header.dance-header.dw
 		ul.nav-links
 			li: a(href="/") 首页
 			li: a(href="/list") 报名情况
+			li: a(href="/man") 会员管理
 
 section.admin-content.dw#admin-content
 	.content-header
@@ -27,7 +28,7 @@ section.admin-content.dw#admin-content
 					tr
 						td.dancerID-cell
 							label 工号：
-							input#dancerID.comm-input(type="text", name="dancerID")
+							input.dancerID.comm-input(type="text", name="dancerID")
 						td.course-cell	
 							label.fd-left 课程：
 							.course-box
@@ -37,6 +38,8 @@ section.admin-content.dw#admin-content
 										option(value="#{course.courseVal}") #{course.courseName}
 						td
 							button(class="approveBtn comm-button", id="approveBtn") 审核通过
+			p.course-tip.fd-hide
+
 
 		.admin-op#course-pay
 			h3 报名设置缴费操作
@@ -45,7 +48,7 @@ section.admin-content.dw#admin-content
 					tr
 						td.dancerID-cell
 							label 工号：
-							input#dancerID.comm-input(type="text", name="dancerID")
+							input.dancerID.comm-input(type="text", name="dancerID")
 						td.course-cell	
 							label.fd-left 课程：
 							.course-box
@@ -55,6 +58,8 @@ section.admin-content.dw#admin-content
 										option(value="#{course.courseVal}") #{course.courseName}
 						td
 							button(class="payBtn comm-button", id="payBtn") 设置缴费
+			p.course-tip.fd-hide
+							
 
 		.admin-op#refuse-apply
 			h3 报名审核拒绝操作
@@ -63,7 +68,7 @@ section.admin-content.dw#admin-content
 					tr
 						td.dancerID-cell
 							label 工号：
-							input#dancerID.comm-input(type="text", name="dancerID")
+							input.dancerID.comm-input(type="text", name="dancerID")
 						td.course-cell	
 							label.fd-left 课程：
 							.course-box
@@ -73,24 +78,7 @@ section.admin-content.dw#admin-content
 										option(value="#{course.courseVal}") #{course.courseName}
 						td
 							button(class="refuseBtn comm-button", id="refuseBtn") 审核拒绝
-
-		.admin-op#quit-approve
-			h3 退课审核通过操作
-			table
-				tbody
-					tr
-						td.dancerID-cell
-							label 工号：
-							input#dancerID.comm-input(type="text", name="dancerID")
-						td.course-cell	
-							label.fd-left 课程：
-							.course-box
-								select.comm-select(name="course")
-									option(value="") 请选择...
-									each course in courseList
-										option(value="#{course.courseVal}") #{course.courseName}
-						td
-							button(class="quitBtn comm-button", id="quitBtn") 审核拒绝
+			p.course-tip.fd-hide
 
 
 		.admin-op#course-refund
@@ -100,7 +88,7 @@ section.admin-content.dw#admin-content
 					tr
 						td.dancerID-cell
 							label 工号：
-							input#dancerID.comm-input(type="text", name="dancerID")
+							input.dancerID.comm-input(type="text", name="dancerID")
 						td.course-cell	
 							label.fd-left 课程：
 							.course-box
@@ -110,6 +98,28 @@ section.admin-content.dw#admin-content
 										option(value="#{course.courseVal}") #{course.courseName}
 						td
 							button(class="refundBtn comm-button", id="refundBtn") 设置退费
+			p.course-tip.fd-hide
+
+
+		.admin-op#quit-approve
+			h3 退课审核通过操作
+			table
+				tbody
+					tr
+						td.dancerID-cell
+							label 工号：
+							input.dancerID.comm-input(type="text", name="dancerID")
+						td.course-cell	
+							label.fd-left 课程：
+							.course-box
+								select.comm-select(name="course")
+									option(value="") 请选择...
+									each course in courseList
+										option(value="#{course.courseVal}") #{course.courseName}
+						td
+							button(class="quitBtn comm-button", id="quitBtn") 确认退课
+			p.course-tip.fd-hide
+
 
 footer.dance-footer.dw				
 

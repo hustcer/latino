@@ -4,8 +4,8 @@
 */
 jQuery.namespace('dance.at.alibaba');             
 
-// TODO: 可以申请退课，可以取消退课申请，注意course addToSet可能引起的问题，课程报名状态：已申请，已通过，剩余名额，总名额
-// TODO: 必填项、表单验证、报名成功提示
+// TODO: 可以申请退课，可以取消退课申请，课程报名状态：已申请，取消申请，退课，取消退课，已通过，剩余名额，总名额
+// TODO: 必填项、表单验证、添加表单重置按钮
 jQuery(function($){
 
     var NS = dance.at.alibaba;
@@ -45,12 +45,11 @@ jQuery(function($){
 		_initDepartment: function(){
 			$.use('ui-combobox',function(){
 				$('div.depart-select', '#dance-content').combobox({
-				    data: 	[{text:'请选择部门...',value:''},{text:'技术部',value:'tech'},{text:'其他部门',value:'other'}],
+				    data: 	[{text:'请选择部门...',value:''}, {text:'技术部',value:'tech'}, {text:'其他部门',value:'other'}],
 				    name: 	"department",
 					// 绑定data.value 到 input上
 					change: function(){
 						$('input.result','div.depart-select').data('depart-value',$(this).combobox('val'));
-						// console.log($('input.result','div.filter-box').data('filter-value'));
 					},
 					listrender: function(){
 						// 默认显示 “请选择部门...” 文案
@@ -176,7 +175,6 @@ jQuery(function($){
 							$('#courseAWrapper').append('<p class="course-tip">' + quitMsg + '</p>');
 						};
 				});
-				// console.log("dancer: " + $("#dancerID").val() + " want to quit course:" + $("#courseA").val());
 			});
 		},
 		/**
@@ -193,7 +191,6 @@ jQuery(function($){
 							$('#courseBWrapper').append('<p class="course-tip">' + quitMsg + '</p>');
 						};
 				});
-				// console.log("dancer: " + $("#dancerID").val() + " want to quit course:" + $("#courseA").val());
 			});
 		}
 
