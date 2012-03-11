@@ -13,21 +13,21 @@ var commonDancerOp = exports.commonDancerOp = {
 		var courseAddArray = [], logMsg = '';
 		if( !!dancerModel.courseA ) {
 			// 新插入数据库的学员如果报名课程的话将其报名状态设为 waiting，待审核,且未付款
-			courseAddArray.push({courseVal:dancerModel.courseA,status:'waiting',
-				gmtStatusChanged: new Date(),paid:false});
+			courseAddArray.push({courseVal:dancerModel.courseA, status:'waiting',
+				gmtStatusChanged: new Date(), paid:false});
 
 			logMsg += 'A--' + dancerModel.courseA;
 		}
 		if( !!dancerModel.courseB ) {
 			// 新插入数据库的学员如果报名课程的话将其报名状态设为 waiting，待审核,且未付款
-			courseAddArray.push({courseVal:dancerModel.courseB,status:'waiting',
-				gmtStatusChanged: new Date(),paid:false});
+			courseAddArray.push({courseVal:dancerModel.courseB, status:'waiting',
+				gmtStatusChanged: new Date(), paid:false});
 
 			logMsg += ' B--' + dancerModel.courseB;
 		}
 
 		if(!!logMsg){
-			console.info("Add New Courses:", logMsg, 'for Member: ', dancerID);
+			console.info("Add New Courses:", logMsg, 'for Member: ', dancerModel.dancerID);
 		}
 
 		delete dancerModel.courseA;
@@ -108,6 +108,8 @@ var commonDancerOp = exports.commonDancerOp = {
 	 * 查询满足指定条件的会员数目
 	 * @param condition 	Json对象，待查询的会员所满足的条件
 	 *						eg. {dancerID:'29411', 'courses.courseVal':'13R', 'courses.paid':true}
+	 *		eg. 查询某个课程申请报名人数 { 'courses.courseVal':'13RE', 'courses.status':'waiting'}
+	 *		eg. 查询某个课程报名成功人数 { 'courses.courseVal':'13RE', 'courses.status':'approved'}
 	 */
 	countDancerByCondition: function(condition, fn){
 		this.count(condition, fn);
@@ -152,7 +154,7 @@ var commonDancerOp = exports.commonDancerOp = {
 	 * @param courseValue 	待设置的课程的值
 	 * @param status 		目前可能的状态有：
 	 *						waiting: 	会员刚申请报名，待审核；
-	 *						cancel: 	用户先申请报名，然后未及管理员审核就取消报名
+	 *						cancelled: 	用户先申请报名，然后未及管理员审核就取消报名
 	 * 						approved: 	管理员审核通过，会员报名成功；
 	 *						refused: 	管理员审核不通过，会员报名失败；
 	 *						quitApplied:会员申请退课，等待管理员审批；

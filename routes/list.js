@@ -10,13 +10,16 @@ var courseList = require("../database/course.js").courseList;
  */
 exports.list = function(req, res){
 	// TODO: 默认查当前开设的两门课程中，所有课程报名审核通过，且已经缴费的会员.需要提示用户当前搜索条件
-	var condition = {'courses.courseVal':{$in: [cCourse.courseA.cValue, cCourse.courseB.cValue]},
-					 'courses.status':'approved', 'courses.paid':true};
+	var condition = {courses:{	$elemMatch:
+								{'courseVal':{$in: [cCourse.courseA.cValue, cCourse.courseB.cValue]},
+								 'status':'approved', 'paid':true
+								}
+							 }
+					};
 
 	db.collection('latin').find(condition).toArray(function(err, result) {
 
 	    if (err) throw err;
-	    //console.log(result);
 
 		res.render('list', {
 	        title: 		'课程报名信息',
@@ -35,12 +38,15 @@ exports.search = function(req, res){
 	var dancerModel = {};
 	// 根据课程状态，是否缴费来进行查询
 	if (!!req.body.dancerID) {dancerModel.dancerID = req.body.dancerID;};
+	if (!!req.body.gender) {dancerModel.gender = req.body.gender;};
+	if (!!req.body.department) {dancerModel.department = req.body.department;};
+
+	//FIXME: 这种查询方式会有问题，课程不是精确匹配的
 	if (!!req.body.course) {dancerModel['courses.courseVal']= req.body.course;};
 	if (!!req.body.status) {dancerModel['courses.status']= req.body.status;};
 	// req.body.paid取得的是“true”、“false”字符串，需要转换
 	if (!!req.body.paid) {dancerModel['courses.paid']= JSON.parse(req.body.paid);};
-	if (!!req.body.gender) {dancerModel.gender = req.body.gender;};
-	if (!!req.body.department) {dancerModel.department = req.body.department;};
+	
 
 	console.log('User Current Search Condition:', dancerModel);
 

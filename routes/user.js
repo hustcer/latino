@@ -1,28 +1,31 @@
 
-/*
- * GET home page.
- */
+
 var db = require("../database/database.js").db;
 // 取得课程值以及对应的中文描述映射信息
 var cList = require("../database/course.js").courseList;
 
+/*
+ * 显示某一用户报名信息.
+ */
 exports.user = function(req, res, next){
 
 	db.collection('latin').findOne( {dancerID: req.params.id}, function(err, result) {
 
 	  	if (result) {
-	  		var courseNames = [];
+	  		
 	  		// 将课程的value替换成对应的易于阅读的中文描述
 	  		if (result.courses && result.courses.length > 0) {
+	  			var courseNames = [];
 	  			for (var i = 0, n = result.courses.length ; i < n; i++) {
-	  				
-	  				for (var m = cList.length - 1; m >= 0; m--) {
-	  					if (cList[m].courseVal === result.courses[i].courseVal) {
-	  						courseNames.push(cList[m].courseName);
-	  						break;
-	  					};
+	  				// 只统计报名通过的课程
+	  				if (result.courses[i].status === 'approved') {
+	  					for (var m = cList.length - 1; m >= 0; m--) {
+		  					if (cList[m].courseVal === result.courses[i].courseVal) {
+		  						courseNames.push(cList[m].courseName);
+		  						break;
+		  					};
+		  				};
 	  				};
-	  				
 		  		};
 	  		};
 	  		result.courses = courseNames;
@@ -62,7 +65,6 @@ exports.pay = function(req, res){
 /*
  * 设置会员未为某课程缴费. eg:http://localhost:3000/man/unpay/29411?courseVal=13CB
  * 注意只有课程状态为 quitApplied、quit 的，即申请过退课的用户才可以退费
- * TODO: UNPAY FOR quit
  */
 exports.unpay = function(req, res){
 
@@ -120,8 +122,7 @@ exports.refuse = function(req, res){
 
 /*
  * 设置会员报名成功. eg:http://localhost:3000/man/quit/29411?courseVal=13CB
- * 注意只有课程状态为 quitApplied 即发出过退课申请的用户才可以退课成功
- * TODO:审核退课的时候最好检查下是否已经退费
+ * 注意只有课程状态为 quitApplied 且已经退费，或者未缴费时，发出过退课申请的用户才可以退课成功
  */
 exports.quit = function(req, res){
 
@@ -129,12 +130,15 @@ exports.quit = function(req, res){
 
 	checkCourseStatus(req, res, 'quitApplied', function(){
 
-		db.latin.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'quit', function(err, result) {
-		    if (err) throw err;
+		checkPayStatus(req, res, false, function(){
+			db.latin.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'quit', function(err, result) {
+			    if (err) throw err;
 
-		    res.contentType('application/json');
-		    res.send({success:true});
+			    res.contentType('application/json');
+			    res.send({success:true});
+			});
 		});
+		
 	});
 	
 };
@@ -158,7 +162,7 @@ var checkCourseStatus = function(req, res, status, callback){
 				result.courses[i].status === status) {
 
 				satisfied = true;
-				console.log("Course Status Satisfied With Status: " + status, 'For Dancer With ID:', req.params.id);
+				console.log("Course Status Satisfied With Status: " + status, ',For Dancer With ID:', req.params.id);
 				
 				callback();
 				break;
@@ -167,6 +171,39 @@ var checkCourseStatus = function(req, res, status, callback){
 		
 		if (!satisfied) {
 			res.send({success:false, msg:'Your Course Status Is Not Satisfied For This Operation!'});
+		};
+		
+	});
+}
+
+/*
+ * 这里的查询条件还要加上对应的课程，否则result.courses.isPaid 未定义
+ * 检查会员缴费状态
+ * @param req.query.courseVal query字符串中要有course的值
+ * @param isPaid 	期望的缴费状态
+ * @param callback 	满足期望状态后执行的回调
+ */
+var checkPayStatus = function(req, res, isPaid, callback){
+
+	db.latin.findDancerByID(req.params.id, function(err, result){
+		if (err) throw err;
+		var satisfied = false;
+
+		for (var i = result.courses.length - 1; i >= 0; i--) {
+			
+			if (result.courses[i].courseVal === req.query.courseVal &&
+				result.courses[i].paid === isPaid) {
+
+				satisfied = true;
+				console.log("Pay Status Satisfied With Status: " + isPaid, ', For Dancer With ID:', req.params.id);
+				
+				callback();
+				break;
+			};
+		};
+		
+		if (!satisfied) {
+			res.send({success:false, msg:'Your Pay Status Is Not Satisfied For This Operation!'});
 		};
 		
 	});

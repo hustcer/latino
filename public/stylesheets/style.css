@@ -39,28 +39,33 @@ body {
 }
 a.comm-btn:hover{text-decoration:none;color:blue;}
 /*.hr-line{height:2px;line-height:2px;background-color:gray;}*/
-.latin-header{margin: 5px 50px 20px 290px;/*display:none;*/}
+.latin-header{margin: 5px 50px 20px 290px;display:none;}
 .dance-content .header-title{font-size: 18px;margin: 0 0 12px;}
 .dance-content .welcome-msg{color:#999;font-size:12px;text-indent:2em;}
-.dance-content .content-header{margin: 0 150px 15px;}
-.dance-content .table-container{margin:9px 150px;}
+.dance-content .content-header{margin: 0 100px 15px;}
+
+.dance-content .apply-container{margin:9px 100px;}
+.dance-content .course-info{float: right;border: 1px solid silver;width: 180px;height: 300px;}
+.dance-content .table-container{float: left;}
 .dance-content .table-container table{width:600px;}
 .dance-content .table-container table th{text-align:right;vertical-align: top;width:100px;}
 .dance-content .table-container table tr{line-height:30px;}
 .dance-content .table-container table .em{font-size:14px;}
-.table-container .apply-btn {margin: 10px 50px 0 255px;}
-.table-container .quit-apply{margin: 0 10px;}
+.table-container .apply-btn {margin: 10px 10px 0 15px;}
+.table-container .reset-btn {margin: 10px 10px 0 180px;}
+.table-container label{margin: 0 10px 0 3px;}
 
 .dance-content .apply-table-a{margin: 0 0 15px 5px;}
 .dance-content .apply-table-b{margin: 5px 0 10px 5px;}
 
 .dance-content .operation-info{
-	display: inline-block;
+	display: block;
 	border: 1px solid silver;
 	padding: 4px 30px 4px 10px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
+	margin: 30px 100px;
 }
 
 .comm-input{margin: 0 9px;border:1px solid #B83B1C;width: 180px;
@@ -75,6 +80,7 @@ a.comm-btn:hover{text-decoration:none;color:blue;}
 	-webkit-border-radius: 3px;
 	border-radius: 3px;height: 20px;line-height: 20px;}
 
+.course-wrapper .comm-btn, .course-wrapper .course-tip{display:none;}
 .dance-content .course-wrapper{margin: 0 8px;line-height: 27px;clear:both;}
 .dance-content .gender-wrapper{margin: 0 8px;}
 .dance-content .depart-select{margin: 0 8px;}

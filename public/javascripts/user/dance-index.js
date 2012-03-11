@@ -4,12 +4,13 @@
 */
 jQuery.namespace('dance.at.alibaba');             
 
-// TODO: 可以申请退课，可以取消退课申请，课程报名状态：已申请，取消申请，退课，取消退课，已通过，剩余名额，总名额
-// TODO: 必填项、表单验证、添加表单重置按钮
+// TODO: 可以取消退课申请，课程报名状态：已申请，取消申请，报名通过，报名拒绝，申请退课，已退课
+// TODO: 必填项、表单验证
 jQuery(function($){
 
     var NS = dance.at.alibaba;
-    var quitMsg = "您已经申请退课，请等待管理员审核";
+    var quitMsg = "您已经申请退课，请等待管理员审核！",
+    	cancelMsg = "您好，你的报名取消成功，欢迎下次报名！";
 
 	// Begin Module Definition
     var module = NS.index = {
@@ -34,9 +35,12 @@ jQuery(function($){
 		_initHandler: function(){
 
 			this._idBlurHandler();
+			this._formActionHandler();
 
-			this._courseAQuitHandler();
-			this._courseBQuitHandler();
+			this._courseQuitHandler('A');
+			this._courseQuitHandler('B');
+			this._courseCancelHandler('A');
+			this._courseCancelHandler('B');
 
 		},
 		/**
@@ -58,6 +62,25 @@ jQuery(function($){
 						}
 					}
 				});
+			});
+		},
+		/**
+		 * 表单提交、重置按钮事件
+		 */
+		_formActionHandler: function(){
+			// 提交表单
+			$('#apply-btn').click(function(){
+				$('#applyForm')[0].submit();
+			});
+
+			// 重置表单
+			$('#reset-btn').click(function(){
+				$('#applyForm')[0].reset();
+				// 清除课程操作按钮
+				$('div.course-wrapper a.comm-btn').hide();
+				$('div.course-wrapper p.course-tip').hide();
+				$('div.operation-info').hide();
+				$('div.course-wrapper input.comm-check').prop('disabled', false);
 			});
 		},
 		/**
@@ -116,41 +139,15 @@ jQuery(function($){
 			if (courses && courses.length > 0) {
 				for (var i = courses.length - 1; i >= 0; i--) {
 					if(courses[i].courseVal === cA){
-						// 课程一旦报名则不能随便退出，需要专门的退出逻辑所以报过名后对应的课程需要disable掉。
-						// 不过未报过名的课程可以继续报名
-						// 报过名或者报名且审核通过的同学可以申请退课
-						// 申请过退课的同学需要等待管理员审核才能进行下一步操作
-						if (courses[i].status === 'waiting' || courses[i].status === 'approved') {
-							$('#courseA').prop("checked", true).prop("disabled", true);
-							if ($('#quitCourseA').length === 0) {
-								$('#courseAWrapper').append('<a href="javascript:;" id="quitCourseA" class="comm-btn quit-apply">申请退课</a>');
-							}
-						}else if (courses[i].status === 'quitApplied' ) {
-							$('#courseA').prop("checked", true).prop("disabled", true);
-							if ( $('#courseAWrapper p.course-tip').length === 0 ) {
-								$('#courseAWrapper').append('<p class="course-tip">' + quitMsg + '</p>');
-							}
-						};
 						
+						NS.index._initCourseItemOperation(courses[i], 'A');
 						checkedCount ++;
 						// 不会开两个同样的课程（即便内容相同也会有不同的value），所以一旦匹配上就不再继续比较下去
 						continue;
 
 					}else if (courses[i].courseVal === cB) {
-						if (courses[i].status === 'waiting' || courses[i].status === 'approved') {
-							$('#courseB').prop("checked", true).prop("disabled", true);
-							if ($('#quitCourseB').length === 0) {
-								$('#courseBWrapper').append('<a href="javascript:;" id="quitCourseB" class="comm-btn quit-apply">申请退课</a>');
-							};
 
-						}else if (courses[i].status === 'quitApplied' ) {
-							$('#courseB').prop("checked", true).prop("disabled", true);
-							// 如果没有退课提示则加上退课提示，防止多次blur事件引起多个提示同时显示
-							if ( $('#courseBWrapper p.course-tip').length === 0 ) {
-								$('#courseBWrapper').append('<p class="course-tip">' + quitMsg + '</p>');
-							};
-							
-						};
+						NS.index._initCourseItemOperation(courses[i], 'B');
 
 						checkedCount ++;
 						continue;
@@ -162,33 +159,58 @@ jQuery(function($){
 			}; // end outer if
 		},
 		/**
-		 * 用户申请退课A
+		 * 初始化每一个课程项在当前状态下可以进行的操作
+		 * 课程一旦报名则不能随便退出，需要专门的退出逻辑所以报过名后对应的课程需要disable掉。
+		 * 1. 未报过名的课程可以继续报名；
+		 * 2. 报过名但是未审核的同学可以取消报名；
+		 * 3. 报名且审核通过的同学可以申请退课；
+		 * 4. 申请过退课的同学需要等待管理员审核才能进行下一步操作；
 		 */
-		_courseAQuitHandler: function(){
+		_initCourseItemOperation: function(courseItem, courseNumber){
 
-			$("#quitCourseA").live('click',function(){
+			if (courseItem.status === 'waiting'){
+				$('#course' + courseNumber).prop("checked", true).prop("disabled", true);
+				$('#cancelCourse' + courseNumber).show();
+			}else if(courseItem.status === 'approved'){
+				$('#course' + courseNumber).prop("checked", true).prop("disabled", true);
+				$('#quitCourse' + courseNumber).show();
+			}else if(courseItem.status === 'quitApplied'){
+				$('#course' + courseNumber).prop("checked", true).prop("disabled", true);
+				$('#tip' + courseNumber).text(quitMsg).show();
+			}
+			
+		},
+		/**
+		 * 用户申请退课事件处理
+		 * param courseNumber: A or B
+		 */
+		_courseQuitHandler: function( courseNumber ){
+
+			$("#quitCourse" + courseNumber).live('click',function(){
 				$.getJSON('quitCourse/' + $("#dancerID").val(), 
-					{ courseVal: $("#courseA").val() }, function(data){
+					{ courseVal: $("#course" + courseNumber).val() }, function(data){
 						if (data.success === true) {
 							// 申请退课成功后要把该按钮删掉
-							$("#quitCourseA").remove();
-							$('#courseAWrapper').append('<p class="course-tip">' + quitMsg + '</p>');
+							$("#quitCourse" + courseNumber).hide();
+							$('#tip' + courseNumber).text(quitMsg).css('display','inline-block');
+							
 						};
 				});
 			});
 		},
 		/**
-		 * 用户申请退课B
+		 * 用户取消报名事件处理
+		 * param courseNumber: A or B
 		 */
-		_courseBQuitHandler: function(){
+		_courseCancelHandler: function( courseNumber ){
 
-			$("#quitCourseB").live('click',function(){
-				$.getJSON('quitCourse/' + $("#dancerID").val(), 
-					{ courseVal: $("#courseB").val() }, function(data){
+			$("#cancelCourse" + courseNumber).live('click',function(){
+				$.getJSON('cancelCourse/' + $("#dancerID").val(), 
+					{ courseVal: $("#course" + courseNumber).val() }, function(data){
 
 						if (data.success === true) {
-							$("#quitCourseB").remove();
-							$('#courseBWrapper').append('<p class="course-tip">' + quitMsg + '</p>');
+							$("#cancelCourse" + courseNumber).hide();
+							$('#tip' + courseNumber).text(cancelMsg).css('display','inline-block');
 						};
 				});
 			});

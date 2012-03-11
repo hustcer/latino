@@ -3,16 +3,66 @@
 var db = require("../database/database.js").db;
 // 当前开课信息
 var cCourse = require("../database/course.js").currentCourse;
+var Step = require('step');
 
 /*
  * GET home page.
  */
 exports.index = function(req, res){
-    res.render('index', {
-        title: 			'Alibaba 拉丁培训',
-        cCourse: 		cCourse,
-        showDancerLink: false
-    });
+	// TODO: DO IT USING STEP!
+	Step(
+			function countByCondition(){
+				db.latin.countDancerByCondition(
+					{ courses:{$elemMatch: {'courseVal':cCourse.courseA.cValue,'status':'waiting'}}}, this);
+			},
+			function fillResult(err, count){
+				if (err) throw err;
+				cCourse.courseA.total = count;
+				return cCourse;
+			},
+			function countByCondition(){
+				db.latin.countDancerByCondition(
+					{ courses:{$elemMatch: {'courseVal':cCourse.courseA.cValue,'status':'approved'}}}, this);
+			},
+			function fillResult(err, count){
+				if (err) throw err;
+				cCourse.courseA.approved = count;
+				// 申请报名总人数等于处于申请审核状态的人数加报名成功的人数
+				cCourse.courseA.total += count;
+				return cCourse;
+			},
+			function countByCondition(){
+				db.latin.countDancerByCondition(
+					{ courses:{$elemMatch: {'courseVal':cCourse.courseB.cValue,'status':'waiting'}}}, this);
+			},
+			function fillResult(err, count){
+				if (err) throw err;
+				cCourse.courseB.total = count;
+				return cCourse;
+			},
+			function countByCondition(){
+				db.latin.countDancerByCondition(
+					{ courses:{$elemMatch: {'courseVal':cCourse.courseB.cValue,'status':'approved'}}}, this);
+			},
+			function fillResult(err, count){
+				if (err) throw err;
+				cCourse.courseB.approved = count;
+				// 申请报名总人数等于处于申请审核状态的人数加报名成功的人数
+				cCourse.courseB.total += count;
+				return cCourse;
+			},
+			// 渲染页面，注意这个也需要放在Step里面，不然可能出现页面渲染的时候数据还没有生成导致渲染出来的部分数据为空的情况
+			function renderIndex(){
+				res.render('index', {
+			        title: 			'Alibaba 拉丁培训',
+			        cCourse: 		cCourse,
+			        showDancerLink: false
+			    });
+			}
+			
+		);
+
+    
 };
 
 /*
@@ -113,6 +163,23 @@ exports.quitCourse = function(req, res){
 };
 
 /*
+ * 会员取消课程报名. eg:http://localhost:3000/cancelCourse/29411?courseVal=13CB
+ */
+exports.cancelCourse = function(req, res){
+
+	console.log("Course Cancel With dancerID: "+ req.params.id + " courseVal: " + req.query.courseVal)
+
+	db.latin.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'cancelled', function(err, result) {
+	    if (err) throw err;
+
+	    res.contentType('application/json');
+	    res.send({success:true});
+	    
+	});
+
+};
+
+/*
  * 初始化测试数据，该代码上线后应当被移除. eg:http://localhost:3000/init/initdata
  */
 exports.initdata = function(req, res){
@@ -122,22 +189,23 @@ exports.initdata = function(req, res){
 		var insertDancer = function(i){
 			dancerModel = {
 				dancerID: 	'299' + i,
-				courseA: 	(i%3+1) + 'RB',
-				courseB: 	(i%3+1) + 'CM',
+				courseA: 	Math.ceil(Math.random()*3) + 'RE',
+				courseB: 	Math.ceil(Math.random()*3) + 'CI',
 				dancerName: 'M.J.' + i,
-				gender: 	i%3 >= 2? 'male':'female',
+				gender: 	Math.random() >= 0.5 ? 'male':'female',
 				email: 		'hustcer' + i + '@alibaba-inc.com',
 				wangWang: 	'hustcer' + i,
 				extNumber: 	'599' + i,
 				alipayID: 	'hustcer' + i + '@gmail.com',
-				department: i%2 === 0? 'tech':'other'
+				department: Math.random() >= 0.5 ? 'tech':'other'
 			};
+			// console.log(dancerModel);
 
 			db.latin.insertDancer(dancerModel, function(err, addResult) {
 			    if (err) throw err;
 
 			    if (addResult) {
-				    console.log(dancerModel.dancerName + ' Added!');
+				    // console.log(dancerModel.dancerName + ' Added!');
 			    }
 			});
 
@@ -146,5 +214,5 @@ exports.initdata = function(req, res){
 
 	};
 	
-	res.send({data:null});
+	res.send({success:true});
 };

@@ -14,73 +14,97 @@ section.dance-content.dw#dance-content
 		h1.header-title= title 
 		p.welcome-msg 欢迎参加 #{title}，请您填写报名信息!
 
-	#apply-container.table-container
-		form(name="applyForm", id="applyForm", method="post", action="/apply")
-			table.apply-table-a
-				tbody
-					tr.em
-						th
-							label 工 号：
-						td	
-							input#dancerID.comm-input(type="text", name="dancerID")
-					tr.row-sep.em
-						th
-							label 报名班级：
-						td
-							#courseAWrapper.course-wrapper
-								input.comm-check(type="checkbox", value="#{cCourse.courseA.cValue}", name="courseA", id="courseA")
-								label(for="courseA", id="courseAName")&nbsp;#{cCourse.courseA.cName}
+	#apply-container.apply-container
+		#course-info.course-info
+			p 当前拉丁培训课程信息：
+			p &nbsp;
+			p 培训一：#{cCourse.courseA.cName}
+			p 报名限额：#{cCourse.courseA.cCapacity}人;
+			p 已预报名：#{cCourse.courseA.total}人;
+			p 报名成功：#{cCourse.courseA.approved}人;
+			p #{cCourse.courseA.ps}
+			p &nbsp;
+			p 培训二：#{cCourse.courseB.cName}
+			p 报名限额：#{cCourse.courseB.cCapacity}人;
+			p 已预报名：#{cCourse.courseB.total}人;
+			p 报名成功：#{cCourse.courseB.approved}人;
+			p #{cCourse.courseB.ps}
 
-							#courseBWrapper.course-wrapper
-								input.comm-check(type="checkbox", value="#{cCourse.courseB.cValue}", name="courseB", id="courseB")
-								label(for="courseB", id="courseBName")&nbsp;#{cCourse.courseB.cName}
-			//.hr-line
+		.table-container
+			form(name="applyForm", id="applyForm", method="post", action="/apply")
+				table.apply-table-a
+					tbody
+						tr.em
+							th
+								label 工 号：
+							td	
+								input#dancerID.comm-input(type="text", name="dancerID")
+						tr.row-sep.em
+							th
+								label 报名班级：
+							td
+								#courseAWrapper.course-wrapper
+									input.comm-check(type="checkbox", value="#{cCourse.courseA.cValue}", name="courseA", id="courseA")
+									label(for="courseA", id="courseAName")&nbsp;#{cCourse.courseA.cName}
+									a(href="javascript:;", id="quitCourseA", class="comm-btn quit-apply")申请退课
+									a(href="javascript:;", id="cancelCourseA", class="comm-btn cancel-apply")取消报名
+									p.course-tip#tipA
 
-			table.apply-table-b
-				tbody
-					tr
-						th
-							label 姓 名：
-						td
-							input#dancerName.comm-input(type="text", name="dancerName")
-					tr
-						th
-							label 性 别：
-						td
-							.gender-wrapper
-								input.comm-radio(type="radio", id="maleRadio", value="male", name="gender")
-								label(for="maleRadio")&nbsp;男 &nbsp;&nbsp;&nbsp;
-								
-								input.comm-radio(type="radio", id="femaleRadio", value="female", name="gender")
-								label(for="femaleRadio")&nbsp;女
-					tr
-						th
-							label 邮 箱：
-						td
-							input#email.comm-input(type="text", name="email")
-					tr
-						th
-							label 旺 旺：
-						td
-							input#wangWang.comm-input(type="text", name="wangWang")
-					tr
-						th
-							label 分 机：
-						td
-							input#extNumber.comm-input(type="text", name="extNumber")
-					tr
-						th
-							label 支付宝：
-						td
-							input#alipayID.comm-input(type="text", name="alipayID")
-					tr
-						th
-							label 部 门：
-						td
-							.depart-select
-								
+								#courseBWrapper.course-wrapper
+									input.comm-check(type="checkbox", value="#{cCourse.courseB.cValue}", name="courseB", id="courseB")
+									label(for="courseB", id="courseBName")&nbsp;#{cCourse.courseB.cName}
+									a(href="javascript:;", id="quitCourseB", class="comm-btn quit-apply")申请退课
+									a(href="javascript:;", id="cancelCourseB", class="comm-btn cancel-apply")取消报名
+									p.course-tip#tipB
+				//.hr-line
 
+				table.apply-table-b
+					tbody
+						tr
+							th
+								label 姓 名：
+							td
+								input#dancerName.comm-input(type="text", name="dancerName")
+						tr
+							th
+								label 性 别：
+							td
+								.gender-wrapper
+									input.comm-radio(type="radio", id="maleRadio", value="male", name="gender")
+									label(for="maleRadio")&nbsp;男 &nbsp;&nbsp;&nbsp;
+									
+									input.comm-radio(type="radio", id="femaleRadio", value="female", name="gender")
+									label(for="femaleRadio")&nbsp;女
+						tr
+							th
+								label 邮 箱：
+							td
+								input#email.comm-input(type="text", name="email")
+						tr
+							th
+								label 旺 旺：
+							td
+								input#wangWang.comm-input(type="text", name="wangWang")
+						tr
+							th
+								label 分 机：
+							td
+								input#extNumber.comm-input(type="text", name="extNumber")
+						tr
+							th
+								label 支付宝：
+							td
+								input#alipayID.comm-input(type="text", name="alipayID")
+						tr
+							th
+								label 部 门：
+							td
+								.depart-select
+					
+
+			button(class="reset-btn comm-button", id="reset-btn") 重&nbsp;置
 			button(class="apply-btn comm-button", id="apply-btn") 提&nbsp;交
+
 
 			if (!!showDancerLink)
 				.operation-info#operation-info
