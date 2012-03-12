@@ -70,7 +70,34 @@ jQuery(function($){
 		_formActionHandler: function(){
 			// 提交表单
 			$('#apply-btn').click(function(){
-				$('#applyForm')[0].submit();
+
+				var $applyForm = $('#applyForm');
+
+				// 表单验证
+				$.use("web-valid", function() {
+					var validApply = new FE.ui.Valid($('input.comm-input', $applyForm), {
+	                    onValid : function(res, o) {
+	                        var tr = $(this).closest('tr'), td = $('td:last-child', tr), msg = '';
+	                        
+	                        switch(res){
+	                            case 'required':
+	                                msg = '请填写该信息';
+	                                break;
+	                            case 'email':
+	                                msg = '邮箱格式不对';
+	                                break;
+	                        }
+	                        
+	                        td.html(msg);
+	                    }
+					});
+
+					if (validApply.valid()) {
+						$applyForm[0].submit();
+					};
+
+				});
+				
 			});
 
 			// 重置表单

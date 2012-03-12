@@ -1,21 +1,18 @@
 ToDo:
 
-	样式调整
-	酷炫特效：impressJS、气泡链接
-	
-	手工报名
-	报名时间区间限制
-	
-	表单前后台验证
-	会员类型：普通、管理员
-
 	课程详情
 	教师信息
 	舞种介绍
 	演出汇报
 	拉丁术语
-	想说的话
+
+	样式调整/UI 美化
+	酷炫特效：impressJS、气泡链接
+	手工报名
+	报名时间区间限制
+	会员类型：普通、管理员
 	
+	想说的话
 	
 	日志、密码、cookie/ email notification
 	
@@ -23,9 +20,6 @@ ToDo:
 	首页统计信息采用异步回调方式改善页面加载速度
 	include 或者layout继承、共用部分
 	报名自动审批，根据等级、vip、序号自动审批
-	
-	表单验证
-	想说的话
 	报名状态锁定
 
 	提示用户当前搜索条件
@@ -33,7 +27,10 @@ ToDo:
 	查询结果分页
 	查询结果表头排序
 	公司邮箱限制、验证
+	IE低版本提示
 
+
+表单前后台验证									O  		后台验证未做
 默认查询当前开课课程相关会员						O
 从文件里面读系统公告，读当前开课课程信息			O
 报名统计信息、限额等							O
@@ -45,21 +42,22 @@ ToDo:
 申请报名后自助放弃报名							O
 课程状态转换有时间记录 用于确定用户报名先后顺序		O
 申请退课后自助放弃退课							X   	(尽量降低复杂度，减少用户随意操作的可能性)
+退课审核拒绝									O
 
 技术实现：
 
-缓存redis
-数据库mongodb
-数据库驱动mongoskin+mongo native
-静态资源服务器nginx
-模板引擎jade/markdown
-css:less
-前端fdev4、impress、arbor.js、curtain.js
-后台nodejs
-部署环境ubuntu、mac
-保持node始终处于运行状态：forever
-step: control-flow library、 Async.js
-邮件模块：node_mailer 
+	缓存redis
+	数据库mongodb
+	数据库驱动mongoskin+mongo native
+	静态资源服务器nginx
+	模板引擎jade/markdown
+	css:less
+	前端fdev4、impress、arbor.js、curtain.js
+	后台nodejs
+	部署环境ubuntu、mac
+	保持node始终处于运行状态：forever
+	step: control-flow library、 Async.js
+	邮件模块：node_mailer 
 
 
 需求规则描述：

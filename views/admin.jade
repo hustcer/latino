@@ -1,12 +1,5 @@
 
-header.dance-header.dw
-	#latin-header.latin-header
-		img(src='../images/latinheader.png')
-	nav.dance-nav#dance-nav
-		ul.nav-links
-			li: a(href="/") 首页
-			li: a(href="/list") 报名情况
-			li: a(href="/man") 会员管理
+include includes/header
 
 section.admin-content.dw#admin-content
 	.content-header
@@ -16,8 +9,9 @@ section.admin-content.dw#admin-content
 			li: a(href="#approve-apply") 报名审核通过
 			li: a(href="#course-pay") 报名设置缴费
 			li: a(href="#refuse-apply") 报名审核拒绝
-			li: a(href="#quit-approve") 退课审核通过
 			li: a(href="#course-refund") 报名设置退费
+			li: a(href="#quit-approve") 退课审核通过
+			li: a(href="#quit-refuse") 退课审核拒绝
 			li: a(href="#") 管理会员信息
 
 	section.op-container#op-container
@@ -120,8 +114,27 @@ section.admin-content.dw#admin-content
 							button(class="quitBtn comm-button", id="quitBtn") 确认退课
 			p.course-tip.fd-hide
 
+		.admin-op#quit-refuse
+			h3 退课审核拒绝操作
+			table
+				tbody
+					tr
+						td.dancerID-cell
+							label 工号：
+							input.dancerID.comm-input(type="text", name="dancerID")
+						td.course-cell	
+							label.fd-left 课程：
+							.course-box
+								select.comm-select(name="course")
+									option(value="") 请选择...
+									each course in courseList
+										option(value="#{course.courseVal}") #{course.courseName}
+						td
+							button(class="quitRefuseBtn comm-button", id="quitRefuseBtn") 拒绝退课
+			p.course-tip.fd-hide
 
-footer.dance-footer.dw				
+
+include includes/footer				
 
 script(src='/javascripts/lib/fdev-min.js')
 script(src='/javascripts/user/admin.js')

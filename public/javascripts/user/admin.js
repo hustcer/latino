@@ -24,12 +24,21 @@ jQuery(function($){
 		 */
 		_initUI: function(){
 
-			this._initCourseApproveCombo();
-			this._initCoursePaidCombo();
-			this._initCourseRefuseCombo();
-			this._initCourseQuitCombo();
-			this._initCourseRefundCombo();
+			// 初始化combobox组件
+			$('#admin-content .course-box').each(function(){
+				var $box = $(this);
 
+				$.use('ui-combobox', function(){
+
+					$box.combobox({
+					    data		: $('select', $box),
+						// 绑定data.value 到 input上
+						change: function(){
+							$('input.result', $box).data('courseVal',$(this).combobox('val'));
+						}
+					});
+				});
+			});
 		},
 		/**
 		 * DOM事件绑定
@@ -46,7 +55,8 @@ jQuery(function($){
 			this._handleRefund();
 			// 设置会员已退课
 			this._handleQuit();
-			// TODO: this._handleRefuseQuit();
+			// 设置拒绝会员已退课
+			this._handleRefuseQuit();
 			
 		},
 		/**
@@ -155,75 +165,24 @@ jQuery(function($){
 			});
 		},
 		/**
-		 * 初始化审核通过课程下拉列表
+		 * 拒绝会员申请退课请求
 		 */
-		_initCourseApproveCombo: function(){
-			$.use('ui-combobox', function(){
-				$('#approve-apply .course-box').combobox({
-				    data: $('#approve-apply .course-box select'),
-					// 绑定data.value 到 input上
-					change: function(){
-						$('input.result','#approve-apply .course-box').data('courseVal',$(this).combobox('val'));
-					}
-				});
-			});
-		},
-		/**
-		 * 初始化设置缴费课程下拉列表
-		 */
-		_initCoursePaidCombo: function(){
-			$.use('ui-combobox', function(){
-				$('#course-pay .course-box').combobox({
-				    data: $('#course-pay .course-box select'),
-					// 绑定data.value 到 input上
-					change: function(){
-						$('input.result','#course-pay .course-box').data('courseVal',$(this).combobox('val'));
-					}
-				});
-			});
-		},
-		/**
-		 * 初始化审核拒绝课程状态下拉列表
-		 */
-		_initCourseRefuseCombo: function(){
-			$.use('ui-combobox', function(){
-				$('#refuse-apply .course-box').combobox({
-				    data: $('#refuse-apply .course-box select'),
-					// 绑定data.value 到 input上
-					change: function(){
-						$('input.result','#refuse-apply .course-box').data('courseVal',$(this).combobox('val'));
-					}
+		_handleRefuseQuit: function(){
+			$("#quitRefuseBtn").click(function(){
 
+				var dancerID = $("#quit-refuse .dancerID").val(), 
+					courseVal = $('input.result','#quit-refuse .course-box').data('courseVal');
+
+				$.getJSON('man/quitRefuse/' + dancerID, 
+					{ courseVal: courseVal }, function(data){
+						if (data.success === true) {
+							
+							$('#quit-refuse p.course-tip').text('会员退课拒绝处理成功!').css('display','inline-block');
+						}else{
+							$('#quit-refuse p.course-tip').text( data.msg ).css('display','inline-block');
+						};
 				});
-			});
-		}
-		,
-		/**
-		 * 初始化退课审核通过课程下拉列表
-		 */
-		_initCourseQuitCombo: function(){
-			$.use('ui-combobox', function(){
-				$('#quit-approve .course-box').combobox({
-				    data: $('#quit-approve .course-box select'),
-					// 绑定data.value 到 input上
-					change: function(){
-						$('input.result','#quit-approve .course-box').data('courseVal',$(this).combobox('val'));
-					}
-				});
-			});
-		},
-		/**
-		 * 初始化退费课程下拉列表
-		 */
-		_initCourseRefundCombo: function(){
-			$.use('ui-combobox', function(){
-				$('#course-refund .course-box').combobox({
-				    data: $('#course-refund .course-box select'),
-					// 绑定data.value 到 input上
-					change: function(){
-						$('input.result','#course-refund .course-box').data('courseVal',$(this).combobox('val'));
-					}
-				});
+				
 			});
 		}
 

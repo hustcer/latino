@@ -37,7 +37,8 @@ exports.user = function(req, res, next){
 
 	  	} else {
 	  		// TODO: 如果会员不存在，直接给于提示不要抛出异常
-	    	next(new Error('Failed to load user ' + req.params.id));
+	    	// next(new Error('Failed to load user ' + req.params.id));
+	    	console.log('This Dancer Dose Not Exist, DancerID:', req.params.id);
 	  	}
 
 	});
@@ -100,7 +101,7 @@ exports.approve = function(req, res){
 };
 
 /*
- * 设置会员报名成功. eg:http://localhost:3000/man/refuse/29411?courseVal=13CB
+ * 设置会员报名不通过. eg:http://localhost:3000/man/refuse/29411?courseVal=13CB
  * 注意只有课程状态为 waiting 的才可以报名审核不通过
  */
 exports.refuse = function(req, res){
@@ -121,7 +122,7 @@ exports.refuse = function(req, res){
 
 
 /*
- * 设置会员报名成功. eg:http://localhost:3000/man/quit/29411?courseVal=13CB
+ * 设置会员退课成功. eg:http://localhost:3000/man/quit/29411?courseVal=13CB
  * 注意只有课程状态为 quitApplied 且已经退费，或者未缴费时，发出过退课申请的用户才可以退课成功
  */
 exports.quit = function(req, res){
@@ -143,6 +144,27 @@ exports.quit = function(req, res){
 	
 };
 
+/*
+ * 设置拒绝会员退课. eg:http://localhost:3000/man/quitRefuse/29411?courseVal=13CB
+ * 注意只有课程状态为 quitApplied 时，发出过退课申请的用户才可以拒绝退课
+ */
+exports.quitRefuse = function(req, res){
+
+	console.log("Refuse Quiting Course With dancerID: "+ req.params.id + " courseVal: " + req.query.courseVal)
+
+	checkCourseStatus(req, res, 'quitApplied', function(){
+
+		db.latin.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'approved', function(err, result) {
+		    if (err) throw err;
+
+		    res.contentType('application/json');
+		    res.send({success:true});
+		});
+		
+	});
+	
+};
+
 
 /*
  * 这里的查询条件还要加上对应的课程，否则result.courses.status 未定义
@@ -156,6 +178,11 @@ var checkCourseStatus = function(req, res, status, callback){
 	db.latin.findDancerByID(req.params.id, function(err, result){
 		if (err) throw err;
 		var satisfied = false;
+
+		// 会员不存在或者没有报名任何课程
+		if (!(!!result && result.courses && result.courses.length > 0)){
+			res.send({success:false, msg:'Dancer Dose Not Exist Or Has No Course !'});
+		}
 
 		for (var i = result.courses.length - 1; i >= 0; i--) {
 			if (result.courses[i].courseVal === req.query.courseVal &&
@@ -188,6 +215,11 @@ var checkPayStatus = function(req, res, isPaid, callback){
 	db.latin.findDancerByID(req.params.id, function(err, result){
 		if (err) throw err;
 		var satisfied = false;
+
+		// 会员不存在或者没有报名任何课程
+		if (!(!!result && result.courses && result.courses.length > 0)){
+			res.send({success:false, msg:'Dancer Dose Not Exist Or Has No Course !'});
+		}
 
 		for (var i = result.courses.length - 1; i >= 0; i--) {
 			

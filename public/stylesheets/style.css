@@ -54,6 +54,7 @@ a.comm-btn:hover{text-decoration:none;color:blue;}
 .table-container .apply-btn {margin: 10px 10px 0 15px;}
 .table-container .reset-btn {margin: 10px 10px 0 180px;}
 .table-container label{margin: 0 10px 0 3px;}
+.table-container .err-tip{color:red;font-size:11px;width: 235px;float: left;}
 
 .dance-content .apply-table-a{margin: 0 0 15px 5px;}
 .dance-content .apply-table-b{margin: 5px 0 10px 5px;}

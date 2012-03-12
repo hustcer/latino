@@ -1,13 +1,5 @@
 
-
-header.dance-header.dw
-	#latin-header.latin-header
-		img(src='../images/latinheader.png')
-	nav.dance-nav#dance-nav
-		ul.nav-links
-			li: a(href="/") 首页
-			li: a(href="/list") 报名情况
-			li: a(href="/man") 会员管理
+include includes/header
 
 section.dance-content.dw#dance-content
 	.content-header
@@ -38,11 +30,12 @@ section.dance-content.dw#dance-content
 							th
 								label 工 号：
 							td	
-								input#dancerID.comm-input(type="text", name="dancerID")
+								input#dancerID.comm-input(type="text", name="dancerID", maxlength="9", data-valid="{required:true}")
+							td.err-tip
 						tr.row-sep.em
 							th
 								label 报名班级：
-							td
+							td(colspan="2")
 								#courseAWrapper.course-wrapper
 									input.comm-check(type="checkbox", value="#{cCourse.courseA.cValue}", name="courseA", id="courseA")
 									label(for="courseA", id="courseAName")&nbsp;#{cCourse.courseA.cName}
@@ -56,6 +49,7 @@ section.dance-content.dw#dance-content
 									a(href="javascript:;", id="quitCourseB", class="comm-btn quit-apply")申请退课
 									a(href="javascript:;", id="cancelCourseB", class="comm-btn cancel-apply")取消报名
 									p.course-tip#tipB
+							
 				//.hr-line
 
 				table.apply-table-b
@@ -64,7 +58,8 @@ section.dance-content.dw#dance-content
 							th
 								label 姓 名：
 							td
-								input#dancerName.comm-input(type="text", name="dancerName")
+								input#dancerName.comm-input(type="text", name="dancerName", maxlength="30", data-valid="{required:true}")
+							td.err-tip
 						tr
 							th
 								label 性 别：
@@ -73,33 +68,39 @@ section.dance-content.dw#dance-content
 									input.comm-radio(type="radio", id="maleRadio", value="male", name="gender")
 									label(for="maleRadio")&nbsp;男 &nbsp;&nbsp;&nbsp;
 									
-									input.comm-radio(type="radio", id="femaleRadio", value="female", name="gender")
+									input.comm-radio(type="radio", id="femaleRadio", checked, value="female", name="gender")
 									label(for="femaleRadio")&nbsp;女
+							td.err-tip
 						tr
 							th
 								label 邮 箱：
 							td
-								input#email.comm-input(type="text", name="email")
+								input#email.comm-input(type="text", name="email", maxlength="30", data-valid="{required:true,type:'email'}")
+							td.err-tip
 						tr
 							th
 								label 旺 旺：
 							td
-								input#wangWang.comm-input(type="text", name="wangWang")
+								input#wangWang.comm-input(type="text", name="wangWang", maxlength="30", data-valid="{required:true}")
+							td.err-tip
 						tr
 							th
 								label 分 机：
 							td
-								input#extNumber.comm-input(type="text", name="extNumber")
+								input#extNumber.comm-input(type="text", name="extNumber", maxlength="12", data-valid="{required:true}")
+							td.err-tip
 						tr
 							th
 								label 支付宝：
 							td
-								input#alipayID.comm-input(type="text", name="alipayID")
+								input#alipayID.comm-input(type="text", name="alipayID", maxlength="30", data-valid="{required:true}")
+							td.err-tip
 						tr
 							th
 								label 部 门：
 							td
 								.depart-select
+							td.err-tip
 					
 
 			button(class="reset-btn comm-button", id="reset-btn") 重&nbsp;置
@@ -113,7 +114,7 @@ section.dance-content.dw#dance-content
 						&nbsp;查看个人详情, 或者
 						a(href="/",id="home-link")返回
 
-footer.dance-footer.dw
+include includes/footer	
 
 script(src='/javascripts/user/dance-index-merge.js')
 

@@ -9,7 +9,7 @@ var Step = require('step');
  * GET home page.
  */
 exports.index = function(req, res){
-	// TODO: DO IT USING STEP!
+	// DO IT USING STEP!
 	Step(
 			function countByCondition(){
 				db.latin.countDancerByCondition(
