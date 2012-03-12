@@ -1,7 +1,11 @@
 
 /**
  * Module dependencies.
+ *
+ * Author: justin.maj
+ * Date: 2012-1-19 
  */
+
 var express = require('express');
 
 var app = module.exports = express.createServer();

@@ -1,11 +1,14 @@
-/*
- * Author: justin.maj
- * Date: 20120225
-*/
+
+/**
+ * Dancer index front.
+ *
+ * Author: 	justin.maj
+ * Date: 	2012-02-25   
+ */
+
 jQuery.namespace('dance.at.alibaba');             
 
 // TODO: 可以取消退课申请，课程报名状态：已申请，取消申请，报名通过，报名拒绝，申请退课，已退课
-// TODO: 必填项、表单验证
 jQuery(function($){
 
     var NS = dance.at.alibaba;

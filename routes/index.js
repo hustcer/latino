@@ -1,4 +1,9 @@
-
+/**
+ * Dancer index 
+ *
+ * Author: 	justin.maj
+ * Date: 	2012-1-19   
+ */
 
 var db = require("../database/database.js").db;
 // 当前开课信息

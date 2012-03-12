@@ -1,7 +1,13 @@
 
+
 /**
  * 会员Collection 常规操作绑定方法
+ * Ref：http://www.hacksparrow.com/mongoskin-tutorial-with-examples.html
+ *
+ * Author: 	justin.maj
+ * Date: 	2012-1-20  
  */
+ 
 var commonDancerOp = exports.commonDancerOp = {
 
 	/**

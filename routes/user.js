@@ -1,4 +1,9 @@
-
+/**
+ * User operations.
+ *
+ * Author: 	justin.maj
+ * Date: 	2012-2-13 
+ */
 
 var db = require("../database/database.js").db;
 // 取得课程值以及对应的中文描述映射信息

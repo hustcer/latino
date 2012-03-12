@@ -1,7 +1,11 @@
-/*
- * Author: justin.maj
- * Date: 20120225
-*/
+
+/**
+ * Dancer list front.
+ *
+ * Author: 	justin.maj
+ * Date: 	2012-1-20   
+ */
+
 jQuery.namespace('dance.at.alibaba.list');             
 
 // TODO:输出信息格式化，默认查询当前开课课程信息

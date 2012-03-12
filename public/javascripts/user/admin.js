@@ -1,7 +1,11 @@
-/*
- * Author: justin.maj
- * Date: 20120225
-*/
+
+/**
+ * Admin front.
+ *
+ * Author: 	justin.maj
+ * Date: 	2012-02-25   
+ */
+
 jQuery.namespace('dance.at.alibaba');             
 
 jQuery(function($){

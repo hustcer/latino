@@ -1,6 +1,10 @@
 /**
  * 路径映射
+ *
+ * Author: 	justin.maj
+ * Date: 	2012-1-19  
  */
+
 var gRouter = exports.gRouter = {};
 
 gRouter["/"] 					= require('./index.js').index;			//首页
