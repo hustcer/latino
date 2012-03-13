@@ -52,17 +52,15 @@ var commonDancerOp = exports.commonDancerOp = {
 	 */
 	updateDancerByID: function(dancerID, dancerModel, fn){
 
-		//console.log("Update Courses: A: s%,  B: s%", dancerModel.courseA, dancerModel.courseB);
-
 		var courseAddArray = [], self = this, logMsg = '';
+
 		if( !!dancerModel.courseA ) {
-			// 新插入数据库的学员如果报名课程的话将其报名状态设为 waiting，待审核,且未付款
-			courseAddArray.push({courseVal:dancerModel.courseA,status:'waiting',paid:false});
+			courseAddArray.push( dancerModel.courseA );
 			logMsg += 'A--' + dancerModel.courseA;
 		}
+
 		if( !!dancerModel.courseB ) {
-			// 新插入数据库的学员如果报名课程的话将其报名状态设为 waiting，待审核,且未付款
-			courseAddArray.push({courseVal:dancerModel.courseB,status:'waiting',paid:false});
+			courseAddArray.push( dancerModel.courseB );
 			logMsg += ' B--' + dancerModel.courseB;
 		}
 
@@ -85,14 +83,23 @@ var commonDancerOp = exports.commonDancerOp = {
 			result.alipayID = dancerModel.alipayID;
 			result.department = dancerModel.department;
 
-			for (var i = result.courses.length - 1; i >= 0; i--) {
-				for (var j = courseAddArray.length - 1; j >= 0; j--) {
-
-					if (result.courses[i].courseVal === courseAddArray[j].courseVal) {
+			for (var exist, j = courseAddArray.length - 1; j >= 0; j--) {
+				exist = false;
+				// 找到则更新相应课程
+				for (var i = result.courses.length - 1; i >= 0; i--) {
+				
+					if (result.courses[i].courseVal === courseAddArray[j]) {
 						result.courses[i].status = 'waiting';
 						result.courses[i].gmtStatusChanged = new Date();
-
+						exist = true;
+						break;
 					};
+				};  // end inner for loop
+				// 未找到则插入数据
+				if ( !exist ) {
+					// 新插入数据库的学员如果报名课程的话将其报名状态设为 waiting，待审核,且未付款
+					result.courses.push( { courseVal:courseAddArray[j], status:'waiting',
+										gmtStatusChanged:new Date(), paid:false } );
 				};
 			};
 

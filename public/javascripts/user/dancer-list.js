@@ -15,6 +15,8 @@ jQuery(function($){
 
 	// Begin Module Definition
     var module = NS.main = {
+    	// 会员列表分页组件
+    	dancerListPg: 	null,
 					
 		/**
 		 * 静态模块的初始化入口
@@ -28,10 +30,23 @@ jQuery(function($){
 		 * 模块的主要UI相关初始化
 		 */
 		_initUI: function(){
-
+			// FIXME: 初始化combobox通用化
 			this._initDepartmentList();
 			this._initCourseList();
 			this._initCourseStatus();
+			this._initPagination();
+			
+		},
+		/**
+		 * 分页组件相关初始化
+		 */
+		_initPagination: function(){
+
+			dancerListPg = new dance.at.alibaba.Paging( $('#dancer-list-paging') );
+			dancerListPg.customClick = function(page){
+				
+			}
+    		dancerListPg.init( 1, 10 );
 		},
 		/**
 		 * DOM事件绑定

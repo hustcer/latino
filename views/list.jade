@@ -104,8 +104,21 @@ section.dance-content.dw#list-content
 						td 
 							#{dancer.department}
 
+	ul.paging-a.fd-clr#dancer-list-paging(data-sp="paging-a")
+		li.pagination
+		li 	共
+			em.pagenum 
+			页 到 
+			input.pnum(type="text", maxlength="4", autocomplete="off")
+			页
+		li: a.btn-b(href="javascript:;")
+				span.btn-l
+					em 确定
+				span.btn-r
+
 include includes/footer	
 
 script(src='/javascripts/lib/fdev-min.js')
 script(src='/javascripts/user/dancer-list.js')
+script(src='/javascripts/lib/widget/paging.js')
 				

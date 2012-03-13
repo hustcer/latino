@@ -1,0 +1,73 @@
+@charset "utf-8";
+
+
+/* --------分页相关样式 begin----------*/
+.paging-a{margin:8px 30px;float:right;}
+.paging-a li { float: left; padding: 0 2px; color: #666; font-family: Tahoma; }
+.paging-a input { margin: 0 2px; padding: 3px 2px; width: 30px; height: 14px; border: solid 1px #A8ACAD; background: #FFF url(http://img.china.alibaba.com/images/trade/quotation/100426/bg1.gif) repeat-x; line-height: 1.2; text-align: right; *margin-top:-1px;*margin-bottom:-1px;}
+.paging-a .pagination a { display: block; float: left; margin-right: 3px; padding:0 4px; min-width: 12px; _width: 12px; height: 20px; border: solid 1px #CCC; color: #06C; text-decoration: none !important; line-height: 18px; text-align:center; word-break: keep-all; }
+.paging-a .pagination a:hover { border-color: #FF7300; color: #FF7300; }
+.paging-a .pagination a.omit, .paging-a .pagination a.indic { padding: 1px 4px; border: 0 none; color: #666 !important; cursor: default; }
+.paging-a .pagination a.current { border-color: #FFF !important; font-weight: bold; color: #FF7300 !important; cursor: default; }
+.paging-a .pagination a.pre, .paging-a .pagination a.pre-disabled, .paging-a .pagination a.next, .paging-a .pagination a.next-disabled { background: url(http://img.china.alibaba.com/images/trade/quotation/100426/icon2.gif) no-repeat; }
+.paging-a .pagination a.pre { width: 10px; background-position: 6px 5px; }
+.paging-a .pagination a.pre:hover { border-color: #FF7300; background-position: 6px -15px; }
+.paging-a .pagination a.pre-disabled { width: 10px; border-color: #CCC !important; background-position: 6px -35px; color: #CCC; cursor: default; }
+.paging-a .pagination a.next { padding-right: 16px; background-position: 45px -55px; }
+.paging-a .pagination a.next:hover { border-color: #FF7300; background-position: 45px -75px; }
+.paging-a .pagination a.next-disabled { padding-right: 16px; border-color: #CCC !important; background-position: 45px -95px; color: #CCC !important; cursor: default; }
+.paging-a .pagination span { padding: 0 4px; }
+
+.btn-b {
+	display: block;
+	float: left;
+	overflow: hidden;
+	height: 22px;
+	text-decoration: none !important;
+}
+
+.btn-b span {
+	display: block;
+	float: left;
+	height: 22px;
+	background:url(http://img.china.alibaba.com/cms/upload/2012/298/392/293892_1165694201.png) no-repeat;
+	cursor: pointer;
+}
+
+.btn-b .btn-l {
+	padding-left: 2px;
+	background-position: left -210px;
+}
+
+.btn-b .btn-r {
+	width: 2px;
+	background-position: -148px -210px;
+}
+
+.btn-b em {
+	padding: 0 8px;
+	font: normal 12px \5B8B\4F53;
+	color: #333 !important;
+	line-height: 1.8;
+}
+
+.btn-b:hover .btn-l {
+	background-position: left -232px;
+}
+
+.btn-b:hover .btn-r {
+	background-position: -148px -232px;
+}
+
+.btn-b-disabled .btn-l {
+	background-position: left -210px !important;
+}
+
+.btn-b-disabled .btn-r {
+	background-position: -148px -210px !important;
+}
+
+.btn-b-disabled em {
+	color: #999 !important;
+}
+/* --------分页相关样式  end----------*/
