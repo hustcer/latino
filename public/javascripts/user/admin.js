@@ -29,6 +29,7 @@ jQuery(function($){
 		_initUI: function(){
 
 			// 初始化combobox组件
+			// TODO: 这样写有没有问题？
 			$('#admin-content .course-box').each(function(){
 				var $box = $(this);
 

@@ -31,6 +31,7 @@ jQuery(function($){
 		 */
 		_initUI: function(){
 			this._initDepartment();
+			this._queryCourseInfo();
 		},
 		/**
 		 * DOM事件绑定
@@ -66,6 +67,20 @@ jQuery(function($){
 					}
 				});
 			});
+		},
+		/**
+		 * 通过Ajax请求取得当前开课课程的报名统计信息
+		 */
+		_queryCourseInfo: function(){
+			$.getJSON('queryCourseInfo', function(data){
+				// console.log('queryCourseInfo:', data);
+				
+				$('#aWaiting').text(data.courseInfo.courseA.total + '人;');
+				$('#aApproved').text(data.courseInfo.courseA.approved + '人;');
+				$('#bWaiting').text(data.courseInfo.courseB.total + '人;');
+				$('#bApproved').text(data.courseInfo.courseB.approved + '人;');
+			});
+
 		},
 		/**
 		 * 表单提交、重置按钮事件
@@ -206,7 +221,7 @@ jQuery(function($){
 				$('#quitCourse' + courseNumber).show();
 			}else if(courseItem.status === 'quitApplied'){
 				$('#course' + courseNumber).prop("checked", true).prop("disabled", true);
-				$('#tip' + courseNumber).text(quitMsg).show();
+				$('#tip' + courseNumber).text(quitMsg).css('display','inline-block');
 			}
 			
 		},

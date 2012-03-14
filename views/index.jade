@@ -14,19 +14,25 @@ section.dance-content.dw#dance-content
 
 	#apply-container.apply-container
 		#course-info.course-info
-			p 当前拉丁培训课程信息：
+			p:em.BD 当前拉丁培训课程信息：
 			p &nbsp;
-			p 培训一：#{cCourse.courseA.cName}
-			p 报名限额：#{cCourse.courseA.cCapacity}人;
-			p 已预报名：#{cCourse.courseA.total}人;
-			p 报名成功：#{cCourse.courseA.approved}人;
-			p #{cCourse.courseA.ps}
+			p:em.BD 培训一：#{cCourse.courseA.cName}
+			p 报名限额：
+				em.R #{cCourse.courseA.cCapacity}人;
+			p 已预报名：
+				em.R#aWaiting
+			p 报名成功：
+				em.R#aApproved
+			p:em.R #{cCourse.courseA.ps}
 			p &nbsp;
-			p 培训二：#{cCourse.courseB.cName}
-			p 报名限额：#{cCourse.courseB.cCapacity}人;
-			p 已预报名：#{cCourse.courseB.total}人;
-			p 报名成功：#{cCourse.courseB.approved}人;
-			p #{cCourse.courseB.ps}
+			p:em.BD 培训二：#{cCourse.courseB.cName}
+			p 报名限额：
+				em.R #{cCourse.courseB.cCapacity}人;
+			p 已预报名：
+				em.R#bWaiting
+			p 报名成功：
+				em.R#bApproved
+			p:em.R #{cCourse.courseB.ps}
 
 		.table-container
 			form(name="applyForm", id="applyForm", method="post", action="/apply")

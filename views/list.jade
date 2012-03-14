@@ -21,7 +21,7 @@ section.dance-content.dw#list-content
 						input#dancerID.comm-input(type="text", name="dancerID")
 					td.department-cell	
 						label.fd-left 部门：
-						.department-box#department-box
+						.department-box.filter-combo#department-box
 							select.comm-select(name="department", id="department")
 								option(value="") 请选择...
 								option(value="tech") 技术部
@@ -35,7 +35,7 @@ section.dance-content.dw#list-content
 						label(for="femaleRadio")&nbsp;女
 					td.course-cell	
 						label.fd-left 课程：
-						.course-box#course-box
+						.course-box.filter-combo#course-box
 							select.comm-select(name="course", id="course")
 								option(value="") 请选择...
 								each course in courseList
@@ -43,7 +43,7 @@ section.dance-content.dw#list-content
 
 					td.status-cell	
 						label.fd-left 课程状态：
-						.status-box#status-box
+						.status-box.filter-combo#status-box
 							select.comm-select(name="status", id="status")
 								option(value="") 请选择...
 								option(value="waiting") 等待审核
@@ -68,15 +68,22 @@ section.dance-content.dw#list-content
 			thead
 				tr
 					th.dancerID-header 工号
+						i.i-sort-default
 					th.dancerName-header 姓名
+						i.i-sort-default
 					th.gender-header 性别
+						i.i-sort-default
 					th.course-header 班级
 					th.status-header 课程状态
 					th.pay-header 缴费
 					th.email-header 邮箱
+						i.i-sort-default
 					th.wangWang-header 旺旺
+						i.i-sort-default
 					th.ext-header 分机
+						i.i-sort-default
 					th.dept-header 部门
+						i.i-sort-default
 			tbody
 				each dancer in dancerList
 					tr
@@ -121,4 +128,5 @@ include includes/footer
 script(src='/javascripts/lib/fdev-min.js')
 script(src='/javascripts/user/dancer-list.js')
 script(src='/javascripts/lib/widget/paging.js')
+script(src='/javascripts/lib/module/json-sorter.js')
 				

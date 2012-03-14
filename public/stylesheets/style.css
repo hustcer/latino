@@ -5,6 +5,10 @@ body {
   min-height:600px;
 }
 
+.BW{word-break: break-all;word-wrap: break-word;}
+.R{color: #C40000;}
+.BD{font-weight:700;}
+
 .dance-nav{clear: both;display: inline-block;float: right;overflow: hidden;margin:0 30px 20px;}
 .dance-nav .nav-links li{float: left;padding: 3px 15px;background: orange;margin: 0 3px;}
 .dance-nav .nav-links li a{color: #333;}
@@ -45,7 +49,7 @@ a.comm-btn:hover{text-decoration:none;color:blue;}
 .dance-content .content-header{margin: 0 100px 15px;}
 
 .dance-content .apply-container{margin:9px 100px;}
-.dance-content .course-info{float: right;border: 1px solid silver;width: 180px;height: 300px;}
+.dance-content .course-info{float: right;border: 1px solid silver;width: 180px;height: 300px;padding: 5px;}
 .dance-content .table-container{float: left;}
 .dance-content .table-container table{width:600px;}
 .dance-content .table-container table th{text-align:right;vertical-align: top;width:100px;}
@@ -111,7 +115,7 @@ a.comm-btn:hover{text-decoration:none;color:blue;}
 .dancer-filter .course-box .comm-select{width:116px;}
 .dancer-filter .department-box .comm-select{width:100px;}
 
-.dancer-list table{width:100%;}
+.dancer-list table{width:100%;table-layout:fixed;}
 
 #list-content .content-header{margin: 0 30px 20px;border-bottom: 1px dashed gray;}
 #list-content .search-form{float: left;}
@@ -122,17 +126,17 @@ a.comm-btn:hover{text-decoration:none;color:blue;}
 #list-content .status-cell .ui-combobox .result {width: 65px;}
 #list-content .status-cell .ui-combobox-panel .list{width:86px;}
 
-.dancer-list table tr{line-height: 23px;height: 23px;}
+.dancer-list table tr{line-height: 17px;height: 23px;}
 .dancer-list table th{background: silver;border-right: 1px solid gray;}
-.dancer-list .dancerID-header{width:65px;text-align:center;}
-.dancer-list .dancerName-header{width:75px;}
-.dancer-list .gender-header{width:60px;}
-.dancer-list .status-header{width:85px;}
-.dancer-list .pay-header{width:50px;}
-.dancer-list .email-header{width:200px;}
-.dancer-list .wangWang-header{width:95px;}
-.dancer-list .ext-header{width:65px;}
-.dancer-list .dept-header{width:100px;}
+.dancer-list .dancerID-header{width:60px;text-align:center;cursor: pointer;}
+.dancer-list .dancerName-header{width:65px;cursor: pointer;}
+.dancer-list .gender-header{width:45px;cursor: pointer;}
+.dancer-list .status-header{width:115px;}
+.dancer-list .pay-header{width:70px;}
+.dancer-list .email-header{width:200px;cursor: pointer;}
+.dancer-list .wangWang-header{width:95px;cursor: pointer;}
+.dancer-list .ext-header{width:65px;cursor: pointer;}
+.dancer-list .dept-header{width:100px;cursor: pointer;}
  
 .admin-bg-nav{float:left;width:180px;padding: 20px 0 50px;background: snow;}
 .admin-bg-nav .admin-links li{line-height:23px;height:23px;padding: 3px 45px;background: snow;}

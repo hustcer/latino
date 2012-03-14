@@ -14,59 +14,12 @@ var Step = require('step');
  * GET home page.
  */
 exports.index = function(req, res){
-	// DO IT USING STEP!
-	Step(
-			function countByCondition(){
-				db.latin.countDancerByCondition(
-					{ courses:{$elemMatch: {'courseVal':cCourse.courseA.cValue,'status':'waiting'}}}, this);
-			},
-			function fillResult(err, count){
-				if (err) throw err;
-				cCourse.courseA.total = count;
-				return cCourse;
-			},
-			function countByCondition(){
-				db.latin.countDancerByCondition(
-					{ courses:{$elemMatch: {'courseVal':cCourse.courseA.cValue,'status':'approved'}}}, this);
-			},
-			function fillResult(err, count){
-				if (err) throw err;
-				cCourse.courseA.approved = count;
-				// 申请报名总人数等于处于申请审核状态的人数加报名成功的人数
-				cCourse.courseA.total += count;
-				return cCourse;
-			},
-			function countByCondition(){
-				db.latin.countDancerByCondition(
-					{ courses:{$elemMatch: {'courseVal':cCourse.courseB.cValue,'status':'waiting'}}}, this);
-			},
-			function fillResult(err, count){
-				if (err) throw err;
-				cCourse.courseB.total = count;
-				return cCourse;
-			},
-			function countByCondition(){
-				db.latin.countDancerByCondition(
-					{ courses:{$elemMatch: {'courseVal':cCourse.courseB.cValue,'status':'approved'}}}, this);
-			},
-			function fillResult(err, count){
-				if (err) throw err;
-				cCourse.courseB.approved = count;
-				// 申请报名总人数等于处于申请审核状态的人数加报名成功的人数
-				cCourse.courseB.total += count;
-				return cCourse;
-			},
-			// 渲染页面，注意这个也需要放在Step里面，不然可能出现页面渲染的时候数据还没有生成导致渲染出来的部分数据为空的情况
-			function renderIndex(){
-				res.render('index', {
-			        title: 			'Alibaba 拉丁培训',
-			        cCourse: 		cCourse,
-			        showDancerLink: false
-			    });
-			}
-			
-		);
-
+	
+	res.render('index', {
+        title: 			'Alibaba 拉丁培训',
+        cCourse: 		cCourse,
+        showDancerLink: false
+    });
     
 };
 
@@ -149,6 +102,60 @@ exports.queryDancer = function(req, res){
 	});
 
 };
+
+/*
+ * 查询当前开课课程报名统计信息. eg:http://localhost:3000/queryCourseInfo
+ */
+exports.queryCourseInfo = function(req, res){
+	var courseInfo = {courseA:{},courseB:{}};
+
+	// DO IT USING STEP!
+	Step(
+			function countByCondition(){
+				db.latin.countDancerByCondition(
+					{ courses:{$elemMatch: {'courseVal':cCourse.courseA.cValue,'status':'waiting'}}}, this);
+			},
+			function fillResult(err, count){
+				if (err) throw err;
+				courseInfo.courseA.total = count;
+				return courseInfo;
+			},
+			function countByCondition(){
+				db.latin.countDancerByCondition(
+					{ courses:{$elemMatch: {'courseVal':cCourse.courseA.cValue,'status':'approved'}}}, this);
+			},
+			function fillResult(err, count){
+				if (err) throw err;
+				courseInfo.courseA.approved = count;
+				// 申请报名总人数等于处于申请审核状态的人数加报名成功的人数
+				courseInfo.courseA.total += count;
+				return courseInfo;
+			},
+			function countByCondition(){
+				db.latin.countDancerByCondition(
+					{ courses:{$elemMatch: {'courseVal':cCourse.courseB.cValue,'status':'waiting'}}}, this);
+			},
+			function fillResult(err, count){
+				if (err) throw err;
+				courseInfo.courseB.total = count;
+				return courseInfo;
+			},
+			function countByCondition(){
+				db.latin.countDancerByCondition(
+					{ courses:{$elemMatch: {'courseVal':cCourse.courseB.cValue,'status':'approved'}}}, this);
+			},
+			function fillResult(err, count){
+				if (err) throw err;
+				courseInfo.courseB.approved = count;
+				// 申请报名总人数等于处于申请审核状态的人数加报名成功的人数
+				courseInfo.courseB.total += count;
+				return courseInfo;
+			},
+			function sendRes(){
+				res.send( {courseInfo:courseInfo} );
+			}
+		);
+}
 
 /*
  * 查询会员信息. eg:http://localhost:3000/quitCourse/29411?courseVal=13CB

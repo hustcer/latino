@@ -10,8 +10,8 @@
  * 当前开课情况
  */
 var cCourse = exports.currentCourse = {
-	courseA:{cValue: "13RI", cName: "第13期伦巴中级班", cCapacity:25, ps:"上课时间:每周四晚6:30~7:30, 公司舞房"},
-	courseB:{cValue: "13CE", cName: "第13期恰恰基础班", cCapacity:25, ps:"上课时间:每周四晚7:40~8:40, 公司舞房"},
+	courseA:{cValue: "13RI", cName: "第13期伦巴中级班", cCapacity:25, ps:"上课时间：每周四晚6:30~7:30, 公司舞房"},
+	courseB:{cValue: "13CE", cName: "第13期恰恰基础班", cCapacity:25, ps:"上课时间：每周四晚7:40~8:40, 公司舞房"},
 	locked: 	false,
 	autoApprove:true,
 	beginDate: 	'',

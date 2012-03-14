@@ -11,6 +11,7 @@ gRouter["/"] 					= require('./index.js').index;			//首页
 gRouter["/index"] 				= gRouter["/"];							//首页
 
 gRouter["/queryDancer/:id"] 	= require("./index.js").queryDancer;	// Ajax调用查询会员信息,用于动态加载报名表单会员信息数据
+gRouter["/queryCourseInfo"]		= require("./index.js").queryCourseInfo;// Ajax请求获取当前开课课程报名统计信息
 gRouter["/quitCourse/:id"] 		= require("./index.js").quitCourse;		// Ajax调用会员申请退课
 gRouter["/cancelCourse/:id"] 	= require("./index.js").cancelCourse;	// Ajax调用会员取消报名
 gRouter["/man"] 				= require("./admin.js").man;			// 管理员后台URL
