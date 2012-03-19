@@ -7,8 +7,11 @@
  * Author: 	justin.maj
  * Date: 	2012-1-20  
  */
- 
-var commonDancerOp = exports.commonDancerOp = {
+
+// 当前开课信息
+var cCourse = require("../database/course.js").currentCourse;
+
+var CDO = exports.commonDancerOp = {
 
 	/**
 	 * 插入新会员
@@ -16,17 +19,22 @@ var commonDancerOp = exports.commonDancerOp = {
 	 */
 	insertDancer: function(dancerModel, fn) {
 
-		var courseAddArray = [], logMsg = '';
+		var courseAddArray = [], logMsg = '', courseStatus;
+
 		if( !!dancerModel.courseA ) {
-			// 新插入数据库的学员如果报名课程的话将其报名状态设为 waiting，待审核,且未付款
-			courseAddArray.push({courseVal:dancerModel.courseA, status:'waiting',
+
+			courseStatus = CDO._getCourseInitStatus(dancerModel, dancerModel.courseA);
+			// 新插入数据库的学员如果报名课程的话根据规则设置报名状态,且未付款
+			courseAddArray.push({courseVal:dancerModel.courseA, status:courseStatus,
 				gmtStatusChanged: new Date(), paid:false});
 
 			logMsg += 'A--' + dancerModel.courseA;
 		}
 		if( !!dancerModel.courseB ) {
-			// 新插入数据库的学员如果报名课程的话将其报名状态设为 waiting，待审核,且未付款
-			courseAddArray.push({courseVal:dancerModel.courseB, status:'waiting',
+
+			courseStatus = CDO._getCourseInitStatus(dancerModel, dancerModel.courseB);
+			// 新插入数据库的学员如果报名课程的话根据规则设置报名状态,且未付款
+			courseAddArray.push({courseVal:dancerModel.courseB, status:courseStatus,
 				gmtStatusChanged: new Date(), paid:false});
 
 			logMsg += ' B--' + dancerModel.courseB;
@@ -38,8 +46,8 @@ var commonDancerOp = exports.commonDancerOp = {
 
 		delete dancerModel.courseA;
 		delete dancerModel.courseB;
-		dancerModel.courses = courseAddArray;
-		dancerModel.gmtCreated = new Date();
+		dancerModel.courses 	= courseAddArray;
+		dancerModel.gmtCreated 	= new Date();
 		dancerModel.gmtModified = new Date();
 
 		this.insert(dancerModel, fn);
@@ -52,7 +60,7 @@ var commonDancerOp = exports.commonDancerOp = {
 	 */
 	updateDancerByID: function(dancerID, dancerModel, fn){
 
-		var courseAddArray = [], self = this, logMsg = '';
+		var courseAddArray = [], self = this, logMsg = '', courseStatus;
 
 		if( !!dancerModel.courseA ) {
 			courseAddArray.push( dancerModel.courseA );
@@ -85,11 +93,13 @@ var commonDancerOp = exports.commonDancerOp = {
 
 			for (var exist, j = courseAddArray.length - 1; j >= 0; j--) {
 				exist = false;
-				// 找到则更新相应课程
+				// 找到则更新相应课程，比如之前报过名的后来状态又变更为quit或者refused的课程
 				for (var i = result.courses.length - 1; i >= 0; i--) {
 				
 					if (result.courses[i].courseVal === courseAddArray[j]) {
-						result.courses[i].status = 'waiting';
+
+						courseStatus = CDO._getCourseInitStatus(dancerModel, courseAddArray[j]);
+						result.courses[i].status = courseStatus;
 						result.courses[i].gmtStatusChanged = new Date();
 						exist = true;
 						break;
@@ -97,8 +107,9 @@ var commonDancerOp = exports.commonDancerOp = {
 				};  // end inner for loop
 				// 未找到则插入数据
 				if ( !exist ) {
-					// 新插入数据库的学员如果报名课程的话将其报名状态设为 waiting，待审核,且未付款
-					result.courses.push( { courseVal:courseAddArray[j], status:'waiting',
+					courseStatus = CDO._getCourseInitStatus(dancerModel, courseAddArray[j]);
+					// 新插入数据库的课程根据规则设置报名状态,且未付款
+					result.courses.push( { courseVal:courseAddArray[j], status:courseStatus,
 										gmtStatusChanged:new Date(), paid:false } );
 				};
 			};
@@ -108,6 +119,38 @@ var commonDancerOp = exports.commonDancerOp = {
 
 		});
 		
+	},
+	/**
+	 * 取得会员报名课程初始化状态
+	 * @param dancerModel 	待设置课程报名状态的会员信息, 该model为前台用户提交的表单信息里面的数据
+	 * @param courseVal 	待设置课程报名状态课程
+	 */
+	_getCourseInitStatus: function(dancerModel, courseVal){
+		var courseStatus = 'waiting';
+
+		if(cCourse.autoApprove && CDO._isAutoApprovable(dancerModel, courseVal)){
+
+			courseStatus = 'approved';
+		}
+		return courseStatus;
+	},
+	/**
+	 * 根据一定的判断原则决定该会员初始报名的时候是否可以自动被审核通过
+	 * 判断原则如下：
+	 * 0. 当前课程报名成功人数小于autoLimit，则返回true
+	 * 1. 男生且当前课程报名成功人数小于班级限额则返回true
+	 * 2. 女生，如果level >= 3，或者vip >= 3 且当前报名成功人数小于(班级限额-3)则返回true
+	 * 3. 其他情况返回 false
+	 * 4. 其他规则后续补充
+	 * @param dancerModel 	待判断是否可以自动审核通过的会员信息, 该model为前台用户提交的表单信息里面的数据
+	 * @param courseVal 	待设置课程报名状态课程
+	 */
+	_isAutoApprovable: function(dancerModel, courseVal){
+		
+		if(dancerModel.gender === 'male'){
+			return true;
+		}
+		return false;
 	},
 	/**
 	 * 根据条件查询其基本会员信息，不含创建，修改时间，_id等

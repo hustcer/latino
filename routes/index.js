@@ -209,7 +209,9 @@ exports.initdata = function(req, res){
 				wangWang: 	'hustcer' + i,
 				extNumber: 	'599' + i,
 				alipayID: 	'hustcer' + i + '@gmail.com',
-				department: Math.random() >= 0.5 ? 'tech':'other'
+				department: Math.random() >= 0.5 ? 'tech':'other',
+				vip: 		Math.ceil(Math.random()*5), 
+				level: 		Math.ceil(Math.random()*9)	
 			};
 			// console.log(dancerModel);
 

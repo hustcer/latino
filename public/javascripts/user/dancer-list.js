@@ -202,18 +202,41 @@ jQuery(function($){
 		    	html.push('</a></td><td>');
 		    	html.push(data[i].dancerName);
 		    	html.push('</td><td>');
-		    	html.push(data[i].gender);
+		    	html.push(data[i].gender === 'male'? 'M':'F');
 		    	html.push('</td><td class="BW">');
 		    	for (var m = 0,l = data[i].courses.length; m < l; m++) {
 		    		html.push(data[i].courses[m].courseVal + ';');
 		    	};
 		    	html.push('</td><td class="BW">');
+
 		    	for (var m = 0,l = data[i].courses.length; m < l; m++) {
-		    		html.push(data[i].courses[m].status + ';');
+		    		switch(data[i].courses[m].status){
+			    		case 'waiting':
+			    			html.push('待审核;');
+			    			break;
+			    		case 'approved':
+			    			html.push('报名成功;');
+			    			break;
+			    		case 'refused':
+			    			html.push('报名失败;');
+			    			break;
+			    		case 'quitApplied':
+			    			html.push('申请退课;');
+			    			break;
+			    		case 'quit':
+			    			html.push('已退课;');
+			    			break;
+			    		case 'cancelled':
+			    			html.push('取消报名;');
+			    			break;
+			    		default:
+			    			html.push('未知;');
+			    			break;
+			    	}
 		    	};
 		    	html.push('</td><td class="BW">');
 		    	for (var m = 0,l = data[i].courses.length; m < l; m++) {
-		    		html.push(data[i].courses[m].paid + ';');
+		    		html.push( data[i].courses[m].paid ? 'Y':'N' + ';' );
 		    	};
 		    	html.push('</td><td>');
 		    	html.push(data[i].email);
@@ -222,7 +245,19 @@ jQuery(function($){
 		    	html.push('</td><td>');
 		    	html.push(data[i].extNumber);
 		    	html.push('</td><td>');
-		    	html.push(data[i].department);
+
+		    	switch(data[i].department){
+		    		case 'tech':
+		    			html.push('技术部');
+		    			break;
+		    		case 'other':
+		    			html.push('其他部门');
+		    			break;
+		    		default:
+		    			html.push('未知部门');
+		    			break;
+		    	}
+		    	
 		    	html.push('</td></tr>');
 		    };
 		    return html.join('');

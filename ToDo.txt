@@ -15,8 +15,13 @@ ToDo:
 	--日志、密码、cookie/ email notification
 	
 
-	报名自动审批，根据等级、vip、序号自动审批			H
-	查询结果输出信息格式化							H
+	报名自动审批，根据等级、vip、序号、性别自动审批		H
+	List页面第一次请求通过Ajax获取数据，保持逻辑一致	H 这个有待斟酌
+	报名页取消报名等操作根据情况修改页面报名统计信息	H 不能直接在页面进行修改，可能存在并发情况
+	统计信息变化后主动通知前台						H
+	管理员修改用户所有信息操作						H
+	课程查询输出结果过滤							H
+	后台管理员手工无限制报名						H
 
 	报名状态锁定
 	提示用户当前搜索条件
@@ -26,6 +31,7 @@ ToDo:
 	课程转让
 	拒绝报名的会员本期不得再报
 
+查询结果输出信息格式化							O
 查询结果表头排序								O	
 查询结果分页									O
 29955 报名不成功								O
@@ -49,17 +55,19 @@ include 或者layout继承、共用部分				O
 技术实现：
 
 	缓存redis
-	数据库mongodb
-	数据库驱动mongoskin+mongo native
+	数据库mongodb							O
+	数据库驱动mongoskin+mongo native			O
 	静态资源服务器nginx
-	模板引擎jade/markdown
+	模板引擎jade/markdown						O
 	css:less
 	前端fdev4、impress、arbor.js、curtain.js
-	后台nodejs
-	部署环境ubuntu、mac
+	后台nodejs								O
+	web Framework：express
+	部署环境ubuntu、mac						O
 	保持node始终处于运行状态：forever
-	step: control-flow library、 Async.js
+	step: control-flow library、 Async.js 	O
 	邮件模块：node_mailer 
+	后台表单验证：i-form
 
 
 需求规则描述：
@@ -93,6 +101,9 @@ include 或者layout继承、共用部分				O
 
 如果是vip会员、或者level高于某个值的会员，其报名的课程不用审核直接通过。
 可以有黑名单，该名单里的会员不能申请任何一次课程报名。
+
+
+
 
 
 

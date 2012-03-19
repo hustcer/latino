@@ -37,3 +37,6 @@ var pRouter = exports.pRouter = {};
 
 pRouter["/apply"] 				= require('./index.js').apply;			// 申请表单提交
 pRouter["/search"] 				= require("./list.js").search;			//会员列表
+
+
+

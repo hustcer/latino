@@ -1,13 +1,16 @@
 body {
   padding: 50px;
   font: 13px "微软雅黑", tahoma;
-  background-color: #FDFADA;
+  background-color: ivory;
   min-height:600px;
 }
 
 .BW{word-break: break-all;word-wrap: break-word;}
 .R{color: #C40000;}
 .BD{font-weight:700;}
+
+.ie-attention{width: 565px;margin: 50px auto;line-height: 30px;color: black;font-size: 14px;}
+.ie-attention em{font-weight: 700;color:red;}
 
 .dance-nav{clear: both;display: inline-block;float: right;overflow: hidden;margin:0 30px 20px;}
 .dance-nav .nav-links li{float: left;padding: 3px 15px;background: orange;margin: 0 3px;}
@@ -43,7 +46,7 @@ body {
 }
 a.comm-btn:hover{text-decoration:none;color:blue;}
 /*.hr-line{height:2px;line-height:2px;background-color:gray;}*/
-.latin-header{margin: 5px 50px 20px 290px;display:none;}
+.latin-header{margin: 5px 50px 20px 290px;/*display:none;*/}
 .dance-content .header-title{font-size: 18px;margin: 0 0 12px;}
 .dance-content .welcome-msg{color:#999;font-size:12px;text-indent:2em;}
 .dance-content .content-header{margin: 0 100px 15px;}
@@ -131,8 +134,8 @@ a.comm-btn:hover{text-decoration:none;color:blue;}
 .dancer-list .dancerID-header{width:60px;text-align:center;cursor: pointer;}
 .dancer-list .dancerName-header{width:65px;cursor: pointer;}
 .dancer-list .gender-header{width:45px;cursor: pointer;}
-.dancer-list .status-header{width:115px;}
-.dancer-list .pay-header{width:70px;}
+.dancer-list .status-header{width:125px;}
+.dancer-list .pay-header{width:60px;}
 .dancer-list .email-header{width:200px;cursor: pointer;}
 .dancer-list .wangWang-header{width:95px;cursor: pointer;}
 .dancer-list .ext-header{width:65px;cursor: pointer;}

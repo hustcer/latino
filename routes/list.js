@@ -11,10 +11,10 @@ var courseList = require("../database/course.js").courseList;
 
 
 /*
- * 会员信息列表接口. TODO: 默认情况应当以当前开设课程为查询条件
+ * 会员信息列表接口. 默认情况应当以当前开设课程为查询条件
  */
 exports.list = function(req, res){
-	// TODO: 默认查当前开设的两门课程中，所有课程报名审核通过，且已经缴费的会员.需要提示用户当前搜索条件
+	// 默认查当前开设的两门课程中，所有课程报名审核通过，且已经缴费的会员.需要提示用户当前搜索条件
 	var condition = {courses:{	$elemMatch:
 								{'courseVal':{$in: [cCourse.courseA.cValue, cCourse.courseB.cValue]},
 								 'status':'approved', 'paid':true
@@ -51,7 +51,6 @@ exports.search = function(req, res){
 	if (!!req.body.status) {dancerModel['courses.status']= req.body.status;};
 	// req.body.paid取得的是“true”、“false”字符串，需要转换
 	if (!!req.body.paid) {dancerModel['courses.paid']= JSON.parse(req.body.paid);};
-	
 
 	console.log('User Current Search Condition:', dancerModel);
 

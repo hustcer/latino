@@ -92,16 +92,36 @@ section.dance-content.dw#list-content
 						td 
 							#{dancer.dancerName}
 						td 
-							#{dancer.gender}
+							- if (dancer.gender === 'female') 
+								p F
+							- else 
+								p M
 						td 
 							each course in dancer.courses
 								#{course.courseVal};
 						td 
 							each course1 in dancer.courses
-								#{course1.status};
+								- if (course1.status === 'waiting')
+									待审核;
+								- else if (course1.status === 'approved')
+									报名成功;
+								- else if (course1.status === 'refused')
+									报名失败;
+								- else if (course1.status === 'quitApplied')
+									申请退课;
+								- else if (course1.status === 'quit')
+									已退课;
+								- else if (course1.status === 'cancelled')
+									取消报名;
+								- else
+									未知;
+									
 						td 
 							each course2 in dancer.courses
-								#{course2.paid};
+								- if (course2.paid)
+									em Y;
+								- else
+									em N;
 						td 
 							#{dancer.email}
 						td 
@@ -109,7 +129,10 @@ section.dance-content.dw#list-content
 						td 
 							#{dancer.extNumber}
 						td 
-							#{dancer.department}
+							- if (dancer.department === 'tech')
+								技术部
+							- else
+								其他部门
 
 	ul.paging-a.fd-clr#dancer-list-paging(data-sp="paging-a")
 		li.pagination

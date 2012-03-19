@@ -12,8 +12,12 @@
 var cCourse = exports.currentCourse = {
 	courseA:{cValue: "13RI", cName: "第13期伦巴中级班", cCapacity:25, ps:"上课时间：每周四晚6:30~7:30, 公司舞房"},
 	courseB:{cValue: "13CE", cName: "第13期恰恰基础班", cCapacity:25, ps:"上课时间：每周四晚7:40~8:40, 公司舞房"},
+	// 锁定课程状态，禁止报名、退课等操作
 	locked: 	false,
+	// 是否开启报名自动审核
 	autoApprove:true,
+	// 自动审核报名成功的人数限制
+	autoLimit: 	18,
 	beginDate: 	'',
 	endingDate: ''
 };
