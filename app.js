@@ -10,8 +10,8 @@ var express = require('express');
 
 var app = module.exports = express.createServer();
 
-var gRouterMap = require('./routes/router.js').gRouter,
-	pRouterMap = require('./routes/router.js').pRouter;
+var gRouterMap = require('./routes/router.node.js').gRouter,
+	pRouterMap = require('./routes/router.node.js').pRouter;
 
 var db = require("./database/database.js").db;
 var dancerOp = require("./database/dancer.js").commonDancerOp;
