@@ -11,9 +11,9 @@ jQuery.namespace('dance.at.alibaba');
 // TODO: 可以取消退课申请，课程报名状态：已申请，取消申请，报名通过，报名拒绝，申请退课，已退课
 jQuery(function($){
 
-    var NS = dance.at.alibaba;
-    var quitMsg = "您已经申请退课，请等待管理员审核！",
-    	cancelMsg = "您好，你的报名取消成功，欢迎下次报名！";
+    var NS 			= dance.at.alibaba;
+    var quitMsg 	= "您已经申请退课，请等待管理员审核！",
+    	cancelMsg 	= "您好，你的报名取消成功，欢迎下次报名！";
 
 	// Begin Module Definition
     var module = NS.index = {
@@ -51,6 +51,7 @@ jQuery(function($){
 		 * 初始化部门选择下拉列表
 		 */
 		_initDepartment: function(){
+			
 			$.use('ui-combobox',function(){
 				$('div.depart-select', '#dance-content').combobox({
 				    data: 	[{text:'请选择部门...',value:''}, {text:'技术部',value:'tech'}, {text:'其他部门',value:'other'}],

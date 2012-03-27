@@ -1,9 +1,38 @@
+
+/**
+ * Package Information.
+ * For More Reference Of Package Format, Please Visit: http://package.json.nodejitsu.com/
+ * Author:  justin.maj
+ * Date:    2012-1-19 
+ */
+
 {
-    "name": "latin-center",
-    "version": "0.0.1",
-    "private": true,
+    "name": 		"latino",
+    "version": 		"0.0.1",
+    "author": 		"Justin <justin.maj@alibaba-inc.com>",
+    "description": 	"Alibaba Latin Training Management System.",
+    "private": 		true,
     "dependencies": {
-      "express": "2.5.5",
-      "jade": ">= 0.0.1"
-  	}
+      "express": 	"2.5.5",
+      "jade": 		">= 0.0.1"
+  	},
+  	"contributors": [ 
+	    {
+	      "name": 	"Justin Ma",
+	      "email": 	"justin.maj@alibaba-inc.com"
+	    } 
+	],
+  	"scripts": 		{
+    	"start": 	"node app.js"
+  	},
+  	"repository": 	{
+    	"type": 	"git",
+    	"url": 		"https://github.com/havenotuploadyet.git"
+  	},
+  	"keywords": [
+	    "mongodb",
+	    "nodejs",
+	    "latin"
+  	],
+  	"license": 		"MIT"
 }

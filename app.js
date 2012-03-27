@@ -2,19 +2,20 @@
 /**
  * Module dependencies.
  *
- * Author: justin.maj
- * Date: 2012-1-19 
+ * Author:  justin.maj
+ * Date:    2012-1-19 
  */
 
-var express = require('express');
+var express     = require('express');
 
-var app = module.exports = express.createServer();
+var app         = module.exports = express.createServer(),
+    db          = require("./database/database.js").db,
+    dancerOp    = require("./database/dancer.js").commonDancerOp;
 
-var gRouterMap = require('./routes/router.node.js').gRouter,
-	pRouterMap = require('./routes/router.node.js').pRouter;
+var gRouterMap  = require('./routes/router.node.js').gRouter,
+	pRouterMap  = require('./routes/router.node.js').pRouter;
 
-var db = require("./database/database.js").db;
-var dancerOp = require("./database/dancer.js").commonDancerOp;
+
 
 // Configuration
 app.configure(function(){
@@ -45,15 +46,18 @@ app.configure('production', function(){
 db.bind("latin", dancerOp);
 
 for (router in gRouterMap) {
-//    console.log("\nHandle Get Path:'" + router + "' \tHandler: " + gRouterMap[router]);
+    // console.log("\nHandle Get Path:'" + router + "' \tHandler: " + gRouterMap[router]);
     app.get(router, gRouterMap[router]);
 }
 
 for (router in pRouterMap) {
-//    console.log("\nHandle Post Path:'" + router + "' \tHandler: " + pRouterMap[router]);
+    // console.log("\nHandle Post Path:'" + router + "' \tHandler: " + pRouterMap[router]);
     app.post(router, pRouterMap[router]);
 }
 
 app.listen(3000);
 
 console.log("\nExpress server listening on port %d in %s mode\n", app.address().port, app.settings.env);
+
+
+

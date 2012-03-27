@@ -44,6 +44,7 @@ jQuery(function($){
 					});
 				});
 			});
+
 		},
 		/**
 		 * DOM事件绑定
@@ -68,10 +69,11 @@ jQuery(function($){
 		 * 审核通过会员报名请求
 		 */
 		_handleApprove: function(){
+
 			$("#approveBtn").click(function(){
 
-				var dancerID = $("#approve-apply .dancerID").val(), 
-					courseVal = $('input.result','#approve-apply .course-box').data('courseVal');
+				var dancerID 	= $("#approve-apply .dancerID").val(), 
+					courseVal 	= $('input.result','#approve-apply .course-box').data('courseVal');
 
 				$.getJSON('man/approve/' + dancerID, 
 					{ courseVal: courseVal }, function(data){
@@ -91,7 +93,7 @@ jQuery(function($){
 		_handlePaid: function(){
 			$("#payBtn").click(function(){
 
-				var dancerID = $("#course-pay .dancerID").val(), 
+				var dancerID  = $("#course-pay .dancerID").val(), 
 					courseVal = $('input.result','#course-pay .course-box').data('courseVal');
 
 				$.getJSON('man/pay/' + dancerID, 
@@ -112,7 +114,7 @@ jQuery(function($){
 		_handleRefuse: function(){
 			$("#refuseBtn").click(function(){
 
-				var dancerID = $("#refuse-apply .dancerID").val(), 
+				var dancerID  = $("#refuse-apply .dancerID").val(), 
 					courseVal = $('input.result','#refuse-apply .course-box').data('courseVal');
 
 				$.getJSON('man/refuse/' + dancerID, 
@@ -133,7 +135,7 @@ jQuery(function($){
 		_handleRefund: function(){
 			$("#refundBtn").click(function(){
 
-				var dancerID = $("#course-refund .dancerID").val(), 
+				var dancerID  = $("#course-refund .dancerID").val(), 
 					courseVal = $('input.result','#course-refund .course-box').data('courseVal');
 
 				$.getJSON('man/unpay/' + dancerID, 
@@ -154,7 +156,7 @@ jQuery(function($){
 		_handleQuit: function(){
 			$("#quitBtn").click(function(){
 
-				var dancerID = $("#quit-approve .dancerID").val(), 
+				var dancerID  = $("#quit-approve .dancerID").val(), 
 					courseVal = $('input.result','#quit-approve .course-box').data('courseVal');
 
 				$.getJSON('man/quit/' + dancerID, 
@@ -175,7 +177,7 @@ jQuery(function($){
 		_handleRefuseQuit: function(){
 			$("#quitRefuseBtn").click(function(){
 
-				var dancerID = $("#quit-refuse .dancerID").val(), 
+				var dancerID  = $("#quit-refuse .dancerID").val(), 
 					courseVal = $('input.result','#quit-refuse .course-box').data('courseVal');
 
 				$.getJSON('man/quitRefuse/' + dancerID, 

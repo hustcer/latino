@@ -5,9 +5,9 @@
  * Date: 	2012-2-12   
  */
 
-var db = require("../database/database.js").db;
-var cCourse = require("../database/course.js").currentCourse;
-var courseList = require("../database/course.js").courseList;
+var db 			= require("../database/database.js").db;
+var cCourse 	= require("../database/course.js").currentCourse;
+var courseList 	= require("../database/course.js").courseList;
 
 
 /*

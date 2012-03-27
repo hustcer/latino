@@ -5,10 +5,10 @@
  * Date: 	2012-1-19   
  */
 
-var db = require("../database/database.js").db;
+var db 		= require("../database/database.js").db;
 // 当前开课信息
 var cCourse = require("../database/course.js").currentCourse;
-var Step = require('step');
+var Step 	= require('step');
 
 /*
  * GET home page.
@@ -41,7 +41,7 @@ exports.apply = function(req, res){
 		department: req.body.department
 	};
 
-	db.latin.findDancerByID(dancerModel.dancerID, function(err, result) {
+	db.latin.findDancerByID( dancerModel.dancerID, function(err, result) {
 	    if (err) throw err;
 	    
 	    // 之所以要把新插入会员和更新会员信息分开处理而不采用upsert模式，
@@ -107,7 +107,7 @@ exports.queryDancer = function(req, res){
  * 查询当前开课课程报名统计信息. eg:http://localhost:3000/queryCourseInfo
  */
 exports.queryCourseInfo = function(req, res){
-	var courseInfo = {courseA:{},courseB:{}};
+	var courseInfo = { courseA:{}, courseB:{} };
 
 	// DO IT USING STEP!
 	Step(
@@ -195,6 +195,7 @@ exports.cancelCourse = function(req, res){
  * 初始化测试数据，该代码上线后应当被移除. eg:http://localhost:3000/init/initdata
  */
 exports.initdata = function(req, res){
+
 	var dancerModel;
 	for (var i = 60; i >= 10; i--) {
 

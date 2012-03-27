@@ -1,13 +1,14 @@
 /**
  * User operations.
+ * Ref：http://www.hacksparrow.com/mongoskin-tutorial-with-examples.html
  *
  * Author: 	justin.maj
  * Date: 	2012-2-13 
  */
 
-var db = require("../database/database.js").db;
+var db 		= require("../database/database.js").db;
 // 取得课程值以及对应的中文描述映射信息
-var cList = require("../database/course.js").courseList;
+var cList 	= require("../database/course.js").courseList;
 
 /*
  * 显示某一用户报名信息.
