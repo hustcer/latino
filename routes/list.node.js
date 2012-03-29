@@ -42,15 +42,15 @@ exports.search = function(req, res){
 
 	var dancerModel = {};
 	// 根据课程状态，是否缴费来进行查询
-	if (!!req.body.dancerID) {dancerModel.dancerID = req.body.dancerID;};
-	if (!!req.body.gender) {dancerModel.gender = req.body.gender;};
-	if (!!req.body.department) {dancerModel.department = req.body.department;};
+	if (!!req.body.dancerID) 	{dancerModel.dancerID = req.body.dancerID;};
+	if (!!req.body.gender) 		{dancerModel.gender = req.body.gender;};
+	if (!!req.body.department) 	{dancerModel.department = req.body.department;};
 
 	//FIXME: 这种查询方式会有问题，课程不是精确匹配的
-	if (!!req.body.course) {dancerModel['courses.courseVal']= req.body.course;};
-	if (!!req.body.status) {dancerModel['courses.status']= req.body.status;};
+	if (!!req.body.course) 		{dancerModel['courses.courseVal']= req.body.course;};
+	if (!!req.body.status) 		{dancerModel['courses.status']= req.body.status;};
 	// req.body.paid取得的是“true”、“false”字符串，需要转换
-	if (!!req.body.paid) {dancerModel['courses.paid']= JSON.parse(req.body.paid);};
+	if (!!req.body.paid) 		{dancerModel['courses.paid']= JSON.parse(req.body.paid);};
 
 	console.log('User Current Search Condition:', dancerModel);
 

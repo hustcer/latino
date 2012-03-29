@@ -81,7 +81,7 @@ jQuery(function($){
 
 					NS.list.resultList = data.data;
 
-					console.log(data.data);
+					// console.log(data.data);
 
 					NS.list._initPagination();
 

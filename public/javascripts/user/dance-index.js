@@ -38,6 +38,14 @@ jQuery(function($){
 		 */
 		_initHandler: function(){
 
+			// 默认情况下禁用cache，消除IE下走cache导致请求没有发出去的问题
+			$.ajaxSetup({
+				cache: 	false,
+				error: 	function(jqXHR, textStatus, errorThrown){
+					console.log('Error Occured While Ajax Calling:', jqXHR, textStatus, errorThrown);
+				}
+			});
+
 			this._idBlurHandler();
 			this._formActionHandler();
 

@@ -214,13 +214,12 @@ exports.initdata = function(req, res){
 				vip: 		Math.ceil(Math.random()*5), 
 				level: 		Math.ceil(Math.random()*9)	
 			};
-			// console.log(dancerModel);
 
 			db.latin.insertDancer(dancerModel, function(err, addResult) {
 			    if (err) throw err;
 
 			    if (addResult) {
-				    // console.log(dancerModel.dancerName + ' Added!');
+				    console.log('index.node.js: [INFO]---',dancerModel.dancerName + ' Added!');
 			    }
 			});
 

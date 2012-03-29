@@ -12,7 +12,7 @@ body {
 .ie-attention{width: 565px;margin: 50px auto;line-height: 30px;color: black;font-size: 14px;}
 .ie-attention em{font-weight: 700;color:red;}
 
-.dance-nav{clear: both;display: inline-block;float: right;overflow: hidden;margin:0 30px 20px;}
+.dance-nav{clear: both;display: inline-block;float: right;overflow: hidden;margin:0 55px 20px;}
 .dance-nav .nav-links li{float: left;padding: 3px 15px;background: orange;margin: 0 3px;}
 .dance-nav .nav-links li a{color: #333;}
 .dance-nav .nav-links li a:hover{color: #00F;text-decoration:none;}
@@ -52,7 +52,7 @@ a.comm-btn:hover{text-decoration:none;color:blue;}
 .dance-content .content-header{margin: 0 100px 15px;}
 
 .dance-content .apply-container{margin:9px 100px;}
-.dance-content .course-info{float: right;border: 1px solid silver;width: 180px;height: 300px;padding: 5px;}
+.dance-content .course-info{float: right;border: 1px solid #C40000;width: 175px;height: 270px;padding:15px 5px 15px 7px;}
 .dance-content .table-container{float: left;}
 .dance-content .table-container table{width:600px;}
 .dance-content .table-container table th{text-align:right;vertical-align: top;width:100px;}

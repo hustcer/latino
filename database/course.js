@@ -10,8 +10,8 @@
  * 当前开课情况
  */
 var cCourse = exports.currentCourse = {
-	courseA:{cValue: "13RI", cName: "第13期伦巴中级班", cCapacity:25, ps:"上课时间：每周四晚6:30~7:30, 公司舞房"},
-	courseB:{cValue: "13CE", cName: "第13期恰恰基础班", cCapacity:25, ps:"上课时间：每周四晚7:40~8:40, 公司舞房"},
+	courseA:{cValue: "2RE", cName: "第2期伦巴基础班", cCapacity:25, ps:"上课时间：每周四晚6:30~7:30, 公司舞房"},
+	courseB:{cValue: "2CI", cName: "第2期恰恰中级班", cCapacity:25, ps:"上课时间：每周四晚7:40~8:40, 公司舞房"},
 	// 锁定课程状态，禁止报名、退课等操作
 	locked: 	false,
 	// 是否开启报名自动审核

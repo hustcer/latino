@@ -7,5 +7,5 @@
  * Date: 	2012-1-20   
  */
 
-var db = exports.db = require('mongoskin').db('localhost:27017/latin');
+var db = exports.db = require('mongoskin').db('localhost:27017/latin007');
 

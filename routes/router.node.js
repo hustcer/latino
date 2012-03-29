@@ -15,12 +15,12 @@ gRouter["/queryCourseInfo"]		= require("./index.node.js").queryCourseInfo;	// Aj
 gRouter["/quitCourse/:id"] 		= require("./index.node.js").quitCourse;		// Ajax调用会员申请退课
 gRouter["/cancelCourse/:id"] 	= require("./index.node.js").cancelCourse;		// Ajax调用会员取消报名
 gRouter["/man"] 				= require("./admin.node.js").man;				// 管理员后台URL
-gRouter["/man/pay/:id"] 		= require("./user.node.js").pay;				// Ajax调用设置会员为课程缴费
-gRouter["/man/unpay/:id"] 		= require("./user.node.js").unpay;				// Ajax调用设置会员未缴费
-gRouter["/man/approve/:id"] 	= require("./user.node.js").approve;			// Ajax调用设置会员报名成功
-gRouter["/man/refuse/:id"] 		= require("./user.node.js").refuse;				// Ajax调用设置会员报名失败
-gRouter["/man/quit/:id"] 		= require("./user.node.js").quit;				// Ajax调用设置会员退课成功
-gRouter["/man/quitRefuse/:id"] 	= require("./user.node.js").quitRefuse;			// Ajax调用设置会员退课拒绝
+gRouter["/man/pay/:id"] 		= require("./admin.node.js").pay;				// Ajax调用设置会员为课程缴费
+gRouter["/man/unpay/:id"] 		= require("./admin.node.js").unpay;				// Ajax调用设置会员未缴费
+gRouter["/man/approve/:id"] 	= require("./admin.node.js").approve;			// Ajax调用设置会员报名成功
+gRouter["/man/refuse/:id"] 		= require("./admin.node.js").refuse;			// Ajax调用设置会员报名失败
+gRouter["/man/quit/:id"] 		= require("./admin.node.js").quit;				// Ajax调用设置会员退课成功
+gRouter["/man/quitRefuse/:id"] 	= require("./admin.node.js").quitRefuse;		// Ajax调用设置会员退课拒绝
 
 gRouter["/init/initdata"]		= require('./index.node.js').initdata;			// 初始化测试数据，该代码上线后应当被移除
 

@@ -10,7 +10,7 @@ jQuery.namespace('dance.at.alibaba');
 
 jQuery(function($){
 
-    var NS = dance.at.alibaba;
+    var NS = dance.at.alibaba, MISSING_PARAM_MSG = '参数填写不完整，请检查后重试！';
 
 	// Begin Module Definition
     var module = NS.admin = {
@@ -29,7 +29,6 @@ jQuery(function($){
 		_initUI: function(){
 
 			// 初始化combobox组件
-			// TODO: 这样写有没有问题？
 			$('#admin-content .course-box').each(function(){
 				var $box = $(this);
 
@@ -50,6 +49,15 @@ jQuery(function($){
 		 * DOM事件绑定
 		 */
 		_initHandler: function(){
+
+			// 默认情况下禁用cache，消除IE下走cache导致请求没有发出去的问题
+			$.ajaxSetup({
+				cache: 	false,
+				error: 	function(jqXHR, textStatus, errorThrown){
+
+					console.log('Error Occured While Ajax Calling:', jqXHR, textStatus, errorThrown);
+				}
+			});
 
 			// 报名审核通过
 			this._handleApprove();
@@ -73,15 +81,21 @@ jQuery(function($){
 			$("#approveBtn").click(function(){
 
 				var dancerID 	= $("#approve-apply .dancerID").val(), 
+					$tipWrapper = $('#approve-apply p.course-tip'),
 					courseVal 	= $('input.result','#approve-apply .course-box').data('courseVal');
+
+				// 如果不存在会员ID或者课程值则不进行下一步操作
+				if( !(!!dancerID && !!courseVal) ){	
+					NS.admin._showTipInfo( $tipWrapper, MISSING_PARAM_MSG );
+					return;	
+				}
 
 				$.getJSON('man/approve/' + dancerID, 
 					{ courseVal: courseVal }, function(data){
 						if (data.success === true) {
-							
-							$('#approve-apply p.course-tip').text('会员报名审核通过处理成功!').css('display','inline-block');
+							NS.admin._showTipInfo( $tipWrapper, '会员报名审核通过处理成功!' );
 						}else{
-							$('#approve-apply p.course-tip').text( data.msg ).css('display','inline-block');
+							NS.admin._showTipInfo( $tipWrapper, data.msg );
 						};
 				});
 				
@@ -93,16 +107,22 @@ jQuery(function($){
 		_handlePaid: function(){
 			$("#payBtn").click(function(){
 
-				var dancerID  = $("#course-pay .dancerID").val(), 
-					courseVal = $('input.result','#course-pay .course-box').data('courseVal');
+				var dancerID  	= $("#course-pay .dancerID").val(), 
+					$tipWrapper = $('#course-pay p.course-tip'),
+					courseVal 	= $('input.result','#course-pay .course-box').data('courseVal');
+
+				// 如果不存在会员ID或者课程值则不进行下一步操作
+				if( !(!!dancerID && !!courseVal) ){	
+					NS.admin._showTipInfo( $tipWrapper, MISSING_PARAM_MSG );
+					return;	
+				}
 
 				$.getJSON('man/pay/' + dancerID, 
 					{ courseVal: courseVal }, function(data){
 						if (data.success === true) {
-							
-							$('#course-pay p.course-tip').text('设置会员缴费处理成功!').css('display','inline-block');
+							NS.admin._showTipInfo( $tipWrapper, '设置会员缴费处理成功!' );
 						}else{
-							$('#course-pay p.course-tip').text(  data.msg ).css('display','inline-block');
+							NS.admin._showTipInfo( $tipWrapper, data.msg );
 						};
 				});
 				
@@ -114,16 +134,22 @@ jQuery(function($){
 		_handleRefuse: function(){
 			$("#refuseBtn").click(function(){
 
-				var dancerID  = $("#refuse-apply .dancerID").val(), 
-					courseVal = $('input.result','#refuse-apply .course-box').data('courseVal');
+				var dancerID  	= $("#refuse-apply .dancerID").val(), 
+					$tipWrapper = $('#refuse-apply p.course-tip'),
+					courseVal 	= $('input.result','#refuse-apply .course-box').data('courseVal');
+
+				// 如果不存在会员ID或者课程值则不进行下一步操作
+				if( !(!!dancerID && !!courseVal) ){	
+					NS.admin._showTipInfo( $tipWrapper, MISSING_PARAM_MSG );
+					return;	
+				}
 
 				$.getJSON('man/refuse/' + dancerID, 
 					{ courseVal: courseVal }, function(data){
 						if (data.success === true) {
-							
-							$('#refuse-apply p.course-tip').text('拒绝会员报名处理成功!').css('display','inline-block');
+							NS.admin._showTipInfo( $tipWrapper, '拒绝会员报名处理成功!');
 						}else{
-							$('#refuse-apply p.course-tip').text( data.msg ).css('display','inline-block');
+							NS.admin._showTipInfo( $tipWrapper, data.msg );
 						};
 				});
 				
@@ -135,16 +161,22 @@ jQuery(function($){
 		_handleRefund: function(){
 			$("#refundBtn").click(function(){
 
-				var dancerID  = $("#course-refund .dancerID").val(), 
-					courseVal = $('input.result','#course-refund .course-box').data('courseVal');
+				var dancerID  	= $("#course-refund .dancerID").val(), 
+					$tipWrapper = $('#course-refund p.course-tip'),
+					courseVal 	= $('input.result','#course-refund .course-box').data('courseVal');
+
+				// 如果不存在会员ID或者课程值则不进行下一步操作
+				if( !(!!dancerID && !!courseVal) ){	
+					NS.admin._showTipInfo( $tipWrapper, MISSING_PARAM_MSG );
+					return;	
+				}
 
 				$.getJSON('man/unpay/' + dancerID, 
 					{ courseVal: courseVal }, function(data){
 						if (data.success === true) {
-							
-							$('#course-refund p.course-tip').text('会员退款处理成功!').css('display','inline-block');
+							NS.admin._showTipInfo( $tipWrapper, '会员退款处理成功!' );
 						}else{
-							$('#course-refund p.course-tip').text( data.msg ).css('display','inline-block');
+							NS.admin._showTipInfo( $tipWrapper, data.msg );
 						};
 				});
 				
@@ -156,16 +188,22 @@ jQuery(function($){
 		_handleQuit: function(){
 			$("#quitBtn").click(function(){
 
-				var dancerID  = $("#quit-approve .dancerID").val(), 
-					courseVal = $('input.result','#quit-approve .course-box').data('courseVal');
+				var dancerID  	= $("#quit-approve .dancerID").val(), 
+					$tipWrapper = $('#quit-approve p.course-tip'),
+					courseVal 	= $('input.result','#quit-approve .course-box').data('courseVal');
+
+				// 如果不存在会员ID或者课程值则不进行下一步操作
+				if( !(!!dancerID && !!courseVal) ){	
+					NS.admin._showTipInfo( $tipWrapper, MISSING_PARAM_MSG );
+					return;	
+				}
 
 				$.getJSON('man/quit/' + dancerID, 
 					{ courseVal: courseVal }, function(data){
 						if (data.success === true) {
-							
-							$('#quit-approve p.course-tip').text('会员退课处理成功!').css('display','inline-block');
+							NS.admin._showTipInfo( $tipWrapper, '会员退课处理成功!' );
 						}else{
-							$('#quit-approve p.course-tip').text( data.msg ).css('display','inline-block');
+							NS.admin._showTipInfo( $tipWrapper, data.msg );
 						};
 				});
 				
@@ -177,20 +215,37 @@ jQuery(function($){
 		_handleRefuseQuit: function(){
 			$("#quitRefuseBtn").click(function(){
 
-				var dancerID  = $("#quit-refuse .dancerID").val(), 
-					courseVal = $('input.result','#quit-refuse .course-box').data('courseVal');
+				var dancerID  	= $("#quit-refuse .dancerID").val(), 
+					$tipWrapper = $('#quit-refuse p.course-tip'),
+					courseVal 	= $('input.result','#quit-refuse .course-box').data('courseVal');
+
+				// 如果不存在会员ID或者课程值则不进行下一步操作
+				if( !(!!dancerID && !!courseVal) ){	
+					NS.admin._showTipInfo( $tipWrapper, MISSING_PARAM_MSG );
+					return;	
+				}
 
 				$.getJSON('man/quitRefuse/' + dancerID, 
 					{ courseVal: courseVal }, function(data){
 						if (data.success === true) {
 							
-							$('#quit-refuse p.course-tip').text('会员退课拒绝处理成功!').css('display','inline-block');
+							NS.admin._showTipInfo( $tipWrapper, '会员退课拒绝处理成功!' );
 						}else{
-							$('#quit-refuse p.course-tip').text( data.msg ).css('display','inline-block');
+							NS.admin._showTipInfo( $tipWrapper, data.msg );
 						};
 				});
 				
 			});
+		},
+		/**
+		 * 显示操作结果反馈信息
+		 * @param $obj	承载提示信息的dom结构
+		 * @param msg	对应的错误提示信息
+		 */
+		_showTipInfo: function($obj, msg){
+			
+			$obj.text(msg).css( 'display','inline-block' );
+
 		}
 
 	}
