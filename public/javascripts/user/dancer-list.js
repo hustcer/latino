@@ -77,7 +77,10 @@ jQuery(function($){
 		_queryHandler: function(){
 			// FIXME: 数据获取失败处理
 			$('#queryBtn').click(function(){
-				
+
+				var loadingHtml = '<tr><td colspan="10" class="loading"><img src="./images/loading.gif"><p>数据正在加载请稍后...</p></td></tr>';
+				$('#dancer-list table tbody').html(loadingHtml);
+
 				$.post('/search', $("#searchForm").serialize(), function(data) {
 
 					NS.list.resultList = data.data;
@@ -113,6 +116,13 @@ jQuery(function($){
 			// FIXME:resultList IS NULL OR NOT?
 			dancerListPg = new dance.at.alibaba.Paging( $('#dancer-list-paging') );
 			
+			if ( this.resultList.length === 0 ) {
+				var noResult = '<tr><td colspan="10" class="list-empty">矮油，你查询的会员没有歪！</td></tr>'
+				$('#dancer-list table tbody').html(noResult);
+				dancerListPg.init(1, 1);
+				return;
+			};
+
 			this.totalPage = Math.ceil( this.resultList.length / this.itemPerPage );
 			dancerListPg.init(1, this.totalPage);
 

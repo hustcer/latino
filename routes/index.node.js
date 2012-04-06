@@ -51,6 +51,7 @@ exports.apply = function(req, res){
 	    	db.latin.updateDancerByID(dancerModel.dancerID, dancerModel, function(err, result) {
 	    		if (err) throw err;
 	    		if (result) {
+	    			// 在这里进行自动审核
 	    			console.log('Dancer Infomation Updated With ID:',dancerModel.dancerID,
 	    						' DancerName:', dancerModel.dancerName);
 	    			
@@ -63,6 +64,7 @@ exports.apply = function(req, res){
 			    if (err) throw err;
 
 			    if (addResult) {
+			    	// 在这里进行自动审核
 				    console.log('New Dancer Added, With ID:',dancerModel.dancerID,
 	    						' DancerName:', dancerModel.dancerName);
 			    }

@@ -10,7 +10,7 @@ jQuery.namespace('dance.at.alibaba');
 
 jQuery(function($){
 
-    var NS = dance.at.alibaba, MISSING_PARAM_MSG = '参数填写不完整，请检查后重试！';
+    var NS = dance.at.alibaba, MISSING_PARAM_MSG = '嗨，你参数没填完整吧 ? !';
 
 	// Begin Module Definition
     var module = NS.admin = {

@@ -21,12 +21,11 @@ var CDO = exports.commonDancerOp = {
 	 * @param dancerModel 	待插入的会员信息
 	 */
 	insertDancer: function(dancerModel, fn) {
-
-		var courseAddArray = [], logMsg = '', courseStatus;
+		// 新报名课程默认状态为 'waiting'
+		var courseAddArray = [], logMsg = '', courseStatus = 'waiting';
 
 		if( !!dancerModel.courseA ) {
-
-			courseStatus = CDO._getCourseInitStatus(dancerModel, dancerModel.courseA);
+			
 			// 新插入数据库的学员如果报名课程的话根据规则设置报名状态,且未付款
 			courseAddArray.push({courseVal:dancerModel.courseA, status:courseStatus,
 				gmtStatusChanged: new Date(), paid:false});
@@ -34,8 +33,7 @@ var CDO = exports.commonDancerOp = {
 			logMsg += 'A--' + dancerModel.courseA;
 		}
 		if( !!dancerModel.courseB ) {
-
-			courseStatus = CDO._getCourseInitStatus(dancerModel, dancerModel.courseB);
+			
 			// 新插入数据库的学员如果报名课程的话根据规则设置报名状态,且未付款
 			courseAddArray.push({courseVal:dancerModel.courseB, status:courseStatus,
 				gmtStatusChanged: new Date(), paid:false});
@@ -63,7 +61,8 @@ var CDO = exports.commonDancerOp = {
 	 */
 	updateDancerByID: function(dancerID, dancerModel, fn){
 
-		var courseAddArray = [], self = this, logMsg = '', courseStatus;
+		// 新报名课程默认状态为 'waiting'
+		var courseAddArray = [], self = this, logMsg = '', courseStatus = 'waiting';
 
 		if( !!dancerModel.courseA ) {
 			courseAddArray.push( dancerModel.courseA );
@@ -102,7 +101,6 @@ var CDO = exports.commonDancerOp = {
 				
 					if (result.courses[i].courseVal === courseAddArray[j]) {
 
-						courseStatus = CDO._getCourseInitStatus(dancerModel, courseAddArray[j]);
 						result.courses[i].status = courseStatus;
 						result.courses[i].gmtStatusChanged = new Date();
 						exist = true;
@@ -111,7 +109,6 @@ var CDO = exports.commonDancerOp = {
 				};  // end inner for loop
 				// 未找到则插入数据
 				if ( !exist ) {
-					courseStatus = CDO._getCourseInitStatus(dancerModel, courseAddArray[j]);
 					// 新插入数据库的课程根据规则设置报名状态,且未付款
 					result.courses.push( { courseVal:courseAddArray[j], status:courseStatus,
 										gmtStatusChanged:new Date(), paid:false } );
@@ -198,8 +195,6 @@ var CDO = exports.commonDancerOp = {
 
 		});*/
 
-
-		
 
 	},
 	/**

@@ -83,7 +83,7 @@ a.comm-btn:hover{text-decoration:none;color:blue;}
 	-webkit-border-radius: 4px;
 	border-radius: 4px;}
 
-.course-tip{color: #999;font-size: 12px;padding: 0px 11px;margin: 0 10px;display: inline-block;
+.course-tip{color: #999;font-size: 12px;padding: 0px 11px;margin: 0 10px 0 49px;display: none;
 	border: 1px solid silver;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
@@ -141,6 +141,9 @@ a.comm-btn:hover{text-decoration:none;color:blue;}
 .dancer-list .wangWang-header{width:95px;cursor: pointer;}
 .dancer-list .ext-header{width:65px;cursor: pointer;}
 .dancer-list .dept-header{width:100px;cursor: pointer;}
+.dancer-list .loading{text-align:center;padding-top: 20px;}
+.dancer-list .loading img{margin-bottom:10px;}
+.dancer-list .list-empty{text-align: center;padding-top: 20px;color: #C40000;font-weight:700;}
  
 .admin-bg-nav{float:left;width:180px;padding: 20px 0 50px;background: snow;}
 .admin-bg-nav .admin-links li{line-height:23px;height:23px;padding: 3px 45px;background: snow;}
@@ -149,12 +152,12 @@ a.comm-btn:hover{text-decoration:none;color:blue;}
 .admin-content .op-container{float: left;width: 770px;padding: 0px 20px 30px 30px;}
 .admin-content .admin-op h3{font-size:14px;font-weight:bold;}
 .admin-content .admin-op {border-bottom: 1px dashed gray;padding: 20px 0 15px;}
-.admin-op table{margin: 15px 5px 10px 50px;}
+.admin-op table{margin: 10px 5px 10px 50px;}
 .admin-op table tr{height: 30px;line-height: 30px;}
 .admin-op table td{padding-right:20px;}
 .admin-op .course-cell{width: 200px;line-height: 20px;}
 .admin-op #dancerID{width:135px;}
 .admin-op .comm-select{width:125px;}
-.admin-op .course-tip{display: none;}
+.admin-op .op-cond{color: #999;padding: 10px 0 0 49px;display: inline-block;}
 #op-container .ui-combobox-panel .list{width:141px;}
 #op-container .ui-combobox-panel .list .ui-combobox-item{height:20px;line-height:20px;}

@@ -23,6 +23,7 @@ section.admin-content.dw#admin-content
 	section.op-container#op-container
 		.admin-op#approve-apply
 			h3 报名审核通过操作
+			span.op-cond * 只有处在'待审核'状态的课程才能被审核通过
 			table
 				tbody
 					tr
@@ -43,6 +44,7 @@ section.admin-content.dw#admin-content
 
 		.admin-op#course-pay
 			h3 报名设置缴费操作
+			span.op-cond * 只有报名成功的课程才能设置缴费
 			table
 				tbody
 					tr
@@ -63,6 +65,7 @@ section.admin-content.dw#admin-content
 
 		.admin-op#refuse-apply
 			h3 报名审核拒绝操作
+			span.op-cond * 只有处在'待审核'状态的课程才能被审核拒绝
 			table
 				tbody
 					tr
@@ -83,6 +86,7 @@ section.admin-content.dw#admin-content
 
 		.admin-op#course-refund
 			h3 设置退费操作
+			span.op-cond * 只有处在'申请退课'状态的课程才能设置退费
 			table
 				tbody
 					tr
@@ -103,6 +107,7 @@ section.admin-content.dw#admin-content
 
 		.admin-op#quit-approve
 			h3 退课审核通过操作
+			span.op-cond * 只有处在'申请退课'状态且已经退还费用的课程才能退课审核通过
 			table
 				tbody
 					tr
@@ -122,6 +127,7 @@ section.admin-content.dw#admin-content
 
 		.admin-op#quit-refuse
 			h3 退课审核拒绝操作
+			span.op-cond * 只有处在'申请退课'状态的课程才能退课审核拒绝
 			table
 				tbody
 					tr

@@ -8,6 +8,7 @@
 var db 		= require("../database/database.js").db;
 // 取得课程值以及对应的中文描述映射信息
 var cList 	= require("../database/course.js").courseList;
+var nodeMsg = require("./nodemsg.node.js").nodeMessages;
 
 
 exports.man = function(req, res, next){
@@ -156,7 +157,7 @@ var checkCourseStatus = function(req, res, status, callback){
 
 		// 会员不存在或者没有报名任何课程
 		if (!(!!result && !!result.courses && result.courses.length > 0)){
-			res.send({success:false, msg:'Dancer Dose Not Exist Or Has No Course !'});
+			res.send({success:false, msg:nodeMsg.notExist});
 			// 如果不return后面for block会继续被执行
 			return;
 		}
@@ -174,7 +175,7 @@ var checkCourseStatus = function(req, res, status, callback){
 		};
 		
 		if (!satisfied) {
-			res.send({success:false, msg:'Your Course Status Is Not Satisfied For This Operation!'});
+			res.send({success:false, msg:nodeMsg.condUnMeet});
 		};
 		
 	});
@@ -195,7 +196,7 @@ var checkPayStatus = function(req, res, isPaid, callback){
 
 		// 会员不存在或者没有报名任何课程
 		if (!(!!result && result.courses && result.courses.length > 0)){
-			res.send({success:false, msg:'Dancer Dose Not Exist Or Has No Course !'});
+			res.send({success:false, msg:nodeMsg.notExist});
 			// 如果不return后面for block会继续被执行
 			return;
 		}
@@ -214,7 +215,7 @@ var checkPayStatus = function(req, res, isPaid, callback){
 		};
 		
 		if (!satisfied) {
-			res.send({success:false, msg:'Your Pay Status Is Not Satisfied For This Operation!'});
+			res.send({success:false, msg:nodeMsg.payUnMeet});
 		};
 		
 	});
