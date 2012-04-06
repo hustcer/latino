@@ -15,24 +15,20 @@ var courseList 	= require("../database/course.js").courseList;
  */
 exports.list = function(req, res){
 	// 默认查当前开设的两门课程中，所有课程报名审核通过，且已经缴费的会员.需要提示用户当前搜索条件
-	var condition = {courses:{	$elemMatch:
-								{'courseVal':{$in: [cCourse.courseA.cValue, cCourse.courseB.cValue]},
-								 'status':'approved', 'paid':true
-								}
-							 }
-					};
+	// var condition = {courses:{	$elemMatch:
+	// 							{'courseVal':{$in: [cCourse.courseA.cValue, cCourse.courseB.cValue]},
+	// 							 'status':'approved', 'paid':true
+	// 							}
+	// 						 }
+	// 				};
+	// db.collection('latin').find(condition).toArray(function(err, result) {});
 
-	db.collection('latin').find(condition).toArray(function(err, result) {
-
-	    if (err) throw err;
-
-		res.render('list', {
-	        title: 		'课程报名信息',
-	        courseList: courseList,
-	        dancerList: result
-	    });
-	});
-
+	res.render('list', {
+        title: 		'课程报名信息',
+        courseList: courseList,
+        cCourse: 	cCourse	    
+    });
+	
 };
 
 /*
@@ -52,7 +48,7 @@ exports.search = function(req, res){
 	// req.body.paid取得的是“true”、“false”字符串，需要转换
 	if (!!req.body.paid) 		{dancerModel['courses.paid']= JSON.parse(req.body.paid);};
 
-	console.log('User Current Search Condition:', dancerModel);
+	// console.log('User Current Search Condition:', dancerModel);
 
 	db.collection('latin').find(dancerModel).toArray(function(err, result) {
 

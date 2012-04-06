@@ -8,8 +8,11 @@
  * Date: 	2012-1-20  
  */
 
+// 注意：将collection与方法绑定是在app.js里进行的，此处在内部调用的时候绑定尚未发生，所以需要引入db
+var db 			= require("../database/database.js").db;
 // 当前开课信息
-var cCourse = require("../database/course.js").currentCourse;
+var cCourse 	= require("../database/course.js").currentCourse;
+var Step 		= require('step');
 
 var CDO = exports.commonDancerOp = {
 
@@ -87,7 +90,8 @@ var CDO = exports.commonDancerOp = {
 			result.extNumber = dancerModel.extNumber;
 			result.email = dancerModel.email;
 			result.wangWang = dancerModel.wangWang;
-			result.gender = dancerModel.gender;
+			// 性别一旦确定则不能修改
+			// result.gender = dancerModel.gender;
 			result.alipayID = dancerModel.alipayID;
 			result.department = dancerModel.department;
 
@@ -127,7 +131,7 @@ var CDO = exports.commonDancerOp = {
 	 */
 	_getCourseInitStatus: function(dancerModel, courseVal){
 		var courseStatus = 'waiting';
-
+		// console.log('CDO._isAutoApprovable(dancerModel, courseVal):', CDO._isAutoApprovable(dancerModel, courseVal));
 		if(cCourse.autoApprove && CDO._isAutoApprovable(dancerModel, courseVal)){
 
 			courseStatus = 'approved';
@@ -146,11 +150,57 @@ var CDO = exports.commonDancerOp = {
 	 * @param courseVal 	待设置课程报名状态课程
 	 */
 	_isAutoApprovable: function(dancerModel, courseVal){
+
+	    if(dancerModel.gender === 'male'){
+            return true;
+       	}
+      	return false;
+
+		var condition = {courses:{	$elemMatch:
+							{'courseVal': 	courseVal,
+							 'status': 		{$in: ['approved', 'quitApplied']}
+							}
+						 }};
+
+		/**
+		// 注意：将collection与方法绑定是在app.js里进行的，此处在内部调用的时候绑定尚未发生
+		// 所以需要调用db的方法
+		db.latin.count(condition, function(err, count){
+
+			console.log('currentCount:', count, ' ,currentLimit:', cCourse.autoLimit);
+
+			// -------------------Rule NO.1-----------------------------------
+			// 如果当前报名成功的会员数目小于允许的自动审核限额则自动审核通过
+			if( count <= cCourse.autoLimit ){
+				return true;
+			}
+			
+			if( count < cCourse.cCapacity ){
+
+			// -------------------Rule NO.2-----------------------------------
+				// 如果该舞种报名男士优先则直接审核通过
+				if (dancerModel.gender === 'male' && cCourse.manFirst) {return true;};
+
+			// -------------------Rule NO.3-----------------------------------
+				CDO.findDancerByID(dancerModel.dancerID, function(err, result){
+					if (err) {throw err};
+					if (!!result) {
+						if ( result.level >= 3 || result.vip >= 3 ) {
+							return true;
+						};
+					};
+
+				})
+
+			} // end if count < cCourse.cCapacity
+
+			return false;
+
+		});*/
+
+
 		
-		if(dancerModel.gender === 'male'){
-			return true;
-		}
-		return false;
+
 	},
 	/**
 	 * 根据条件查询其基本会员信息，不含创建，修改时间，_id等

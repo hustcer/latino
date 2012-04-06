@@ -159,9 +159,11 @@ jQuery(function($){
 					$('#alipayID').val(data.data.alipayID);
 
 					if (data.data.gender === 'male') { 
-						$('#maleRadio').prop('checked', true);
+						$('#maleRadio').prop('checked', true).prop('disabled', true);
+						$('#femaleRadio').prop('disabled', true);
 					}else{
-						$('#femaleRadio').prop('checked', true);
+						$('#femaleRadio').prop('checked', true).prop('disabled', true);
+						$('#maleRadio').prop('disabled', true);
 					}
 					if (data.data.department === 'tech') {
 						// 回填表单department数据 

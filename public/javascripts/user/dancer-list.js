@@ -69,6 +69,7 @@ jQuery(function($){
 			this._handleSort("wangWang-header", "wangWang");
 			this._handleSort("ext-header", "extNumber");
 			this._handleSort("dept-header", "department");
+			$('#queryBtn').trigger('click');
 		},
 		/**
 		 * 会员查询筛选
@@ -236,7 +237,7 @@ jQuery(function($){
 		    	};
 		    	html.push('</td><td class="BW">');
 		    	for (var m = 0,l = data[i].courses.length; m < l; m++) {
-		    		html.push( data[i].courses[m].paid ? 'Y':'N' + ';' );
+		    		html.push( data[i].courses[m].paid ? 'Y;':'N;' );
 		    	};
 		    	html.push('</td><td>');
 		    	html.push(data[i].email);

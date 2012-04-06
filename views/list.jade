@@ -39,7 +39,10 @@ section.dance-content.dw#list-content
 							select.comm-select(name="course", id="course")
 								option(value="") 请选择...
 								each course in courseList
-									option(value="#{course.courseVal}") #{course.courseName}
+									if (course.courseVal == cCourse.courseA.cValue)
+										option(value="#{course.courseVal}", selected='selected') #{course.courseName}
+									else
+										option(value="#{course.courseVal}") #{course.courseName}
 
 					td.status-cell	
 						label.fd-left 课程状态：
@@ -47,7 +50,7 @@ section.dance-content.dw#list-content
 							select.comm-select(name="status", id="status")
 								option(value="") 请选择...
 								option(value="waiting") 等待审核
-								option(value="approved") 报名成功
+								option(value="approved", selected='selected') 报名成功
 								option(value="refused") 报名失败
 								option(value="quitApplied") 申请退课
 								option(value="quit") 已退课
@@ -85,54 +88,7 @@ section.dance-content.dw#list-content
 					th.dept-header 部门
 						i.i-sort-default
 			tbody
-				each dancer in dancerList
-					tr
-						td 
-							a(href="/user/#{dancer.dancerID}")#{dancer.dancerID}
-						td 
-							#{dancer.dancerName}
-						td 
-							- if (dancer.gender === 'female') 
-								p F
-							- else 
-								p M
-						td 
-							each course in dancer.courses
-								#{course.courseVal};
-						td 
-							each course1 in dancer.courses
-								- if (course1.status === 'waiting')
-									待审核;
-								- else if (course1.status === 'approved')
-									报名成功;
-								- else if (course1.status === 'refused')
-									报名失败;
-								- else if (course1.status === 'quitApplied')
-									申请退课;
-								- else if (course1.status === 'quit')
-									已退课;
-								- else if (course1.status === 'cancelled')
-									取消报名;
-								- else
-									未知;
-									
-						td 
-							each course2 in dancer.courses
-								- if (course2.paid)
-									em Y;
-								- else
-									em N;
-						td 
-							#{dancer.email}
-						td 
-							#{dancer.wangWang}
-						td 
-							#{dancer.extNumber}
-						td 
-							- if (dancer.department === 'tech')
-								技术部
-							- else
-								其他部门
+				
 
 	ul.paging-a.fd-clr#dancer-list-paging(data-sp="paging-a")
 		li.pagination

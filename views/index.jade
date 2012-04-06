@@ -18,7 +18,7 @@ section.dance-content.dw#dance-content
 			p &nbsp;
 			p:em.BD 培训一：#{cCourse.courseA.cName}
 			p 报名限额：
-				em.R #{cCourse.courseA.cCapacity}人;
+				em.R #{cCourse.cCapacity}人;
 			p 已预报名：
 				em.R#aWaiting
 			p 报名成功：
@@ -27,7 +27,7 @@ section.dance-content.dw#dance-content
 			p &nbsp;
 			p:em.BD 培训二：#{cCourse.courseB.cName}
 			p 报名限额：
-				em.R #{cCourse.courseB.cCapacity}人;
+				em.R #{cCourse.cCapacity}人;
 			p 已预报名：
 				em.R#bWaiting
 			p 报名成功：
@@ -82,6 +82,7 @@ section.dance-content.dw#dance-content
 									
 									input.comm-radio(type="radio", id="femaleRadio", checked, value="female", name="gender")
 									label(for="femaleRadio")&nbsp;女
+									span.gender-tip提交后不能修改
 							td.err-tip *
 						tr
 							th
