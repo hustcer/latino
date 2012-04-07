@@ -10,10 +10,17 @@ jQuery.namespace('dance.at.alibaba');
 
 jQuery(function($){
 
-    var NS = dance.at.alibaba, MISSING_PARAM_MSG = '嗨，你参数没填完整吧 ? !';
+    var NS = dance.at.alibaba;
 
 	// Begin Module Definition
     var module = NS.admin = {
+    	PAY_MSG: 			'设置会员缴费处理成功!',
+    	QUIT_MSG: 			'会员退课处理成功!',
+    	UNPAY_MSG: 			'会员退款处理成功!',
+    	REFUSE_MSG: 		'拒绝会员报名处理成功!',
+    	APPROVE_MSG: 		'会员报名审核通过处理成功!',
+    	QUIT_REFUSE_MSG: 	'会员退课拒绝处理成功!',
+    	MISSING_PARAM_MSG: 	'嗨，你参数没填完整吧 ? !',
 					
 		/**
 		 * 静态模块的初始化入口
@@ -86,16 +93,16 @@ jQuery(function($){
 
 				// 如果不存在会员ID或者课程值则不进行下一步操作
 				if( !(!!dancerID && !!courseVal) ){	
-					NS.admin._showTipInfo( $tipWrapper, MISSING_PARAM_MSG );
+					module._showTipInfo( $tipWrapper, module.MISSING_PARAM_MSG );
 					return;	
 				}
 
 				$.getJSON('man/approve/' + dancerID, 
 					{ courseVal: courseVal }, function(data){
 						if (data.success === true) {
-							NS.admin._showTipInfo( $tipWrapper, '会员报名审核通过处理成功!' );
+							module._showTipInfo( $tipWrapper, module.APPROVE_MSG );
 						}else{
-							NS.admin._showTipInfo( $tipWrapper, data.msg );
+							module._showTipInfo( $tipWrapper, data.msg );
 						};
 				});
 				
@@ -113,16 +120,16 @@ jQuery(function($){
 
 				// 如果不存在会员ID或者课程值则不进行下一步操作
 				if( !(!!dancerID && !!courseVal) ){	
-					NS.admin._showTipInfo( $tipWrapper, MISSING_PARAM_MSG );
+					module._showTipInfo( $tipWrapper, module.MISSING_PARAM_MSG );
 					return;	
 				}
 
 				$.getJSON('man/pay/' + dancerID, 
 					{ courseVal: courseVal }, function(data){
 						if (data.success === true) {
-							NS.admin._showTipInfo( $tipWrapper, '设置会员缴费处理成功!' );
+							module._showTipInfo( $tipWrapper, module.PAY_MSG );
 						}else{
-							NS.admin._showTipInfo( $tipWrapper, data.msg );
+							module._showTipInfo( $tipWrapper, data.msg );
 						};
 				});
 				
@@ -140,16 +147,16 @@ jQuery(function($){
 
 				// 如果不存在会员ID或者课程值则不进行下一步操作
 				if( !(!!dancerID && !!courseVal) ){	
-					NS.admin._showTipInfo( $tipWrapper, MISSING_PARAM_MSG );
+					module._showTipInfo( $tipWrapper, module.MISSING_PARAM_MSG );
 					return;	
 				}
 
 				$.getJSON('man/refuse/' + dancerID, 
 					{ courseVal: courseVal }, function(data){
 						if (data.success === true) {
-							NS.admin._showTipInfo( $tipWrapper, '拒绝会员报名处理成功!');
+							module._showTipInfo( $tipWrapper, module.REFUSE_MSG);
 						}else{
-							NS.admin._showTipInfo( $tipWrapper, data.msg );
+							module._showTipInfo( $tipWrapper, data.msg );
 						};
 				});
 				
@@ -167,16 +174,16 @@ jQuery(function($){
 
 				// 如果不存在会员ID或者课程值则不进行下一步操作
 				if( !(!!dancerID && !!courseVal) ){	
-					NS.admin._showTipInfo( $tipWrapper, MISSING_PARAM_MSG );
+					module._showTipInfo( $tipWrapper, module.MISSING_PARAM_MSG );
 					return;	
 				}
 
 				$.getJSON('man/unpay/' + dancerID, 
 					{ courseVal: courseVal }, function(data){
 						if (data.success === true) {
-							NS.admin._showTipInfo( $tipWrapper, '会员退款处理成功!' );
+							module._showTipInfo( $tipWrapper, module.UNPAY_MSG );
 						}else{
-							NS.admin._showTipInfo( $tipWrapper, data.msg );
+							module._showTipInfo( $tipWrapper, data.msg );
 						};
 				});
 				
@@ -194,16 +201,16 @@ jQuery(function($){
 
 				// 如果不存在会员ID或者课程值则不进行下一步操作
 				if( !(!!dancerID && !!courseVal) ){	
-					NS.admin._showTipInfo( $tipWrapper, MISSING_PARAM_MSG );
+					module._showTipInfo( $tipWrapper, module.MISSING_PARAM_MSG );
 					return;	
 				}
 
 				$.getJSON('man/quit/' + dancerID, 
 					{ courseVal: courseVal }, function(data){
 						if (data.success === true) {
-							NS.admin._showTipInfo( $tipWrapper, '会员退课处理成功!' );
+							module._showTipInfo( $tipWrapper, module.QUIT_MSG );
 						}else{
-							NS.admin._showTipInfo( $tipWrapper, data.msg );
+							module._showTipInfo( $tipWrapper, data.msg );
 						};
 				});
 				
@@ -221,7 +228,7 @@ jQuery(function($){
 
 				// 如果不存在会员ID或者课程值则不进行下一步操作
 				if( !(!!dancerID && !!courseVal) ){	
-					NS.admin._showTipInfo( $tipWrapper, MISSING_PARAM_MSG );
+					module._showTipInfo( $tipWrapper, module.MISSING_PARAM_MSG );
 					return;	
 				}
 
@@ -229,9 +236,9 @@ jQuery(function($){
 					{ courseVal: courseVal }, function(data){
 						if (data.success === true) {
 							
-							NS.admin._showTipInfo( $tipWrapper, '会员退课拒绝处理成功!' );
+							module._showTipInfo( $tipWrapper, module.QUIT_REFUSE_MSG );
 						}else{
-							NS.admin._showTipInfo( $tipWrapper, data.msg );
+							module._showTipInfo( $tipWrapper, data.msg );
 						};
 				});
 				

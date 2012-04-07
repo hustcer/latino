@@ -48,14 +48,13 @@ exports.apply = function(req, res){
 	    // 一方面是要设置会员创建时间，另一方面是为了明确操作逻辑，避免意外
 	    // 会员存在则更新会员信息
 	    if (!!result) {
-	    	db.latin.updateDancerByID(dancerModel.dancerID, dancerModel, function(err, result) {
+	    	db.latin.updateDancerByID(dancerModel.dancerID, dancerModel, function(err) {
 	    		if (err) throw err;
-	    		if (result) {
-	    			// 在这里进行自动审核
-	    			console.log('Dancer Infomation Updated With ID:',dancerModel.dancerID,
-	    						' DancerName:', dancerModel.dancerName);
-	    			
-	    		};
+
+    			// 如果开启课程自动审核则在这里进行自动审核
+    			if(cCourse.autoApprove){
+    				db.latin.autoApprove(dancerModel);
+    			}
 	    	});
 			
 		// 会员不存在则插入会员信息
@@ -64,9 +63,10 @@ exports.apply = function(req, res){
 			    if (err) throw err;
 
 			    if (addResult) {
-			    	// 在这里进行自动审核
-				    console.log('New Dancer Added, With ID:',dancerModel.dancerID,
-	    						' DancerName:', dancerModel.dancerName);
+				    // 如果开启课程自动审核则在这里进行自动审核
+	    			if(cCourse.autoApprove){
+	    				db.latin.autoApprove(dancerModel);
+	    			}
 			    }
 			});
 	    }
@@ -166,7 +166,7 @@ exports.quitCourse = function(req, res){
 
 	console.log("Applying Course Quiting With dancerID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 
-	db.latin.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'quitApplied', function(err, result) {
+	db.latin.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'quitApplied', function(err) {
 	    if (err) throw err;
 
 	    res.contentType('application/json');
@@ -183,9 +183,8 @@ exports.cancelCourse = function(req, res){
 
 	console.log("Course Cancel With dancerID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 
-	db.latin.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'cancelled', function(err, result) {
+	db.latin.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'cancelled', function(err) {
 	    if (err) throw err;
-
 	    res.contentType('application/json');
 	    res.send({success:true});
 	    

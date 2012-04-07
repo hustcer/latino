@@ -8,11 +8,10 @@
  * Date: 	2012-1-20  
  */
 
-// 注意：将collection与方法绑定是在app.js里进行的，此处在内部调用的时候绑定尚未发生，所以需要引入db
+// 注意：将collection与方法绑定是在app.js里进行的，在内部调用的时候绑定尚未发生，所以需要引入db
 var db 			= require("../database/database.js").db;
 // 当前开课信息
 var cCourse 	= require("../database/course.js").currentCourse;
-var Step 		= require('step');
 
 var CDO = exports.commonDancerOp = {
 
@@ -41,10 +40,6 @@ var CDO = exports.commonDancerOp = {
 			logMsg += ' B--' + dancerModel.courseB;
 		}
 
-		if(!!logMsg){
-			console.info("Add New Courses:", logMsg, 'for Member: ', dancerModel.dancerID);
-		}
-
 		delete dancerModel.courseA;
 		delete dancerModel.courseB;
 		dancerModel.courses 	= courseAddArray;
@@ -52,6 +47,7 @@ var CDO = exports.commonDancerOp = {
 		dancerModel.gmtModified = new Date();
 
 		this.insert(dancerModel, fn);
+		console.log('New Dancer Added, With ID:',dancerModel.dancerID, " Courses:", (logMsg ? logMsg: '---None') );
 	},
 	/**
 	 * 更新会员dancerID的相关信息
@@ -72,10 +68,6 @@ var CDO = exports.commonDancerOp = {
 		if( !!dancerModel.courseB ) {
 			courseAddArray.push( dancerModel.courseB );
 			logMsg += ' B--' + dancerModel.courseB;
-		}
-
-		if(!!logMsg){
-			console.info("Update Courses:", logMsg, 'for Member: ', dancerID);
 		}
 
 		this.findOne({'dancerID':dancerID}, function(err, result) {
@@ -118,40 +110,40 @@ var CDO = exports.commonDancerOp = {
 			result.gmtModified = new Date();
 			self.save(result, fn);
 
+			console.log('Dancer Infomation Updated With ID:', dancerModel.dancerID,
+    						" Update Courses:", (logMsg ? logMsg: '---None') );
+
 		});
 		
 	},
 	/**
-	 * 取得会员报名课程初始化状态
-	 * @param dancerModel 	待设置课程报名状态的会员信息, 该model为前台用户提交的表单信息里面的数据
-	 * @param courseVal 	待设置课程报名状态课程
+	 * 根据一定的判断原则决定该会员初始报名的时候是否可以自动被审核通过
+	 * @param dancerModel 	待判断是否可以自动审核通过的会员信息, 该model为前台用户提交的表单信息里面的数据
 	 */
-	_getCourseInitStatus: function(dancerModel, courseVal){
-		var courseStatus = 'waiting';
-		// console.log('CDO._isAutoApprovable(dancerModel, courseVal):', CDO._isAutoApprovable(dancerModel, courseVal));
-		if(cCourse.autoApprove && CDO._isAutoApprovable(dancerModel, courseVal)){
-
-			courseStatus = 'approved';
+	autoApprove: function(dancerModel){
+		
+		if( !!dancerModel.courseA ) {
+			CDO._approveCourse(dancerModel.dancerID, dancerModel.courseA );
 		}
-		return courseStatus;
+
+		if( !!dancerModel.courseB ) {
+			CDO._approveCourse(dancerModel.dancerID, dancerModel.courseB );
+		}
+
 	},
 	/**
 	 * 根据一定的判断原则决定该会员初始报名的时候是否可以自动被审核通过
 	 * 判断原则如下：
-	 * 0. 当前课程报名成功人数小于autoLimit，则返回true
-	 * 1. 男生且当前课程报名成功人数小于班级限额则返回true
-	 * 2. 女生，如果level >= 3，或者vip >= 3 且当前报名成功人数小于(班级限额-3)则返回true
-	 * 3. 其他情况返回 false
+	 * 0. 当前课程报名成功人数小于autoLimit，则自动审核通过
+	 * 1. 男生且当前课程报名成功人数小于班级限额则自动审核通过
+	 * 2. 女生，如果level >= 3，或者vip >= 3 且当前报名成功人数小于(班级限额-3)则自动审核通过
+	 * 3. 其他情况不会修改课程审核状态
 	 * 4. 其他规则后续补充
-	 * @param dancerModel 	待判断是否可以自动审核通过的会员信息, 该model为前台用户提交的表单信息里面的数据
-	 * @param courseVal 	待设置课程报名状态课程
+	 * @param dancerID 		待判断是否可以自动审核通过的会员ID
+	 * @param courseVal 	待自动审核的课程
 	 */
-	_isAutoApprovable: function(dancerModel, courseVal){
-
-	    if(dancerModel.gender === 'male'){
-            return true;
-       	}
-      	return false;
+	_approveCourse: function(dancerID, courseVal){
+		console.log('Auto Approve Dancer:', dancerID, ' CourseVal:', courseVal);
 
 		var condition = {courses:{	$elemMatch:
 							{'courseVal': 	courseVal,
@@ -159,43 +151,45 @@ var CDO = exports.commonDancerOp = {
 							}
 						 }};
 
-		/**
-		// 注意：将collection与方法绑定是在app.js里进行的，此处在内部调用的时候绑定尚未发生
-		// 所以需要调用db的方法
+		// 此处内部调用时还没有绑定方法所以要调用原生db
 		db.latin.count(condition, function(err, count){
-
-			console.log('currentCount:', count, ' ,currentLimit:', cCourse.autoLimit);
 
 			// -------------------Rule NO.1-----------------------------------
 			// 如果当前报名成功的会员数目小于允许的自动审核限额则自动审核通过
-			if( count <= cCourse.autoLimit ){
-				return true;
+			if( count < cCourse.autoLimit ){
+				console.log('Auto Approve Dancer According to Rule NO.1----', dancerID, ', Course:--', courseVal);
+				CDO.updateDancerCourseStatus(dancerID, courseVal, 'approved');
+				// 每条自动审核规则执行完后都要return，否则会继续执行下面的规则，下同。
+				return;
 			}
 			
+			// 如果当前报名成功的会员数目小于课程总容量则继续下面的审核规则，否则不再继续审核
 			if( count < cCourse.cCapacity ){
 
-			// -------------------Rule NO.2-----------------------------------
-				// 如果该舞种报名男士优先则直接审核通过
-				if (dancerModel.gender === 'male' && cCourse.manFirst) {return true;};
-
-			// -------------------Rule NO.3-----------------------------------
-				CDO.findDancerByID(dancerModel.dancerID, function(err, result){
+				CDO.findDancerByID(dancerID, function(err, result){
 					if (err) {throw err};
-					if (!!result) {
-						if ( result.level >= 3 || result.vip >= 3 ) {
-							return true;
-						};
+
+					// -------------------Rule NO.2-----------------------------------
+					// 如果该舞种报名男士优先则直接审核通过
+					if ( !!result && result.gender === 'male' && cCourse.manFirst ) {
+						console.log('Auto Approve Dancer According to Rule NO.2----', dancerID, ', Course:--', courseVal);
+						CDO.updateDancerCourseStatus(dancerID, courseVal, 'approved');
+						return;
+					};
+
+					// -------------------Rule NO.3-----------------------------------
+					if ( !!result && ( result.level >= 3 || result.vip >= 3 ) ) {
+
+						console.log('Auto Approve Dancer According to Rule NO.3----', dancerID, ', Course:--', courseVal);
+						CDO.updateDancerCourseStatus(dancerID, courseVal, 'approved');
+						return;
 					};
 
 				})
 
 			} // end if count < cCourse.cCapacity
-
-			return false;
-
-		});*/
-
-
+			return;
+		});
 	},
 	/**
 	 * 根据条件查询其基本会员信息，不含创建，修改时间，_id等
@@ -220,7 +214,7 @@ var CDO = exports.commonDancerOp = {
 	 * @param dancerID 		待查询的会员的dancerID
 	 */
 	findDancerByID: function(dancerID, fn){
-		this.findOne({'dancerID':dancerID}, {gmtCreated:0, gmtModified:0, _id:0}, fn);
+		db.latin.findOne({'dancerID':dancerID}, {gmtCreated:0, gmtModified:0, _id:0}, fn);
 	},
 	/**
 	 * 根据dancerID查询其全部保存在数据库里的会员信息
@@ -253,7 +247,7 @@ var CDO = exports.commonDancerOp = {
 	 * 设置会员课程状态
 	 * @param dancerID 		待设置的会员的dancerID
 	 * @param courseValue 	待设置的课程的值
-	 * @param status 		目前可能的状态有：
+	 * @param status 		课程新的状态。目前可能的状态有：
 	 *						waiting: 	会员刚申请报名，待审核；
 	 *						cancelled: 	用户先申请报名，然后未及管理员审核就取消报名
 	 * 						approved: 	管理员审核通过，会员报名成功；
@@ -263,7 +257,7 @@ var CDO = exports.commonDancerOp = {
 	 */
 	updateDancerCourseStatus: function(dancerID, courseValue, status, fn){
 
-		this.update({'dancerID':dancerID, 'courses.courseVal':courseValue}, {  $set:
+		db.latin.update({'dancerID':dancerID, 'courses.courseVal':courseValue}, {  $set:
 			{'courses.$.status':status, 'courses.$.gmtStatusChanged':new Date(), 'gmtModified': new Date()}
 
 		}, fn);

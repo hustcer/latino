@@ -5,12 +5,11 @@
  * Author:  justin.maj
  * Date:    2012-1-19 
  */
-
 {
-    "name": 		"latino",
+    "name": 		  "latino",
     "version": 		"0.0.1",
     "author": 		"Justin <justin.maj@alibaba-inc.com>",
-    "description": 	"Alibaba Latin Training Management System.",
+    "description":"Alibaba Latin Training Management System.",
     "private": 		true,
     "dependencies": {
       "express": 	"2.5.5",

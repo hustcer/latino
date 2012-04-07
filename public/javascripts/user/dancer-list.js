@@ -35,7 +35,17 @@ jQuery(function($){
 		 * 总分页数
 		 */
     	totalPage: 		1,
-					
+
+		/**
+		 * 没有满足条件的查询结果的HTML
+		 */
+		noResult: 		'<tr><td colspan="10" class="list-empty">矮油，没有满足条件的会员歪！</td></tr>',	
+
+    	/**
+		 * 显示正在加载数据的HTML
+		 */
+    	loadingHtml: 	'<tr><td colspan="10" class="loading"><img src="./images/loading.gif"><p>数据正在加载请稍后...</p></td></tr>',
+
 		/**
 		 * 静态模块的初始化入口
 		 */
@@ -78,16 +88,15 @@ jQuery(function($){
 			// FIXME: 数据获取失败处理
 			$('#queryBtn').click(function(){
 
-				var loadingHtml = '<tr><td colspan="10" class="loading"><img src="./images/loading.gif"><p>数据正在加载请稍后...</p></td></tr>';
-				$('#dancer-list table tbody').html(loadingHtml);
+				$('#dancer-list table tbody').html(module.loadingHtml);
 
 				$.post('/search', $("#searchForm").serialize(), function(data) {
 
-					NS.list.resultList = data.data;
+					module.resultList = data.data;
 
 					// console.log(data.data);
 
-					NS.list._initPagination();
+					module._initPagination();
 
 				}, 'json' );
 			});
@@ -117,8 +126,8 @@ jQuery(function($){
 			dancerListPg = new dance.at.alibaba.Paging( $('#dancer-list-paging') );
 			
 			if ( this.resultList.length === 0 ) {
-				var noResult = '<tr><td colspan="10" class="list-empty">矮油，你查询的会员没有歪！</td></tr>'
-				$('#dancer-list table tbody').html(noResult);
+				
+				$('#dancer-list table tbody').html(module.noResult);
 				dancerListPg.init(1, 1);
 				return;
 			};
@@ -131,9 +140,9 @@ jQuery(function($){
     		
     		dancerListPg.customClick = function(page){
 
-    			var data = NS.list.resultList.slice( (page - 1) * NS.list.itemPerPage, 
-    													   page * NS.list.itemPerPage);
-				html = NS.list._renderRowHtml( data );
+    			var data = module.resultList.slice( (page - 1) * module.itemPerPage, 
+    													   page * module.itemPerPage);
+				html = module._renderRowHtml( data );
 				$('#dancer-list table tbody').html(html);
 			}
 		},
@@ -144,18 +153,18 @@ jQuery(function($){
 			
 			$("#dancer-list ." + headClassName ).click(function(){
 				
-				NS.list._resetOrderStatus(headClassName);
+				module._resetOrderStatus(headClassName);
 				
 				var sortIcon = $("i",this);
 				if( sortIcon.hasClass("i-sort-default") || sortIcon.hasClass("i-sort-up")){
-					NS.list.resultList = json.array.util.sortOrder(NS.list.resultList, dataKeyName, -1);
+					module.resultList = json.array.util.sortOrder(module.resultList, dataKeyName, -1);
 					sortIcon.attr('class', 'i-sort-down');
 				}else{
-					NS.list.resultList = json.array.util.sortOrder(NS.list.resultList, dataKeyName, 1);
+					module.resultList = json.array.util.sortOrder(module.resultList, dataKeyName, 1);
 					sortIcon.attr('class', 'i-sort-up');
 				}
 				
-				NS.list._refreshTableData( NS.list._getCurrentPgIndex() );
+				module._refreshTableData( module._getCurrentPgIndex() );
 			});
 		},
 		/**
@@ -194,10 +203,10 @@ jQuery(function($){
 		 */
 		_refreshTableData: function( currentPage ){
 			if( currentPage === undefined || currentPage < 1 ||
-				currentPage > Math.ceil(NS.list.resultList.length / NS.list.itemPerPage) ) currentPage = 1;
+				currentPage > Math.ceil(module.resultList.length / module.itemPerPage) ) currentPage = 1;
 					
-				var data = 	NS.list.resultList.slice( (currentPage - 1) * NS.list.itemPerPage, 
-							currentPage * NS.list.itemPerPage );
+				var data = 	module.resultList.slice( (currentPage - 1) * module.itemPerPage, 
+							currentPage * module.itemPerPage );
 	
 				$('#dancer-list table tbody').html(this._renderRowHtml( data ));
 

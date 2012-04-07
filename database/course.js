@@ -20,7 +20,7 @@ var cCourse = exports.currentCourse = {
 	// 是否男士报名优先，对于拉丁课男士优先则自动审核开启时男士报名自动审核通过
 	manFirst: 	true,
 	// 自动审核报名成功的人数限制
-	autoLimit: 	18,
+	autoLimit: 	8,
 	beginDate: 	'',
 	endingDate: ''
 };

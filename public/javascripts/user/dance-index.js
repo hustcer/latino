@@ -11,13 +11,13 @@ jQuery.namespace('dance.at.alibaba');
 // TODO: 可以取消退课申请，课程报名状态：已申请，取消申请，报名通过，报名拒绝，申请退课，已退课
 jQuery(function($){
 
-    var NS 			= dance.at.alibaba;
-    var quitMsg 	= "您已经申请退课，请等待管理员审核！",
-    	cancelMsg 	= "您好，你的报名取消成功，欢迎下次报名！";
+    var NS 			= dance.at.alibaba;    	
 
 	// Begin Module Definition
     var module = NS.index = {
-					
+		QUIT_MSG: 	"您已经申请退课，请等待管理员审核！",
+		CANCEL_MSG: "您好，你的报名取消成功，欢迎下次报名！",
+
 		/**
 		 * 静态模块的初始化入口
 		 */
@@ -53,7 +53,6 @@ jQuery(function($){
 			this._courseQuitHandler('B');
 			this._courseCancelHandler('A');
 			this._courseCancelHandler('B');
-
 		},
 		/**
 		 * 初始化部门选择下拉列表
@@ -85,8 +84,8 @@ jQuery(function($){
 				// console.log('queryCourseInfo:', data);
 				
 				$('#aWaiting').text(data.courseInfo.courseA.total + '人;');
-				$('#aApproved').text(data.courseInfo.courseA.approved + '人;');
 				$('#bWaiting').text(data.courseInfo.courseB.total + '人;');
+				$('#aApproved').text(data.courseInfo.courseA.approved + '人;');
 				$('#bApproved').text(data.courseInfo.courseB.approved + '人;');
 			});
 
@@ -131,9 +130,9 @@ jQuery(function($){
 			$('#reset-btn').click(function(){
 				$('#applyForm')[0].reset();
 				// 清除课程操作按钮
+				$('div.operation-info').hide();
 				$('div.course-wrapper a.comm-btn').hide();
 				$('div.course-wrapper p.course-tip').hide();
-				$('div.operation-info').hide();
 				$('div.course-wrapper input.comm-check').prop('disabled', false);
 			});
 		},
@@ -152,11 +151,11 @@ jQuery(function($){
 					// 会员不存在的时候直接返回
 					if (!(data && data.data)) {return false;};
 
-					$('#dancerName').val(data.data.dancerName);
 					$('#email').val(data.data.email);
 					$('#wangWang').val(data.data.wangWang);
-					$('#extNumber').val(data.data.extNumber);
 					$('#alipayID').val(data.data.alipayID);
+					$('#extNumber').val(data.data.extNumber);
+					$('#dancerName').val(data.data.dancerName);
 
 					if (data.data.gender === 'male') { 
 						$('#maleRadio').prop('checked', true).prop('disabled', true);
@@ -175,11 +174,10 @@ jQuery(function($){
 						$selectInput.val("其他部门");
 
 					}else{
-
 						$selectInput.val("请选择部门...");
 					}
 
-					NS.index._initCourseOperation( data );
+					module._initCourseOperation( data );
 				});
 			});
 		},
@@ -196,14 +194,14 @@ jQuery(function($){
 				for (var i = courses.length - 1; i >= 0; i--) {
 					if(courses[i].courseVal === cA){
 						
-						NS.index._initCourseItemOperation(courses[i], 'A');
+						module._initCourseItemOperation(courses[i], 'A');
 						checkedCount ++;
 						// 不会开两个同样的课程（即便内容相同也会有不同的value），所以一旦匹配上就不再继续比较下去
 						continue;
 
 					}else if (courses[i].courseVal === cB) {
 
-						NS.index._initCourseItemOperation(courses[i], 'B');
+						module._initCourseItemOperation(courses[i], 'B');
 
 						checkedCount ++;
 						continue;
@@ -232,7 +230,7 @@ jQuery(function($){
 				$('#quitCourse' + courseNumber).show();
 			}else if(courseItem.status === 'quitApplied'){
 				$('#course' + courseNumber).prop("checked", true).prop("disabled", true);
-				$('#tip' + courseNumber).text(quitMsg).css('display','inline-block');
+				$('#tip' + courseNumber).text(module.QUIT_MSG).css('display','inline-block');
 			}
 			
 		},
@@ -248,7 +246,7 @@ jQuery(function($){
 						if (data.success === true) {
 							// 申请退课成功后要把该按钮删掉
 							$("#quitCourse" + courseNumber).hide();
-							$('#tip' + courseNumber).text(quitMsg).css('display','inline-block');
+							$('#tip' + courseNumber).text(module.QUIT_MSG).css('display','inline-block');
 							
 						};
 				});
@@ -266,7 +264,7 @@ jQuery(function($){
 
 						if (data.success === true) {
 							$("#cancelCourse" + courseNumber).hide();
-							$('#tip' + courseNumber).text(cancelMsg).css('display','inline-block');
+							$('#tip' + courseNumber).text(module.CANCEL_MSG).css('display','inline-block');
 						};
 				});
 			});

@@ -13,7 +13,7 @@ jQuery(function($){
     var NS = dance.at.alibaba;
 
 	// Begin Module Definition
-    var module = NS.admin = {
+    var module = NS.ie = {
 					
 		/**
 		 * 静态模块的初始化入口
