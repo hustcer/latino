@@ -42,18 +42,25 @@ exports.search = function(req, res){
 	if (!!req.body.gender) 		{dancerModel.gender = req.body.gender;};
 	if (!!req.body.department) 	{dancerModel.department = req.body.department;};
 
-	//FIXME: 这种查询方式会有问题，课程不是精确匹配的
-	if (!!req.body.course) 		{dancerModel['courses.courseVal']= req.body.course;};
-	if (!!req.body.status) 		{dancerModel['courses.status']= req.body.status;};
-	// req.body.paid取得的是“true”、“false”字符串，需要转换
-	if (!!req.body.paid) 		{dancerModel['courses.paid']= JSON.parse(req.body.paid);};
+	// 内嵌文档精确匹配
+	dancerModel.courses = {};
+	dancerModel.courses.$elemMatch = {};
+	if (!!req.body.course) {
+		dancerModel.courses.$elemMatch.courseVal = req.body.course;
+	};
+	if (!!req.body.status) {
+		dancerModel.courses.$elemMatch.status = req.body.status;
+	};
+	if (!!req.body.paid) {
+		// req.body.paid取得的是“true”、“false”字符串，需要转换
+		dancerModel.courses.$elemMatch.paid = JSON.parse(req.body.paid);
+	};
 
 	// console.log('User Current Search Condition:', dancerModel);
 
-	db.collection('latin').find(dancerModel).toArray(function(err, result) {
+	db.latin.findDancerByCondition(dancerModel, function(err, result) {
 
 	    if (err) throw err;
-	    //console.log(result);
 
 		res.contentType('application/json');
 		res.send({data:result});

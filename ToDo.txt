@@ -22,6 +22,7 @@ ToDo:
 	后台管理员手工无限制报名						H
 	排序标志										H
 	*paid改成金额而非boolean						H
+	*Lock则报名结束								H
 
 	
 	报名状态锁定
