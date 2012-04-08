@@ -35,6 +35,31 @@ jQuery(function($){
 		 */
 		_initUI: function(){
 
+			// console.log(window.location.hash);
+			if(window.location.hash === '#'||window.location.hash === ''){
+				$('#approve-apply').fadeIn();
+				// 设置当前菜单样式
+				$('ul.admin-links li a[href="#approve-apply"]').css({color:'white'}).parent().css({background:'gray'});
+			}else{
+				var hash = window.location.hash;
+				$(hash).fadeIn();
+				// 设置当前菜单样式
+				$('ul.admin-links li a[href=' + hash + ']').css({color:'white'}).parent().css({background:'gray'});
+			}
+
+			$('ul.admin-links li a').click(function(){
+				var href = $(this).prop('href'), blockSelector = href.substring(href.lastIndexOf('#'));
+				// 重设其他菜单样式
+				$('ul.admin-links li').css({background:'none'}).find('a').css({color:'#6D79E1'});
+				// 设置当前菜单样式
+				$(this).css({color:'white'}).parent().css({background:'gray'});
+				
+				$('div.admin-op').hide();
+				$('p.course-tip', blockSelector).hide();
+				$(blockSelector).slideDown('fast');
+				return false;
+			})
+
 			// 初始化combobox组件
 			$('#admin-content .course-box').each(function(){
 				var $box = $(this);

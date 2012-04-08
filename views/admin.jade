@@ -12,17 +12,17 @@ section.admin-content.dw#admin-content
 		h1.header-title= title
 	nav.admin-bg-nav
 		ul.admin-links
-			li: a(href="#approve-apply") 报名审核通过
-			li: a(href="#course-pay") 报名设置缴费
-			li: a(href="#refuse-apply") 报名审核拒绝
-			li: a(href="#course-refund") 报名设置退费
-			li: a(href="#quit-approve") 退课审核通过
-			li: a(href="#quit-refuse") 退课审核拒绝
-			li: a(href="#") 管理会员信息
+			li: a(href="#approve-apply") 报名通过
+			li: a(href="#course-pay") 课程缴费
+			li: a(href="#refuse-apply") 报名拒绝
+			li: a(href="#course-refund") 课程退费
+			li: a(href="#quit-approve") 退课通过
+			li: a(href="#quit-refuse") 退课拒绝
+			li: a(href="#dancer-edit") 会员管理
 
 	section.op-container#op-container
 		.admin-op#approve-apply
-			h3 报名审核通过操作
+			h3 报名通过
 			span.op-cond * 只有处在'待审核'状态的课程才能被审核通过
 			table
 				tbody
@@ -43,7 +43,7 @@ section.admin-content.dw#admin-content
 
 
 		.admin-op#course-pay
-			h3 报名设置缴费操作
+			h3 缴费
 			span.op-cond * 只有报名成功的课程才能设置缴费
 			table
 				tbody
@@ -64,7 +64,7 @@ section.admin-content.dw#admin-content
 							
 
 		.admin-op#refuse-apply
-			h3 报名审核拒绝操作
+			h3 报名拒绝
 			span.op-cond * 只有处在'待审核'状态的课程才能被审核拒绝
 			table
 				tbody
@@ -85,7 +85,7 @@ section.admin-content.dw#admin-content
 
 
 		.admin-op#course-refund
-			h3 设置退费操作
+			h3 退费
 			span.op-cond * 只有处在'申请退课'状态的课程才能设置退费
 			table
 				tbody
@@ -106,7 +106,7 @@ section.admin-content.dw#admin-content
 
 
 		.admin-op#quit-approve
-			h3 退课审核通过操作
+			h3 退课通过
 			span.op-cond * 只有处在'申请退课'状态且已经退还费用的课程才能退课审核通过
 			table
 				tbody
@@ -126,7 +126,7 @@ section.admin-content.dw#admin-content
 			p.course-tip.fd-hide
 
 		.admin-op#quit-refuse
-			h3 退课审核拒绝操作
+			h3 退课拒绝
 			span.op-cond * 只有处在'申请退课'状态的课程才能退课审核拒绝
 			table
 				tbody
@@ -143,6 +143,14 @@ section.admin-content.dw#admin-content
 										option(value="#{course.courseVal}") #{course.courseName}
 						td
 							button(class="quitRefuseBtn comm-button", id="quitRefuseBtn") 拒绝退课
+			p.course-tip.fd-hide
+
+		.admin-op#dancer-edit
+			h3 会员管理
+			span.op-cond * 请君慎用管理员权限. 该功能尚待完善
+			
+			
+
 			p.course-tip.fd-hide
 
 

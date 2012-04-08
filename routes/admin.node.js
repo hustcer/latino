@@ -8,6 +8,7 @@
 var db 		= require("../database/database.js").db;
 // 取得课程值以及对应的中文描述映射信息
 var cList 	= require("../database/course.js").courseList;
+var cCourse = require("../database/course.js").currentCourse;
 var nodeMsg = require("./nodemsg.node.js").nodeMessages;
 
 
@@ -15,7 +16,8 @@ exports.man = function(req, res, next){
 
 	res.render('admin', {
         title: 		'管理员后台',
-        courseList: cList
+        courseList: cList,
+        cCourse: 	cCourse
     });
 
 };

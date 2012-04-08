@@ -62,9 +62,13 @@ exports.apply = function(req, res){
 	    	db.latin.insertDancer(dancerModel, function(err, addResult) {
 			    if (err) throw err;
 
-			    if (addResult) {
+			    if (!!addResult) {
+
 				    // 如果开启课程自动审核则在这里进行自动审核
 	    			if(cCourse.autoApprove){
+	    				// 会员信息插入的时候把courseA、courseB删掉了，自动审核时需要回填回来
+	    				dancerModel.courseA = req.body.courseA;
+	    				dancerModel.courseB = req.body.courseB;
 	    				db.latin.autoApprove(dancerModel);
 	    			}
 			    }

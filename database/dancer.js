@@ -27,7 +27,7 @@ var CDO = exports.commonDancerOp = {
 			
 			// 新插入数据库的学员如果报名课程的话根据规则设置报名状态,且未付款
 			courseAddArray.push({courseVal:dancerModel.courseA, status:courseStatus,
-				gmtStatusChanged: new Date(), paid:false});
+				gmtStatusChanged: new Date(), applyTime: new Date(), paid:false});
 
 			logMsg += 'A--' + dancerModel.courseA;
 		}
@@ -35,7 +35,7 @@ var CDO = exports.commonDancerOp = {
 			
 			// 新插入数据库的学员如果报名课程的话根据规则设置报名状态,且未付款
 			courseAddArray.push({courseVal:dancerModel.courseB, status:courseStatus,
-				gmtStatusChanged: new Date(), paid:false});
+				gmtStatusChanged: new Date(), applyTime: new Date(), paid:false});
 
 			logMsg += ' B--' + dancerModel.courseB;
 		}
@@ -93,7 +93,8 @@ var CDO = exports.commonDancerOp = {
 				
 					if (result.courses[i].courseVal === courseAddArray[j]) {
 
-						result.courses[i].status = courseStatus;
+						result.courses[i].status 	= courseStatus;
+						result.courses[i].applyTime = new Date();
 						result.courses[i].gmtStatusChanged = new Date();
 						exist = true;
 						break;
@@ -103,7 +104,7 @@ var CDO = exports.commonDancerOp = {
 				if ( !exist ) {
 					// 新插入数据库的课程根据规则设置报名状态,且未付款
 					result.courses.push( { courseVal:courseAddArray[j], status:courseStatus,
-										gmtStatusChanged:new Date(), paid:false } );
+										gmtStatusChanged:new Date(), applyTime: new Date(), paid:false } );
 				};
 			};
 

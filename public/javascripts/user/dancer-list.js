@@ -39,12 +39,12 @@ jQuery(function($){
 		/**
 		 * 没有满足条件的查询结果的HTML
 		 */
-		noResult: 		'<tr><td colspan="10" class="list-empty">矮油，没有满足条件的会员歪！</td></tr>',	
+		noResult: 		'<tr><td colspan="8" class="list-empty">矮油，没有满足条件的会员歪！</td></tr>',	
 
     	/**
 		 * 显示正在加载数据的HTML
 		 */
-    	loadingHtml: 	'<tr><td colspan="10" class="loading"><img src="./images/loading.gif"><p>数据正在加载请稍后...</p></td></tr>',
+    	loadingHtml: 	'<tr><td colspan="8" class="loading"><img src="./images/loading.gif"><p>数据正在加载请稍后...</p></td></tr>',
 
 		/**
 		 * 静态模块的初始化入口
@@ -72,14 +72,17 @@ jQuery(function($){
 			this._handleSort("dancerID-header", "dancerID");
 			this._handleSort("dancerName-header", "dancerName");
 			this._handleSort("gender-header", "gender");
-			// this._handleSort("course-header", "searchTimes");
-			// this._handleSort("status-header", "changeTrend");
-			// this._handleSort("pay-header", "ctr");
 			this._handleSort("email-header", "email");
 			this._handleSort("wangWang-header", "wangWang");
 			this._handleSort("ext-header", "extNumber");
 			this._handleSort("dept-header", "department");
-			$('#queryBtn').trigger('click');
+
+			// FIXME:一开始combox dom 还没有创建完毕 $('#course-box input.field').val() 为undefined
+			// 所以这里加了一个丑陋的延时来修正，后面注意考虑更合适的方案。
+			setTimeout( function(){
+				$('#queryBtn').trigger('click');
+			}, 100);
+			
 		},
 		/**
 		 * 会员查询筛选
@@ -137,6 +140,7 @@ jQuery(function($){
 
 			var html = this._renderRowHtml( this.resultList.slice(0, this.itemPerPage) );
 			$('#dancer-list table tbody').html(html);
+			$('#dancer-list table tbody tr:odd').css({background:'white'});
     		
     		dancerListPg.customClick = function(page){
 
@@ -144,6 +148,7 @@ jQuery(function($){
     													   page * module.itemPerPage);
 				html = module._renderRowHtml( data );
 				$('#dancer-list table tbody').html(html);
+				$('#dancer-list table tbody tr:odd').css({background:'white'});
 			}
 		},
 		/**
@@ -158,10 +163,10 @@ jQuery(function($){
 				var sortIcon = $("i",this);
 				if( sortIcon.hasClass("i-sort-default") || sortIcon.hasClass("i-sort-up")){
 					module.resultList = json.array.util.sortOrder(module.resultList, dataKeyName, -1);
-					sortIcon.attr('class', 'i-sort-down');
+					sortIcon.attr('class', 'i-sort-down').text('▼');
 				}else{
 					module.resultList = json.array.util.sortOrder(module.resultList, dataKeyName, 1);
-					sortIcon.attr('class', 'i-sort-up');
+					sortIcon.attr('class', 'i-sort-up').text('▲');
 				}
 				
 				module._refreshTableData( module._getCurrentPgIndex() );
@@ -172,12 +177,11 @@ jQuery(function($){
 		 */
 		_resetOrderStatus: function( className ){
 			var allClass = ["dancerID-header", "dancerName-header", "gender-header", "course-header",
-							"status-header", "pay-header", "email-header", "wangWang-header", 
-							"ext-header", "dept-header"];
+							 "email-header", "wangWang-header", "ext-header", "dept-header"];
 			
 			for(var i = 0, l = allClass.length; i < l; i++ ){
 				if(allClass[i] !== className){
-					$("#dancer-list ." + allClass[i] + " i").attr('class', 'i-sort-default');
+					$("#dancer-list ." + allClass[i] + " i").attr('class', 'i-sort-default').text('◆');
 				}
 			}
 		},
@@ -215,7 +219,7 @@ jQuery(function($){
 		 * 将data Array对应的数据渲染成相应的html
 		 */
 		_renderRowHtml: function( data ){
-			var html = [];
+			var cCourseCond = $('#course-box input.field').val(), html = [], date;
 			for (var i = 0, n = data.length; i < n; i++) {
 		    	html.push('<tr><td><a href="/user/' + data[i].dancerID +' " target="_blank" >');
 		    	html.push(data[i].dancerID);
@@ -225,39 +229,29 @@ jQuery(function($){
 		    	html.push(data[i].gender === 'male'? 'M':'F');
 		    	html.push('</td><td class="BW">');
 		    	for (var m = 0,l = data[i].courses.length; m < l; m++) {
-		    		html.push(data[i].courses[m].courseVal + ';');
-		    	};
-		    	html.push('</td><td class="BW">');
+		    		date = new Date(Date.parse(data[i].courses[m].applyTime)).format('yyyy/MM/dd hh:mm:ss');
+		    		// 如果当前课程筛选条件不为空则过滤只显示当前课程
+		    		if( !!cCourseCond ){
 
-		    	for (var m = 0,l = data[i].courses.length; m < l; m++) {
-		    		switch(data[i].courses[m].status){
-			    		case 'waiting':
-			    			html.push('待审核;');
-			    			break;
-			    		case 'approved':
-			    			html.push('报名成功;');
-			    			break;
-			    		case 'refused':
-			    			html.push('报名失败;');
-			    			break;
-			    		case 'quitApplied':
-			    			html.push('申请退课;');
-			    			break;
-			    		case 'quit':
-			    			html.push('已退课;');
-			    			break;
-			    		case 'cancelled':
-			    			html.push('取消报名;');
-			    			break;
-			    		default:
-			    			html.push('未知;');
-			    			break;
-			    	}
+		    			if( data[i].courses[m].courseVal === cCourseCond ){
+		    				html.push( data[i].courses[m].courseVal + ';' );
+		    				html.push(module._getCourseStatus(data[i].courses[m]));
+		    				html.push( data[i].courses[m].paid ? '缴费:Y;':'缴费:N;' );
+
+		    				html.push('报名时间:' + date );
+		    				html.push('<br/>');
+		    				
+		    			}
+		    			
+		    		}else{
+		    			html.push(data[i].courses[m].courseVal + ';');
+		    			html.push(module._getCourseStatus(data[i].courses[m]));
+		    			html.push( data[i].courses[m].paid ? '缴费:Y;':'缴费:N;' );
+		    			html.push('报名时间:' + date );
+		    			html.push('<br/>');
+		    		}
 		    	};
-		    	html.push('</td><td class="BW">');
-		    	for (var m = 0,l = data[i].courses.length; m < l; m++) {
-		    		html.push( data[i].courses[m].paid ? 'Y;':'N;' );
-		    	};
+		    	
 		    	html.push('</td><td>');
 		    	html.push(data[i].email);
 		    	html.push('</td><td>');
@@ -274,13 +268,43 @@ jQuery(function($){
 		    			html.push('其他部门');
 		    			break;
 		    		default:
-		    			html.push('未知部门');
+		    			html.push('---');
 		    			break;
 		    	}
 		    	
 		    	html.push('</td></tr>');
 		    };
 		    return html.join('');
+		},
+		/**
+		 * 根据课程返回其对应的状态描述信息
+		 */
+		_getCourseStatus: function( course ){
+			var status = '';
+			switch(course.status){
+	    		case 'waiting':
+	    			status = ('等待审核;');
+	    			break;
+	    		case 'approved':
+	    			status = ('报名成功;');
+	    			break;
+	    		case 'refused':
+	    			status = ('报名失败;');
+	    			break;
+	    		case 'quitApplied':
+	    			status = ('申请退课;');
+	    			break;
+	    		case 'quit':
+	    			status = ('已经退课;');
+	    			break;
+	    		case 'cancelled':
+	    			status = ('取消报名;');
+	    			break;
+	    		default:
+	    			status = ('未知状态;');
+	    			break;
+	    	};
+	    	return status;
 		}
 
 	}
