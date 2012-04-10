@@ -143,6 +143,48 @@ exports.quitRefuse = function(req, res){
 	
 };
 
+/*
+ * 管理员修改保存会员信息. eg:http://localhost:3000/man/editDancer
+ * 
+ */
+exports.editDancer = function(req, res){
+	var dancerModel = {
+		dancerID: 	req.body.dancerID,
+		// courseA: 	req.body.courseA,
+		// courseB: 	req.body.courseB,
+		dancerName: req.body.dancerName,
+		gender: 	req.body.gender,
+		email: 		req.body.email,
+		wangWang: 	req.body.wangWang,
+		extNumber: 	req.body.extNumber,
+		alipayID: 	req.body.alipayID,
+		vip: 		req.body.vip,
+		level: 		req.body.level,
+		forever: 	req.body.forever,
+		department: req.body.department
+	};
+
+	db.latin.findDancerByID( dancerModel.dancerID, function(err, result) {
+	    if (err) throw err;
+	    
+	    // 之所以要把新插入会员和更新会员信息分开处理而不采用upsert模式，
+	    // 一方面是要设置会员创建时间，另一方面是为了明确操作逻辑，避免意外
+	    // 会员存在则更新会员信息
+	    if (!!result) {
+	    	db.latin.updateDancerByAdmin(dancerModel.dancerID, dancerModel, function(err) {
+	    		if (err) throw err;
+
+	    		// 表单提交成功后返回首页, 没有错误消息就是好消息
+	    		res.redirect('back');
+	    		// res.send({success:true, msg:'Dancer Information Updated Successfully!'});
+	    	});
+			
+	    }
+
+	});
+
+};
+
 
 /*
  * 这里的查询条件还要加上对应的课程，否则result.courses.status 未定义

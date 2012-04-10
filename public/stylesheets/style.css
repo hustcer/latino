@@ -68,10 +68,10 @@ a.comm-btn:hover{text-decoration:none;color:blue;}
 .dance-content .table-container table th{text-align:right;vertical-align: top;width:100px;}
 .dance-content .table-container table tr{line-height:30px;}
 .dance-content .table-container table .em{font-size:14px;}
-.table-container .apply-btn {margin: 10px 10px 0 15px;}
-.table-container .reset-btn {margin: 10px 10px 0 180px;}
-.table-container label{margin: 0 10px 0 3px;}
-.table-container .err-tip{color:red;font-size:11px;width: 235px;float: left;}
+.dance-content .table-container .apply-btn {margin: 10px 10px 0 15px;}
+.dance-content .table-container .reset-btn {margin: 10px 10px 0 180px;}
+.dance-content .table-container label{margin: 0 10px 0 3px;}
+.dance-content .table-container .err-tip{color:red;font-size:11px;width: 235px;float: left;}
 
 .dance-content .apply-table-a{margin: 0 0 15px 5px;}
 .dance-content .apply-table-b{margin: 5px 0 10px 5px;}
@@ -161,7 +161,7 @@ a.comm-btn:hover{text-decoration:none;color:blue;}
 .admin-content h1.header-title{font-size:17px;font-weight:bold;margin-bottom:20px;}
 .admin-content .op-container{float: left;width: 770px;padding: 0px 20px 30px 30px;}
 .admin-content .admin-op h3{font-size:16px;font-weight:bold;color:#6D79E1;margin-bottom: 20px;}
-.admin-content .admin-op {border-bottom: 1px dashed gray;padding: 20px 0 15px;display: none;}
+.admin-content .admin-op {border-bottom: 1px dashed gray;padding: 20px 0 15px;display: none;overflow: hidden;}
 .admin-op table{margin: 10px 5px 25px 50px;}
 .admin-op table tr{height: 30px;line-height: 30px;}
 .admin-op table td{padding-right:20px;}
@@ -171,3 +171,26 @@ a.comm-btn:hover{text-decoration:none;color:blue;}
 .admin-op .op-cond{color: #999;padding: 10px 0 15px 49px;display: inline-block;}
 #op-container .ui-combobox-panel .list{width:141px;}
 #op-container .ui-combobox-panel .list .ui-combobox-item{height:20px;line-height:20px;}
+
+.admin-op .edit-container{margin:9px 100px;clear: both;overflow: hidden;}
+.admin-op .edit-container #dancerID{width:180px !important;}
+.admin-op .course-info{float: right;border: 1px solid #C40000;width: 175px;height: 270px;padding:15px 5px 15px 7px;}
+.admin-op .table-container{float: left;}
+.admin-op .table-container table{width:600px;}
+.admin-op .table-container table th{text-align:right;vertical-align: top;width:100px;}
+.admin-op .table-container table tr{line-height:30px;}
+.admin-op .table-container table .em{font-size:14px;}
+.admin-op .table-container .reset-btn {margin: 10px 10px 0 180px;}
+.admin-op .table-container label{margin: 0 10px 0 3px;}
+.admin-op .table-container .err-tip{color:red;font-size:11px;width: 235px;float: left;}
+.admin-op .course-wrapper{margin: 0 8px;line-height: 27px;clear:both;}
+.admin-op .depart-select,.admin-op .forever,.admin-op .gender-wrapper{margin: 0 8px;}
+
+.admin-op .rangeVal{font-weight: bold;color: orange;font-size:16px;}
+.admin-op .forever-label{color:#C40000;}
+
+#dancer-edit .ui-combobox-panel .list{width:190px!important;}
+#dancer-edit .ui-combobox .result{width:170px!important;}
+
+.admin-op .edit-table-a{margin: 0 0 15px 5px;}
+.admin-op .edit-table-b{margin: 5px 0 10px 5px;}

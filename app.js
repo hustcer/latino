@@ -13,8 +13,9 @@ var app         = module.exports = express.createServer(),
     dancerOp    = require("./database/dancer.js").commonDancerOp;
 
 var gRouterMap  = require('./routes/router.node.js').gRouter,
-	pRouterMap  = require('./routes/router.node.js').pRouter;
-    aRouterMap  = require('./routes/router.node.js').adminRouter;
+	pRouterMap  = require('./routes/router.node.js').pRouter,
+    agRouterMap  = require('./routes/router.node.js').adminRouter,
+    apRouterMap = require('./routes/router.node.js').adminPostRouter;
     
 
 // Configuration
@@ -36,8 +37,11 @@ var setRouters = function( fullFeature ){
 
     // 管理员相关功能，目前只允许测试环境下访问
     if( fullFeature ){
-        for (router in aRouterMap) {
-            app.get(router, aRouterMap[router]);
+        for (router in agRouterMap) {
+            app.get(router, agRouterMap[router]);
+        }
+        for (router in apRouterMap) {
+            app.post(router, apRouterMap[router]);
         }
     }
 

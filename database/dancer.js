@@ -119,6 +119,48 @@ var CDO = exports.commonDancerOp = {
 		
 	},
 	/**
+	 * Admin更新会员dancerID的相关信息
+	 * @param dancerID 		待更新的会员的dancerID
+	 * @param dancerModel 	待更新的会员信息, 该model为前台用户提交的表单信息里面的数据
+	 */
+	updateDancerByAdmin: function(dancerID, dancerModel, fn){
+
+		var self = this;
+
+		this.findOne({'dancerID':dancerID}, function(err, result) {
+
+		    if (err) {
+		    	console.log('Find Dancer Failed While Updating Dancer Info of dancerID', dancerID);
+		    	throw err;
+			}
+
+			result.dancerName = dancerModel.dancerName;
+			result.extNumber = dancerModel.extNumber;
+			result.email = dancerModel.email;
+			result.wangWang = dancerModel.wangWang;
+			// 性别管理员还是可以修改的哈
+			result.gender = dancerModel.gender;
+			result.alipayID = dancerModel.alipayID;
+			result.department = dancerModel.department;
+			if(!!dancerModel.vip) result.vip = dancerModel.vip;
+			if(!!dancerModel.level) result.level = dancerModel.level;
+			if(!!dancerModel.forever){
+				result.forever = true;
+			} else{
+				result.forever = false;
+			}
+
+			// 管理员修改用户信息不用更新修改时间状态
+			// result.gmtModified = new Date();
+			self.save(result, fn);
+
+			console.info('[INFO]----Dancer Information was Updated by Admin, ID:', dancerModel.dancerID,
+    						', DancerName:', dancerModel.dancerName, ', at', new Date() );
+
+		});
+		
+	},
+	/**
 	 * 根据一定的判断原则决定该会员初始报名的时候是否可以自动被审核通过
 	 * @param dancerModel 	待判断是否可以自动审核通过的会员信息, 该model为前台用户提交的表单信息里面的数据
 	 */

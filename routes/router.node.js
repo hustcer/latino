@@ -39,5 +39,12 @@ var pRouter = exports.pRouter 	= {};
 pRouter["/apply"] 				= require('./index.node.js').apply;				// 申请表单提交
 pRouter["/search"] 				= require("./list.node.js").search;				// 会员列表查询表单
 
+/**
+ * 管理员提交表单路径映射
+ */
+var adminPostRouter = exports.adminPostRouter  = {};
+
+adminPostRouter["/man/editDancer"]	= require("./admin.node.js").editDancer;	
+
 
 

@@ -29,52 +29,19 @@ jQuery(function($){
 		
 			this._initUI();
 			this._initHandler();
+
 		},
 		/**
 		 * 模块的主要UI相关初始化
 		 */
 		_initUI: function(){
 
-			// console.log(window.location.hash);
-			if(window.location.hash === '#'||window.location.hash === ''){
-				$('#approve-apply').fadeIn();
-				// 设置当前菜单样式
-				$('ul.admin-links li a[href="#approve-apply"]').css({color:'white'}).parent().css({background:'gray'});
-			}else{
-				var hash = window.location.hash;
-				$(hash).fadeIn();
-				// 设置当前菜单样式
-				$('ul.admin-links li a[href=' + hash + ']').css({color:'white'}).parent().css({background:'gray'});
-			}
+			this._initMenu();
 
-			$('ul.admin-links li a').click(function(){
-				var href = $(this).prop('href'), blockSelector = href.substring(href.lastIndexOf('#'));
-				// 重设其他菜单样式
-				$('ul.admin-links li').css({background:'none'}).find('a').css({color:'#6D79E1'});
-				// 设置当前菜单样式
-				$(this).css({color:'white'}).parent().css({background:'gray'});
-				
-				$('div.admin-op').hide();
-				$('p.course-tip', blockSelector).hide();
-				$(blockSelector).slideDown('fast');
-				return false;
-			})
+			// 初始化课程选择combobox组件
+			this._initComboBoxs();
 
-			// 初始化combobox组件
-			$('#admin-content .course-box').each(function(){
-				var $box = $(this);
-
-				$.use('ui-combobox', function(){
-
-					$box.combobox({
-					    data		: $('select', $box),
-						// 绑定data.value 到 input上
-						change: function(){
-							$('input.result', $box).data('courseVal',$(this).combobox('val'));
-						}
-					});
-				});
-			});
+			this._initDepartment();
 
 		},
 		/**
@@ -91,6 +58,8 @@ jQuery(function($){
 				}
 			});
 
+			// 设置菜单条目点击时选中的菜单项
+			this._menuClickHandler();
 			// 报名审核通过
 			this._handleApprove();
 			// 设置会员已缴费
@@ -103,7 +72,69 @@ jQuery(function($){
 			this._handleQuit();
 			// 设置拒绝会员已退课
 			this._handleRefuseQuit();
-			
+			// 修改会员信息，鼠标焦点离开
+			this._idBlurHandler();
+			// 表单提交、重置事件处理
+			this._formActionHandler();
+
+			// range值改变提示
+			$('input.range-input','#dancer-edit').change(function(){
+				$(this).parent().find('span.rangeVal').text($(this).val());
+			});
+
+		},
+		/**
+		 * 根据浏览器url设置当前选中的菜单项
+		 */
+		_initMenu: function(){
+			// console.log(window.location.hash);
+			if(window.location.hash === '#'||window.location.hash === ''){
+				$('#approve-apply').fadeIn();
+				// 设置当前菜单样式
+				$('ul.admin-links li a[href="#approve-apply"]').css({color:'white'}).parent().css({background:'gray'});
+			}else{
+				var hash = window.location.hash;
+				$(hash).fadeIn();
+				// 设置当前菜单样式
+				$('ul.admin-links li a[href=' + hash + ']').css({color:'white'}).parent().css({background:'gray'});
+			}
+		},
+		/**
+		 * 设置菜单条目点击时选中的菜单项
+		 */
+		_menuClickHandler: function(){
+			$('ul.admin-links li a').click(function(){
+				var href = $(this).prop('href'), blockSelector = href.substring(href.lastIndexOf('#'));
+				// 重设其他菜单样式
+				$('ul.admin-links li').css({background:'none'}).find('a').css({color:'#6D79E1'});
+				// 设置当前菜单样式
+				$(this).css({color:'white'}).parent().css({background:'gray'});
+				
+				$('div.admin-op').hide();
+				$('p.course-tip', blockSelector).hide();
+				$(blockSelector).slideDown('fast');
+				return false;
+			});
+		},
+		/**
+		 * 初始化课程选择combobox组件
+		 */
+		_initComboBoxs: function(){
+			// 初始化combobox组件
+			$('#admin-content .course-box').each(function(){
+				var $box = $(this);
+
+				$.use('ui-combobox', function(){
+
+					$box.combobox({
+					    data		: $('select', $box),
+						// 绑定data.value 到 input上
+						change: function(){
+							$('input.result', $box).data('courseVal',$(this).combobox('val'));
+						}
+					});
+				});
+			});
 		},
 		/**
 		 * 审核通过会员报名请求
@@ -268,6 +299,119 @@ jQuery(function($){
 				});
 				
 			});
+		},
+		/**
+		 * 初始化部门选择下拉列表
+		 */
+		_initDepartment: function(){
+			
+			$.use('ui-combobox',function(){
+				$('div.depart-select', '#dancer-edit').combobox({
+				    data: 	[{text:'请选择部门...',value:''}, {text:'技术部',value:'tech'}, {text:'其他部门',value:'other'}],
+				    name: 	"department",
+					// 绑定data.value 到 input上
+					change: function(){
+						$('input.result','div.depart-select').data('depart-value',$(this).combobox('val'));
+					},
+					listrender: function(){
+						// 默认显示 “请选择部门...” 文案
+						if($("div.depart-select input.result", '#dancer-edit').val() === "" ){
+							$("div.depart-select input.result", '#dancer-edit').val("请选择部门...");	
+						}
+					}
+				});
+			});
+		},
+		/**
+		 * 用户ID输入框失去焦点后触发事件
+		 */
+		_idBlurHandler: function(){
+
+			$("#dancerID").blur(function(){
+				
+				var mid = $.trim($(this).val());
+				if (mid === '') {return false;};
+
+				$.getJSON('/queryDancer/' + mid, function(data){
+					var $selectInput = $("div.depart-select input.result", '#dancer-edit');
+					// 会员不存在的时候直接返回
+					if (!(data && data.data)) {return false;};
+
+					$('#vip').val(data.data.vip);
+					$('#level').val(data.data.level);
+					$('#email').val(data.data.email);
+					$('#vipValue').text(data.data.vip);
+					$('#levelValue').text(data.data.level);
+					$('#wangWang').val(data.data.wangWang);
+					$('#alipayID').val(data.data.alipayID);
+					$('#extNumber').val(data.data.extNumber);
+					$('#dancerName').val(data.data.dancerName);
+					if (data.data.forever) {
+						$('#forever').prop('checked',true);
+					};
+
+					if (data.data.gender === 'male') { 
+						$('#maleRadio').prop('checked', true);
+					}else{
+						$('#femaleRadio').prop('checked', true);
+					}
+					if (data.data.department === 'tech') {
+						// 回填表单department数据 
+						$('#edit-container input.field').val('tech');
+						$selectInput.val("技术部");
+
+					}else if(data.data.department === 'other'){
+						$('#edit-container input.field').val('other');
+						$selectInput.val("其他部门");
+
+					}else{
+						$selectInput.val("请选择部门...");
+					}
+
+				});
+			});
+		},
+		/**
+		 * 表单提交、重置按钮事件
+		 */
+		_formActionHandler: function(){
+			// 提交表单
+			$('#confirm-btn').click(function(){
+
+				var $editForm = $('#editForm');
+
+				// 表单验证
+				$.use("web-valid", function() {
+					var validApply = new FE.ui.Valid($('input.comm-input', $editForm), {
+	                    onValid : function(res, o) {
+	                        var tr = $(this).closest('tr'), td = $('td:last-child', tr), msg = '';
+	                        
+	                        switch(res){
+	                            case 'required':
+	                                msg = '请填写该信息';
+	                                break;
+	                            case 'email':
+	                                msg = '邮箱格式不对';
+	                                break;
+	                        }
+	                        
+	                        td.html(msg);
+	                    }
+					});
+
+					if (validApply.valid()) {
+						$editForm[0].submit();
+					};
+
+				});
+				
+			});
+
+			// 重置表单
+			$('#reset-btn').click(function(){
+				$('#editForm')[0].reset();
+			});
+			
 		},
 		/**
 		 * 显示操作结果反馈信息
