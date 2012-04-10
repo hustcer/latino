@@ -21,8 +21,12 @@ ToDo:
 	*后台管理员手工无限制报名						H
 	*paid改成金额而非boolean						H
 	*Lock则报名结束								H
-	年卡会员自动报名								H
-	筛选条件面包屑
+	年卡会员自动报名forever						H
+	筛选条件面包屑									H
+	班级配置成数组									H
+	production mode特殊处理						H
+	导出满足相应条件的邮件列表						H
+
 
 
 	

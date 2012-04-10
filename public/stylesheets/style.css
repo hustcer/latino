@@ -1,8 +1,9 @@
 body {
-  padding: 50px;
+  padding: 50px 0;
   font: 13px "微软雅黑", tahoma;
   background-color: ivory;
   min-height:600px;
+  margin: 0;
 }
 
 input{font: 13px "微软雅黑", tahoma;}
@@ -12,6 +13,8 @@ input{font: 13px "微软雅黑", tahoma;}
 .BW{word-break: break-all;word-wrap: break-word;}
 .R{color: #C40000;}
 .BD{font-weight:700;}
+
+.none-exist{color: #C40000;margin: 20px 50px;font-weight: 700;}
 
 #user-info{margin-left:250px;}
 
@@ -24,7 +27,7 @@ input{font: 13px "微软雅黑", tahoma;}
 .dance-nav .nav-links li a{color: #333;}
 .dance-nav .nav-links li a:hover{color: #00F;text-decoration:none;}
 
-.dw{width:1000px;margin: 0 auto;clear:both;}
+.dw{width:1000px;margin: 0 auto;clear: both;}
 .comm-button {
 	border:1px solid #B83B1C;
 	background: orange;
@@ -58,7 +61,7 @@ a.comm-btn:hover{text-decoration:none;color:blue;}
 .dance-content .welcome-msg{color:#999;font-size:12px;text-indent:2em;}
 .dance-content .content-header{margin: 0 100px 15px;}
 
-.dance-content .apply-container{margin:9px 100px;}
+.dance-content .apply-container{margin:9px 100px;clear: both;overflow: hidden;}
 .dance-content .course-info{float: right;border: 1px solid #C40000;width: 175px;height: 270px;padding:15px 5px 15px 7px;}
 .dance-content .table-container{float: left;}
 .dance-content .table-container table{width:600px;}

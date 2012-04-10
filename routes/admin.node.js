@@ -29,7 +29,7 @@ exports.man = function(req, res, next){
  */
 exports.pay = function(req, res){
 
-	console.log("Set Some Course To Be Paid For User With ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
+	console.log("Set Paid For User With ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 	
 	checkCourseStatus(req, res, 'approved', function(){
 		db.latin.updateDancerPayStatus(req.params.id, req.query.courseVal, true, function(err, result) {
@@ -47,7 +47,7 @@ exports.pay = function(req, res){
  */
 exports.unpay = function(req, res){
 
-	console.log("Set Some Course To Be Unpaid For User With ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
+	console.log("Set Unpaid For User With ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 	
 	checkCourseStatus(req, res, 'quitApplied', function(){
 
@@ -128,7 +128,7 @@ exports.quit = function(req, res){
  */
 exports.quitRefuse = function(req, res){
 
-	console.log("Refuse Quiting Course With dancerID: "+ req.params.id + " courseVal: " + req.query.courseVal)
+	console.log("Refuse Quiting With dancerID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 
 	checkCourseStatus(req, res, 'quitApplied', function(){
 

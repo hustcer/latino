@@ -14,46 +14,65 @@ var app         = module.exports = express.createServer(),
 
 var gRouterMap  = require('./routes/router.node.js').gRouter,
 	pRouterMap  = require('./routes/router.node.js').pRouter;
-
-
+    aRouterMap  = require('./routes/router.node.js').adminRouter;
+    
 
 // Configuration
 app.configure(function(){
 
     app.set('views', __dirname + '/views');
     app.set('view engine', 'jade');
-    // app.set('view options', { layout: false });
     app.use(express.bodyParser());
     app.use(express.methodOverride());
-	// 注意顺序，为了能够正确定向到404页面，要把这个提前，否则请求静态资源也会跳转到404。
-    app.use(express.static(__dirname + '/public'));
 	
-    app.use(app.router);
-    
 });
+
+/**
+ * 绑定数据库collection及相应方法，配置请求响应路由
+ * @param fullFeature   是否启用所有功能，包括管理员权限功能
+ */
+var setRouters = function( fullFeature ){
+    db.bind("latin", dancerOp);
+
+    // 管理员相关功能，目前只允许测试环境下访问
+    if( fullFeature ){
+        for (router in aRouterMap) {
+            app.get(router, aRouterMap[router]);
+        }
+    }
+
+    // 普通用户get请求
+    for (router in gRouterMap) {
+        // console.log("\nHandle Get Path:'" + router + "' \tHandler: " + gRouterMap[router]);
+        app.get(router, gRouterMap[router]);
+    }
+    // 普通用户post请求
+    for (router in pRouterMap) {
+        app.post(router, pRouterMap[router]);
+    }
+};
 
 app.configure('development', function(){
     app.use(express.errorHandler({
         dumpExceptions: true,
-        showStack: true
+        showStack:      true
     }));
+    // 注意顺序，为了能够正确定向到404页面，要把这个提前，否则请求静态资源也会跳转到404。
+    app.use(express.static(__dirname + '/public'));
+    
+    app.use(app.router);
+    setRouters(true);
 });
 
 app.configure('production', function(){
+    var oneMonth = 1000*60*60*24*30;
     app.use(express.errorHandler());
+    // 注意顺序，为了能够正确定向到404页面，要把这个提前，否则请求静态资源也会跳转到404。
+    app.use(express.static(__dirname + '/public', { maxAge: oneMonth }));
+    
+    app.use(app.router);
+    setRouters(false);
 });
-
-db.bind("latin", dancerOp);
-
-for (router in gRouterMap) {
-    // console.log("\nHandle Get Path:'" + router + "' \tHandler: " + gRouterMap[router]);
-    app.get(router, gRouterMap[router]);
-}
-
-for (router in pRouterMap) {
-    // console.log("\nHandle Post Path:'" + router + "' \tHandler: " + pRouterMap[router]);
-    app.post(router, pRouterMap[router]);
-}
 
 app.listen(3000);
 

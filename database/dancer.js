@@ -47,7 +47,8 @@ var CDO = exports.commonDancerOp = {
 		dancerModel.gmtModified = new Date();
 
 		this.insert(dancerModel, fn);
-		console.log('New Dancer Added, With ID:',dancerModel.dancerID, " Courses:", (logMsg ? logMsg: '---None') );
+		console.info('[INFO]----New Dancer Added, With DancerID:', dancerModel.dancerID, 
+			', DancerName:', dancerModel.dancerName, ", Courses:", (logMsg ? logMsg: 'None') );
 	},
 	/**
 	 * 更新会员dancerID的相关信息
@@ -73,7 +74,7 @@ var CDO = exports.commonDancerOp = {
 		this.findOne({'dancerID':dancerID}, function(err, result) {
 
 		    if (err) {
-		    	console.log('Find Dancer Failed While Updating Dancer Info!');
+		    	console.log('Find Dancer Failed While Updating Dancer Info of dancerID', dancerID);
 		    	throw err;
 			}
 
@@ -111,8 +112,8 @@ var CDO = exports.commonDancerOp = {
 			result.gmtModified = new Date();
 			self.save(result, fn);
 
-			console.log('Dancer Infomation Updated With ID:', dancerModel.dancerID,
-    						" Update Courses:", (logMsg ? logMsg: '---None') );
+			console.info('[INFO]----Dancer Infomation Updated With ID:', dancerModel.dancerID,
+    						', DancerName:', dancerModel.dancerName, ", Updated Courses:", (logMsg ? logMsg: 'None') );
 
 		});
 		
@@ -122,13 +123,13 @@ var CDO = exports.commonDancerOp = {
 	 * @param dancerModel 	待判断是否可以自动审核通过的会员信息, 该model为前台用户提交的表单信息里面的数据
 	 */
 	autoApprove: function(dancerModel){
-		
+
 		if( !!dancerModel.courseA ) {
-			CDO._approveCourse(dancerModel.dancerID, dancerModel.courseA );
+			CDO._approveCourse(dancerModel, dancerModel.courseA );
 		}
 
 		if( !!dancerModel.courseB ) {
-			CDO._approveCourse(dancerModel.dancerID, dancerModel.courseB );
+			CDO._approveCourse(dancerModel, dancerModel.courseB );
 		}
 
 	},
@@ -140,11 +141,11 @@ var CDO = exports.commonDancerOp = {
 	 * 2. 女生，如果level >= 3，或者vip >= 3 且当前报名成功人数小于(班级限额-3)则自动审核通过
 	 * 3. 其他情况不会修改课程审核状态
 	 * 4. 其他规则后续补充
-	 * @param dancerID 		待判断是否可以自动审核通过的会员ID
+	 * @param dancerModel 	待判断是否可以自动审核通过的会员
 	 * @param courseVal 	待自动审核的课程
 	 */
-	_approveCourse: function(dancerID, courseVal){
-		console.log('Auto Approve Dancer:', dancerID, ' CourseVal:', courseVal);
+	_approveCourse: function(dancerModel, courseVal){
+		// console.info('[INFO]----Auto Approve Dancer:', dancerModel.dancerID, ' CourseVal:', courseVal);
 
 		var condition = {courses:{	$elemMatch:
 							{'courseVal': 	courseVal,
@@ -158,8 +159,9 @@ var CDO = exports.commonDancerOp = {
 			// -------------------Rule NO.1-----------------------------------
 			// 如果当前报名成功的会员数目小于允许的自动审核限额则自动审核通过
 			if( count < cCourse.autoLimit ){
-				console.log('Auto Approve Dancer According to Rule NO.1----', dancerID, ', Course:--', courseVal);
-				CDO.updateDancerCourseStatus(dancerID, courseVal, 'approved');
+				console.info('[INFO]----Auto Approve According to Rule NO.1: DancerID-', dancerModel.dancerID, 
+					', DancerName-', dancerModel.dancerName, ', Course-', courseVal);
+				CDO.updateDancerCourseStatus(dancerModel.dancerID, courseVal, 'approved');
 				// 每条自动审核规则执行完后都要return，否则会继续执行下面的规则，下同。
 				return;
 			}
@@ -167,22 +169,24 @@ var CDO = exports.commonDancerOp = {
 			// 如果当前报名成功的会员数目小于课程总容量则继续下面的审核规则，否则不再继续审核
 			if( count < cCourse.cCapacity ){
 
-				CDO.findDancerByID(dancerID, function(err, result){
+				CDO.findDancerByID(dancerModel.dancerID, function(err, result){
 					if (err) {throw err};
 
 					// -------------------Rule NO.2-----------------------------------
 					// 如果该舞种报名男士优先则直接审核通过
 					if ( !!result && result.gender === 'male' && cCourse.manFirst ) {
-						console.log('Auto Approve Dancer According to Rule NO.2----', dancerID, ', Course:--', courseVal);
-						CDO.updateDancerCourseStatus(dancerID, courseVal, 'approved');
+						console.info('[INFO]----Auto Approve According to Rule NO.2: DancerID-', dancerModel.dancerID, 
+							', DancerName-', dancerModel.dancerName, ', Course-', courseVal);
+						CDO.updateDancerCourseStatus(dancerModel.dancerID, courseVal, 'approved');
 						return;
 					};
 
 					// -------------------Rule NO.3-----------------------------------
 					if ( !!result && ( result.level >= 3 || result.vip >= 3 ) ) {
 
-						console.log('Auto Approve Dancer According to Rule NO.3----', dancerID, ', Course:--', courseVal);
-						CDO.updateDancerCourseStatus(dancerID, courseVal, 'approved');
+						console.info('[INFO]----Auto Approve According to Rule NO.3: DancerID-', dancerModel.dancerID, 
+							', DancerName-', dancerModel.dancerName, ', Course-', courseVal);
+						CDO.updateDancerCourseStatus(dancerModel.dancerID, courseVal, 'approved');
 						return;
 					};
 

@@ -14,14 +14,6 @@ var courseList 	= require("../database/course.js").courseList;
  * 会员信息列表接口. 默认情况应当以当前开设课程为查询条件
  */
 exports.list = function(req, res){
-	// 默认查当前开设的两门课程中，所有课程报名审核通过，且已经缴费的会员.需要提示用户当前搜索条件
-	// var condition = {courses:{	$elemMatch:
-	// 							{'courseVal':{$in: [cCourse.courseA.cValue, cCourse.courseB.cValue]},
-	// 							 'status':'approved', 'paid':true
-	// 							}
-	// 						 }
-	// 				};
-	// db.collection('latin').find(condition).toArray(function(err, result) {});
 
 	res.render('list', {
         title: 		'课程报名信息',
@@ -38,8 +30,8 @@ exports.search = function(req, res){
 
 	var dancerModel = {};
 	// 根据课程状态，是否缴费来进行查询
-	if (!!req.body.dancerID) 	{dancerModel.dancerID = req.body.dancerID;};
-	if (!!req.body.gender) 		{dancerModel.gender = req.body.gender;};
+	if (!!req.body.dancerID) 	{dancerModel.dancerID 	= req.body.dancerID;};
+	if (!!req.body.gender) 		{dancerModel.gender 	= req.body.gender;};
 	if (!!req.body.department) 	{dancerModel.department = req.body.department;};
 
 	// 内嵌文档精确匹配
