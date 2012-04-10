@@ -27,7 +27,7 @@ input{font: 13px "微软雅黑", tahoma;}
 .dance-nav .nav-links li a{color: #333;}
 .dance-nav .nav-links li a:hover{color: #00F;text-decoration:none;}
 
-.dw{width:1000px;margin: 0 auto;clear: both;}
+.dw{width:1000px;margin: 0 auto;clear: both;overflow: hidden;}
 .comm-button {
 	border:1px solid #B83B1C;
 	background: orange;

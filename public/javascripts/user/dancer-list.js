@@ -220,6 +220,7 @@ jQuery(function($){
 		 */
 		_renderRowHtml: function( data ){
 			var cCourseCond = $('#course-box input.field').val(), html = [], date;
+
 			for (var i = 0, n = data.length; i < n; i++) {
 		    	html.push('<tr><td><a href="/user/' + data[i].dancerID +' " target="_blank" >');
 		    	html.push(data[i].dancerID);
@@ -228,29 +229,37 @@ jQuery(function($){
 		    	html.push('</td><td>');
 		    	html.push(data[i].gender === 'male'? 'M':'F');
 		    	html.push('</td><td class="BW">');
-		    	for (var m = 0,l = data[i].courses.length; m < l; m++) {
-		    		date = new Date(Date.parse(data[i].courses[m].applyTime)).format('yyyy/MM/dd hh:mm:ss');
-		    		// 如果当前课程筛选条件不为空则过滤只显示当前课程
-		    		if( !!cCourseCond ){
 
-		    			if( data[i].courses[m].courseVal === cCourseCond ){
-		    				html.push( data[i].courses[m].courseVal + ';' );
-		    				html.push(module._getCourseStatus(data[i].courses[m]));
-		    				html.push( data[i].courses[m].paid ? '缴费:Y;':'缴费:N;' );
+		    	$.use("util-date",function(){
+				        
+				    for (var m = 0,l = data[i].courses.length; m < l; m++) {
+				    	// 本方法在ie浏览器下有问题，故而用util-date取代
+			    		// date = new Date(Date.parse(data[i].courses[m].applyTime)).format('yyyy/MM/dd hh:mm:ss');
 
-		    				html.push('报名时间:' + date );
-		    				html.push('<br/>');
-		    				
-		    			}
-		    			
-		    		}else{
-		    			html.push(data[i].courses[m].courseVal + ';');
-		    			html.push(module._getCourseStatus(data[i].courses[m]));
-		    			html.push( data[i].courses[m].paid ? '缴费:Y;':'缴费:N;' );
-		    			html.push('报名时间:' + date );
-		    			html.push('<br/>');
-		    		}
-		    	};
+			    		date = Date.parseDate(data[i].courses[m].applyTime, "yyyy-MM-dd hh:mm:ss").format('yyyy/MM/dd hh:mm:ss');
+			    		// 如果当前课程筛选条件不为空则过滤只显示当前课程
+			    		if( !!cCourseCond ){
+
+			    			if( data[i].courses[m].courseVal === cCourseCond ){
+			    				html.push( data[i].courses[m].courseVal + ';' );
+			    				html.push(module._getCourseStatus(data[i].courses[m]));
+			    				html.push( data[i].courses[m].paid ? '缴费:Y;':'缴费:N;' );
+
+			    				html.push('报名时间:' + date );
+			    				html.push('<br/>');
+			    				
+			    			}
+			    			
+			    		}else{
+			    			html.push(data[i].courses[m].courseVal + ';');
+			    			html.push(module._getCourseStatus(data[i].courses[m]));
+			    			html.push( data[i].courses[m].paid ? '缴费:Y;':'缴费:N;' );
+			    			html.push('报名时间:' + date );
+			    			html.push('<br/>');
+			    		}
+			    	};
+				});
+		    	
 		    	
 		    	html.push('</td><td>');
 		    	html.push(data[i].email);

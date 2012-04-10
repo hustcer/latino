@@ -7,7 +7,7 @@
 
 include includes/header
 
-section.admin-content.dw#admin-content
+.dw: section.admin-content#admin-content
 	.content-header
 		h1.header-title= title
 	nav.admin-bg-nav
@@ -37,8 +37,7 @@ section.admin-content.dw#admin-content
 									option(value="") 请选择...
 									each course in courseList
 										option(value="#{course.courseVal}") #{course.courseName}
-						td
-							button(class="approveBtn comm-button", id="approveBtn") 审核通过
+						td: button(class="approveBtn comm-button", id="approveBtn") 审核通过
 			p.course-tip.fd-hide
 
 
@@ -58,8 +57,7 @@ section.admin-content.dw#admin-content
 									option(value="") 请选择...
 									each course in courseList
 										option(value="#{course.courseVal}") #{course.courseName}
-						td
-							button(class="payBtn comm-button", id="payBtn") 设置缴费
+						td: button(class="payBtn comm-button", id="payBtn") 设置缴费
 			p.course-tip.fd-hide
 							
 
@@ -79,8 +77,7 @@ section.admin-content.dw#admin-content
 									option(value="") 请选择...
 									each course in courseList
 										option(value="#{course.courseVal}") #{course.courseName}
-						td
-							button(class="refuseBtn comm-button", id="refuseBtn") 审核拒绝
+						td: button(class="refuseBtn comm-button", id="refuseBtn") 审核拒绝
 			p.course-tip.fd-hide
 
 
@@ -100,8 +97,7 @@ section.admin-content.dw#admin-content
 									option(value="") 请选择...
 									each course in courseList
 										option(value="#{course.courseVal}") #{course.courseName}
-						td
-							button(class="refundBtn comm-button", id="refundBtn") 设置退费
+						td: button(class="refundBtn comm-button", id="refundBtn") 设置退费
 			p.course-tip.fd-hide
 
 
@@ -121,8 +117,7 @@ section.admin-content.dw#admin-content
 									option(value="") 请选择...
 									each course in courseList
 										option(value="#{course.courseVal}") #{course.courseName}
-						td
-							button(class="quitBtn comm-button", id="quitBtn") 确认退课
+						td: button(class="quitBtn comm-button", id="quitBtn") 确认退课
 			p.course-tip.fd-hide
 
 		.admin-op#quit-refuse
@@ -141,8 +136,7 @@ section.admin-content.dw#admin-content
 									option(value="") 请选择...
 									each course in courseList
 										option(value="#{course.courseVal}") #{course.courseName}
-						td
-							button(class="quitRefuseBtn comm-button", id="quitRefuseBtn") 拒绝退课
+						td: button(class="quitRefuseBtn comm-button", id="quitRefuseBtn") 拒绝退课
 			p.course-tip.fd-hide
 
 		.admin-op#dancer-edit
@@ -150,7 +144,6 @@ section.admin-content.dw#admin-content
 			span.op-cond * 请君慎用管理员权限. 该功能尚待完善
 			
 			
-
 			p.course-tip.fd-hide
 
 

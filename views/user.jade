@@ -8,55 +8,46 @@
 
 include includes/header
 
-section.dance-content.dw#dance-content
+div.dw: section.dance-content#dance-content
 	.content-header
 		h1.header-title= title 
 
 	#user-info.table-container
 		table
 			tr
-				th
-					label 工号：
+				th: label 工号：
 				td	
 					#{dancer.dancerID}
 			tr
-				th
-					label 姓名：
+				th: label 姓名：
 				td
 					#{dancer.dancerName}
 			tr
-				th
-					label 性别：
+				th: label 性别：
 				td
 					#{dancer.gender}
 			tr
-				th
-					label 邮箱：
+				th: label 邮箱：
 				td
 					#{dancer.email}
 			tr
-				th
-					label 旺旺：
+				th: label 旺旺：
 				td
 					#{dancer.wangWang}
 			tr
-				th
-					label 分机：
+				th: label 分机：
 				td
 					#{dancer.extNumber}
 			tr
-				th
-					label 部门：
+				th: label 部门：
 				td
 					#{dancer.department}
 			tr
-				th
-					label 支付宝：
+				th: label 支付宝：
 				td
 					#{dancer.alipayID}
 			tr
-				th
-					label 参加的培训：
+				th: label 参加的培训：
 				td
 					#{dancer.courses}
 
