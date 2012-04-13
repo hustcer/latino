@@ -5,7 +5,7 @@
  * Date: 	2012-2-12   
  */
 
-var db 			= require("../database/database.js").db;
+var col 		= require("../database/database.js").collection;
 var cCourse 	= require("../database/course.js").currentCourse;
 var courseList 	= require("../database/course.js").courseList;
 
@@ -50,7 +50,7 @@ exports.search = function(req, res){
 
 	// console.log('User Current Search Condition:', dancerModel);
 
-	db.latin.findDancerByCondition(dancerModel, function(err, result) {
+	col.findDancerByCondition(dancerModel, function(err, result) {
 
 	    if (err) throw err;
 

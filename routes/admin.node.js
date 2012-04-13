@@ -5,7 +5,7 @@
  * Date: 	2012-2-13   
  */
 
-var db 		= require("../database/database.js").db;
+var col 	= require("../database/database.js").collection;
 // 取得课程值以及对应的中文描述映射信息
 var cList 	= require("../database/course.js").courseList;
 var cCourse = require("../database/course.js").currentCourse;
@@ -32,7 +32,7 @@ exports.pay = function(req, res){
 	console.log("Set Paid For User With ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 	
 	checkCourseStatus(req, res, 'approved', function(){
-		db.latin.updateDancerPayStatus(req.params.id, req.query.courseVal, true, function(err, result) {
+		col.updateDancerPayStatus(req.params.id, req.query.courseVal, true, function(err, result) {
 		    if (err) throw err;
 
 		    res.contentType('application/json');
@@ -51,7 +51,7 @@ exports.unpay = function(req, res){
 	
 	checkCourseStatus(req, res, 'quitApplied', function(){
 
-		db.latin.updateDancerPayStatus(req.params.id, req.query.courseVal, false, function(err, result) {
+		col.updateDancerPayStatus(req.params.id, req.query.courseVal, false, function(err, result) {
 		    if (err) throw err;
 
 		    res.contentType('application/json');
@@ -69,7 +69,7 @@ exports.approve = function(req, res){
 	console.log("Approve Course With ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 	checkCourseStatus(req, res, 'waiting', function(){
 
-		db.latin.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'approved', function(err, result) {
+		col.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'approved', function(err, result) {
 		    if (err) throw err;
 
 		    res.contentType('application/json');
@@ -88,7 +88,7 @@ exports.refuse = function(req, res){
 
 	checkCourseStatus(req, res, 'waiting', function(){
 
-		db.latin.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'refused', function(err, result) {
+		col.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'refused', function(err, result) {
 		    if (err) throw err;
 
 		    res.contentType('application/json');
@@ -110,7 +110,7 @@ exports.quit = function(req, res){
 	checkCourseStatus(req, res, 'quitApplied', function(){
 
 		checkPayStatus(req, res, false, function(){
-			db.latin.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'quit', function(err, result) {
+			col.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'quit', function(err, result) {
 			    if (err) throw err;
 
 			    res.contentType('application/json');
@@ -132,7 +132,7 @@ exports.quitRefuse = function(req, res){
 
 	checkCourseStatus(req, res, 'quitApplied', function(){
 
-		db.latin.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'approved', function(err, result) {
+		col.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'approved', function(err, result) {
 		    if (err) throw err;
 
 		    res.contentType('application/json');
@@ -164,14 +164,14 @@ exports.editDancer = function(req, res){
 		department: req.body.department
 	};
 
-	db.latin.findDancerByID( dancerModel.dancerID, function(err, result) {
+	col.findDancerByID( dancerModel.dancerID, function(err, result) {
 	    if (err) throw err;
 	    
 	    // 之所以要把新插入会员和更新会员信息分开处理而不采用upsert模式，
 	    // 一方面是要设置会员创建时间，另一方面是为了明确操作逻辑，避免意外
 	    // 会员存在则更新会员信息
 	    if (!!result) {
-	    	db.latin.updateDancerByAdmin(dancerModel.dancerID, dancerModel, function(err) {
+	    	col.updateDancerByAdmin(dancerModel.dancerID, dancerModel, function(err) {
 	    		if (err) throw err;
 
 	    		// 表单提交成功后返回首页, 没有错误消息就是好消息
@@ -195,7 +195,7 @@ exports.editDancer = function(req, res){
  */
 var checkCourseStatus = function(req, res, status, callback){
 
-	db.latin.findDancerByID(req.params.id, function(err, result){
+	col.findDancerByID(req.params.id, function(err, result){
 		if (err) throw err;
 		var satisfied = false;
 
@@ -234,7 +234,7 @@ var checkCourseStatus = function(req, res, status, callback){
  */
 var checkPayStatus = function(req, res, isPaid, callback){
 
-	db.latin.findDancerByID(req.params.id, function(err, result){
+	col.findDancerByID(req.params.id, function(err, result){
 		if (err) throw err;
 		var satisfied = false;
 

@@ -6,7 +6,7 @@
  * Date: 	2012-2-13 
  */
 
-var db 		= require("../database/database.js").db;
+var col 	= require("../database/database.js").collection;
 // 取得课程值以及对应的中文描述映射信息
 var cList 	= require("../database/course.js").courseList;
 
@@ -15,7 +15,7 @@ var cList 	= require("../database/course.js").courseList;
  */
 exports.user = function(req, res, next){
 
-	db.collection('latin').findOne( {dancerID: req.params.id}, function(err, result) {
+	col.findOne( {dancerID: req.params.id}, function(err, result) {
 
 	  	if (result) {
 	  		

@@ -1,10 +1,4 @@
 
-/**
- * Package Information.
- * For More Reference Of Package Format, Please Visit: http://package.json.nodejitsu.com/
- * Author:  justin.maj
- * Date:    2012-1-19 
- */
 {
     "name": 		  "latino",
     "version": 		"0.0.1",

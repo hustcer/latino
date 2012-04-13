@@ -10,8 +10,13 @@
  * 当前开课情况
  */
 var cCourse = exports.currentCourse = {
-	courseA:{cValue: "2RE", cName: "第2期伦巴基础班", ps:"上课时间：每周四晚6:30~7:30, 公司舞房"},
-	courseB:{cValue: "2CI", cName: "第2期恰恰中级班", ps:"上课时间：每周四晚7:40~8:40, 公司舞房"},
+	// **************	不同的舞种数据存储在不同的Collecion里面的，一定不能混存。	*************
+	// **************	拉丁数据存储在dance数据库中的	latin  collecion中 	  	*************
+	// **************	爵士数据存储在dance数据库中的	jazz   collecion中 		*************
+	// **************	街舞数据存储在dance数据库中的	hiphop collecion中 		*************
+	courseType: 'latin',		
+	courseA: 	{cValue: "2RE", cName: "第2期伦巴基础班", ps:"上课时间：每周四晚6:30~7:30, 公司舞房"},
+	courseB: 	{cValue: "2CI", cName: "第2期恰恰中级班", ps:"上课时间：每周四晚7:40~8:40, 公司舞房"},
 	cCapacity: 	25, 
 	// 锁定课程状态，禁止报名、退课等操作
 	locked: 	false,

@@ -8,8 +8,8 @@
  * Date: 	2012-1-20  
  */
 
-// 注意：将collection与方法绑定是在app.js里进行的，在内部调用的时候绑定尚未发生，所以需要引入db
-var db 			= require("../database/database.js").db;
+// 注意：将collection与方法绑定是在app.js里进行的，在内部调用的时候绑定尚未发生，所以需要引入col
+var col 		= require("../database/database.js").collection;
 // 当前开课信息
 var cCourse 	= require("../database/course.js").currentCourse;
 
@@ -196,7 +196,7 @@ var CDO = exports.commonDancerOp = {
 						 }};
 
 		// 此处内部调用时还没有绑定方法所以要调用原生db
-		db.latin.count(condition, function(err, count){
+		col.count(condition, function(err, count){
 
 			// -------------------Rule NO.1-----------------------------------
 			// 如果当前报名成功的会员数目小于允许的自动审核限额则自动审核通过
@@ -261,7 +261,7 @@ var CDO = exports.commonDancerOp = {
 	 * @param dancerID 		待查询的会员的dancerID
 	 */
 	findDancerByID: function(dancerID, fn){
-		db.latin.findOne({'dancerID':dancerID}, {gmtCreated:0, gmtModified:0, _id:0}, fn);
+		col.findOne({'dancerID':dancerID}, {gmtCreated:0, gmtModified:0, _id:0}, fn);
 	},
 	/**
 	 * 根据dancerID查询其全部保存在数据库里的会员信息
@@ -304,7 +304,7 @@ var CDO = exports.commonDancerOp = {
 	 */
 	updateDancerCourseStatus: function(dancerID, courseValue, status, fn){
 
-		db.latin.update({'dancerID':dancerID, 'courses.courseVal':courseValue}, {  $set:
+		col.update({'dancerID':dancerID, 'courses.courseVal':courseValue}, {  $set:
 			{'courses.$.status':status, 'courses.$.gmtStatusChanged':new Date(), 'gmtModified': new Date()}
 
 		}, fn);

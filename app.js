@@ -1,3 +1,6 @@
+/**
+ * For More Reference about Package Format, Please Visit: http://package.json.nodejitsu.com/
+ */
 
 /**
  * Module dependencies.
@@ -10,6 +13,7 @@ var express     = require('express');
 
 var app         = module.exports = express.createServer(),
     db          = require("./database/database.js").db,
+    cCourse     = require("./database/course.js").currentCourse,
     dancerOp    = require("./database/dancer.js").commonDancerOp;
 
 var gRouterMap  = require('./routes/router.node.js').gRouter,
@@ -25,7 +29,7 @@ app.configure(function(){
     app.set('view engine', 'jade');
     app.use(express.bodyParser());
     app.use(express.methodOverride());
-	
+
 });
 
 /**
@@ -33,7 +37,8 @@ app.configure(function(){
  * @param fullFeature   是否启用所有功能，包括管理员权限功能
  */
 var setRouters = function( fullFeature ){
-    db.bind("latin", dancerOp);
+    // 将相应的操作绑定到Collection上
+    db.bind(cCourse.courseType, dancerOp);
 
     // 管理员相关功能，目前只允许测试环境下访问
     if( fullFeature ){
@@ -57,23 +62,23 @@ var setRouters = function( fullFeature ){
 };
 
 app.configure('development', function(){
+
     app.use(express.errorHandler({
         dumpExceptions: true,
         showStack:      true
     }));
-    // 注意顺序，为了能够正确定向到404页面，要把这个提前，否则请求静态资源也会跳转到404。
+    // 静态资源路由
     app.use(express.static(__dirname + '/public'));
-    
     app.use(app.router);
     setRouters(true);
 });
 
 app.configure('production', function(){
+
     var oneMonth = 1000*60*60*24*30;
     app.use(express.errorHandler());
-    // 注意顺序，为了能够正确定向到404页面，要把这个提前，否则请求静态资源也会跳转到404。
+    // 静态资源路由
     app.use(express.static(__dirname + '/public', { maxAge: oneMonth }));
-    
     app.use(app.router);
     setRouters(false);
 });

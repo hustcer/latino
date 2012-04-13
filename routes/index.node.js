@@ -5,7 +5,7 @@
  * Date: 	2012-1-19   
  */
 
-var db 		= require("../database/database.js").db;
+var col 	= require("../database/database.js").collection;
 // 当前开课信息
 var cCourse = require("../database/course.js").currentCourse;
 var Step 	= require('step');
@@ -41,25 +41,25 @@ exports.apply = function(req, res){
 		department: req.body.department
 	};
 
-	db.latin.findDancerByID( dancerModel.dancerID, function(err, result) {
+	col.findDancerByID( dancerModel.dancerID, function(err, result) {
 	    if (err) throw err;
 	    
 	    // 之所以要把新插入会员和更新会员信息分开处理而不采用upsert模式，
 	    // 一方面是要设置会员创建时间，另一方面是为了明确操作逻辑，避免意外
 	    // 会员存在则更新会员信息
 	    if (!!result) {
-	    	db.latin.updateDancerByID(dancerModel.dancerID, dancerModel, function(err) {
+	    	col.updateDancerByID(dancerModel.dancerID, dancerModel, function(err) {
 	    		if (err) throw err;
 
     			// 如果开启课程自动审核则在这里进行自动审核
     			if(cCourse.autoApprove){
-    				db.latin.autoApprove(dancerModel);
+    				col.autoApprove(dancerModel);
     			}
 	    	});
 			
 		// 会员不存在则插入会员信息
 	    }else{
-	    	db.latin.insertDancer(dancerModel, function(err, addResult) {
+	    	col.insertDancer(dancerModel, function(err, addResult) {
 			    if (err) throw err;
 
 			    if (!!addResult) {
@@ -69,7 +69,7 @@ exports.apply = function(req, res){
 	    				// 会员信息插入的时候把courseA、courseB删掉了，自动审核时需要回填回来
 	    				dancerModel.courseA = req.body.courseA;
 	    				dancerModel.courseB = req.body.courseB;
-	    				db.latin.autoApprove(dancerModel);
+	    				col.autoApprove(dancerModel);
 	    			}
 			    }
 			});
@@ -93,7 +93,7 @@ exports.apply = function(req, res){
  */
 exports.queryDancer = function(req, res){
 
-	db.latin.findDancerByID(req.params.id, function(err, result) {
+	col.findDancerByID(req.params.id, function(err, result) {
 	    if (err) throw err;
 
 	    res.contentType('application/json');
@@ -118,7 +118,7 @@ exports.queryCourseInfo = function(req, res){
 	// DO IT USING STEP!
 	Step(
 			function countByCondition(){
-				db.latin.countDancerByCondition(
+				col.countDancerByCondition(
 					{ courses:{$elemMatch: {'courseVal':cCourse.courseA.cValue,'status':'waiting'}}}, this);
 			},
 			function fillResult(err, count){
@@ -127,7 +127,7 @@ exports.queryCourseInfo = function(req, res){
 				return courseInfo;
 			},
 			function countByCondition(){
-				db.latin.countDancerByCondition(
+				col.countDancerByCondition(
 					{ courses:{$elemMatch: {'courseVal':cCourse.courseA.cValue,'status':'approved'}}}, this);
 			},
 			function fillResult(err, count){
@@ -138,7 +138,7 @@ exports.queryCourseInfo = function(req, res){
 				return courseInfo;
 			},
 			function countByCondition(){
-				db.latin.countDancerByCondition(
+				col.countDancerByCondition(
 					{ courses:{$elemMatch: {'courseVal':cCourse.courseB.cValue,'status':'waiting'}}}, this);
 			},
 			function fillResult(err, count){
@@ -147,7 +147,7 @@ exports.queryCourseInfo = function(req, res){
 				return courseInfo;
 			},
 			function countByCondition(){
-				db.latin.countDancerByCondition(
+				col.countDancerByCondition(
 					{ courses:{$elemMatch: {'courseVal':cCourse.courseB.cValue,'status':'approved'}}}, this);
 			},
 			function fillResult(err, count){
@@ -170,7 +170,7 @@ exports.quitCourse = function(req, res){
 
 	console.log("Applying Course Quiting With dancerID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 
-	db.latin.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'quitApplied', function(err) {
+	col.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'quitApplied', function(err) {
 	    if (err) throw err;
 
 	    res.contentType('application/json');
@@ -187,7 +187,7 @@ exports.cancelCourse = function(req, res){
 
 	console.log("Course Cancel With dancerID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 
-	db.latin.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'cancelled', function(err) {
+	col.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'cancelled', function(err) {
 	    if (err) throw err;
 	    res.contentType('application/json');
 	    res.send({success:true});
@@ -220,7 +220,7 @@ exports.initdata = function(req, res){
 				level: 		Math.ceil(Math.random()*9)	
 			};
 
-			db.latin.insertDancer(dancerModel, function(err, addResult) {
+			col.insertDancer(dancerModel, function(err, addResult) {
 			    if (err) throw err;
 
 			    if (addResult) {
