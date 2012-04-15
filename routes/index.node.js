@@ -16,7 +16,7 @@ var Step 	= require('step');
 exports.index = function(req, res){
 	
 	res.render('index', {
-        title: 			'Alibaba 拉丁培训',
+        title: 			'Alibaba 舞蹈培训',
         cCourse: 		cCourse,
         showDancerLink: false
     });
@@ -34,7 +34,7 @@ exports.apply = function(req, res){
 		courseB: 	req.body.courseB,
 		dancerName: req.body.dancerName,
 		gender: 	req.body.gender,
-		email: 		req.body.email,
+		email: 		req.body.email + '@alibaba-inc.com',
 		wangWang: 	req.body.wangWang,
 		extNumber: 	req.body.extNumber,
 		alipayID: 	req.body.alipayID,
@@ -78,7 +78,7 @@ exports.apply = function(req, res){
 	    // 表单提交成功后返回首页
 	    // res.redirect('back');
 		res.render('index', {
-	        title: 			'Alibaba 拉丁培训',
+	        title: 			'Alibaba 舞蹈培训',
 	        cCourse: 		cCourse,
 	        showDancerLink: true,
 	        dancerID: 		dancerModel.dancerID

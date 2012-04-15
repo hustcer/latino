@@ -35,7 +35,7 @@ var cCourse = exports.currentCourse = {
  * R:Rumba; C:ChaCha; J:Jive; S:Samba; P:Paso doble;
  * 最后一个大写字母表示课程级别：E: Elementary 基础班;I: Intermediate 中级班; A: Advanced 高级班
  */
-var courseList = exports.courseList = [
+var courseLatin = exports.courseList = [
 		{courseVal:'1RE',courseName:'第1期伦巴基础班'},
 		{courseVal:'2RE',courseName:'第2期伦巴基础班'},
 		{courseVal:'3RE',courseName:'第3期伦巴基础班'},

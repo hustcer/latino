@@ -15,6 +15,7 @@ gRouter["/quitCourse/:id"] 		= require("./index.node.js").quitCourse;		// Ajax�
 gRouter["/cancelCourse/:id"] 	= require("./index.node.js").cancelCourse;		// Ajax调用会员取消报名
 
 gRouter["/list"] 				= require("./list.node.js").list;				// 会员列表
+gRouter["/list/queryEmail"] 	= require("./list.node.js").queryEmail;			// 查询满足条件的会员的邮件列表
 gRouter["/user/:id"] 			= require("./user.node.js").user;				// 会员信息
 gRouter["/err404"] 				= require('./err404.node.js').err404;			// 404页面
 gRouter["/*"] 					= gRouter["/err404"];							// 其他页面跳转到404

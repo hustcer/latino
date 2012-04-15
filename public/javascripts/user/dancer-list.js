@@ -8,10 +8,12 @@
 
 jQuery.namespace('dance.at.alibaba');             
 
-// TODO:输出信息格式化，默认查询当前开课课程信息
+// 默认查询当前开课课程信息
 jQuery(function($){
 
     var NS = dance.at.alibaba;
+    var $filter 	= $('#dancer-filter'),
+    	$tableBody 	= $('#dancer-list table tbody');
 
 	// Begin Module Definition
     var module = NS.list = {
@@ -68,7 +70,15 @@ jQuery(function($){
 		_initHandler: function(){
 
 			this._queryHandler();
+			this._clearCondHandler();
+			this._breadRemoveHandler();
 
+			// 导出满足当前查询条件的会员邮件列表，这个功能是非公开的呃，不能随便什么人都来用
+			if(window.location.hash === '#em'){
+				$('button.email-btn', $filter).show();
+				this._getMailListHandler();
+			}
+			
 			this._handleSort("dancerID-header", "dancerID");
 			this._handleSort("dancerName-header", "dancerName");
 			this._handleSort("gender-header", "gender");
@@ -91,7 +101,7 @@ jQuery(function($){
 			// FIXME: 数据获取失败处理
 			$('#queryBtn').click(function(){
 
-				$('#dancer-list table tbody').html(module.loadingHtml);
+				$tableBody.html(module.loadingHtml);
 
 				$.post('/search', $("#searchForm").serialize(), function(data) {
 
@@ -100,9 +110,122 @@ jQuery(function($){
 					// console.log(data.data);
 
 					module._initPagination();
+					// 显示当前查询条件对应的面包屑
+					module._buildBread();
 
 				}, 'json' );
 			});
+		},
+		/**
+		 * 清除查询条件按钮点击后响应。
+		 */
+		_clearCondHandler: function(){
+			
+			$('button.clear-btn', $filter).click(function(){
+				$('span.cond-item', $filter).find('p').text('').end().hide();
+				$('#dancerID').val('');
+				$('#maleRadio')	 .prop('checked',false);
+				$('#femaleRadio').prop('checked',false);
+				$('#paidRadio')  .prop('checked',false);
+				$('#unpayRadio') .prop('checked',false);
+
+				$('#course-box input.field').val('');
+				$('#status-box input.field').val('');
+				$('#department-box input.field').val('');
+
+				$('#course-box div.ui-combobox-panel ul li').removeClass('ui-combobox-selected');
+				$('#status-box div.ui-combobox-panel ul li').removeClass('ui-combobox-selected');
+				$('#department-box div.ui-combobox-panel ul li').removeClass('ui-combobox-selected');
+
+				$('#course-box input.result').val('请选择...');
+				$('#status-box input.result').val('请选择...');
+				$('#department-box input.result').val('请选择...');
+
+			});
+		},
+		/**
+		 * 删除面包屑条目事件响应
+		 */
+		_breadRemoveHandler: function(){
+			$('span.id-cond span.close', $filter).click(function(){
+				$(this).parent().find('p').text('').end().hide();
+				$('#dancerID').val('');
+			});
+			$('span.dep-cond span.close', $filter).click(function(){
+				$(this).parent().find('p').text('').end().hide();
+				$('#department-box input.field').val('');
+				$('#department-box input.result').val('请选择...');
+				$('#department-box div.ui-combobox-panel ul li').removeClass('ui-combobox-selected');
+
+			});
+			$('span.gender-cond span.close', $filter).click(function(){
+				$(this).parent().find('p').text('').end().hide();
+				$('#maleRadio')	 .prop('checked',false);
+				$('#femaleRadio').prop('checked',false);
+			});
+			$('span.cval-cond span.close', $filter).click(function(){
+				$(this).parent().find('p').text('').end().hide();
+				$('#course-box input.field').val('');
+				$('#course-box input.result').val('请选择...');
+				$('#course-box div.ui-combobox-panel ul li').removeClass('ui-combobox-selected');
+			});
+			$('span.cstatus-cond span.close', $filter).click(function(){
+				$(this).parent().find('p').text('').end().hide();
+				$('#status-box input.field').val('');
+				$('#status-box input.result').val('请选择...');
+				$('#status-box div.ui-combobox-panel ul li').removeClass('ui-combobox-selected');
+			});
+			$('span.cpay-cond span.close', $filter).click(function(){
+				$(this).parent().find('p').text('').end().hide();
+				$('#paidRadio')  .prop('checked',false);
+				$('#unpayRadio') .prop('checked',false);
+			});
+		},
+		/**
+		 * 获取满足当前查询条件的会员的邮件列表
+		 */
+		_getMailListHandler: function(){
+			$('button.email-btn', $filter).click(function(){
+				$.getJSON('/list/queryEmail', $("#searchForm").serialize(), function(data) {
+
+					$('#list-content').append('<p class="email-result"></p>')
+									  .find('p.email-result').empty()
+									  .text(data.data + ';');
+					
+				});
+			});
+		},
+		/**
+		 * 根据当前查询条件设置面包屑提示
+		 */
+		_buildBread: function(){
+			 
+			var	dID 	= $.trim($('#dancerID').val()),
+				depVal 	= $('#department-box input.field').val(),
+				cVal 	= $('#course-box input.field').val(),
+				cStatus = $('#status-box input.field').val(),
+				male 	= $('#maleRadio')	.prop('checked'),
+				female  = $('#femaleRadio')	.prop('checked'),
+				paid 	= $('#paidRadio')	.prop('checked'),
+				unpay 	= $('#unpayRadio')	.prop('checked');
+
+			if ( !!dID ) 	{ $('span.id-cond p',  		$filter).text(dID); }
+			if ( male ) 	{ $('span.gender-cond p', 	$filter).text('男'); };
+			if ( female ) 	{ $('span.gender-cond p', 	$filter).text('女'); };
+			if ( paid ) 	{ $('span.cpay-cond p', 	$filter).text('已缴费'); };
+			if ( unpay ) 	{ $('span.cpay-cond p', 	$filter).text('未缴费'); };
+			
+			if ( !!depVal ) { $('span.dep-cond p', 		$filter).text( $('#department-box input.result').val() ); }
+			if ( !!cVal ) 	{ $('span.cval-cond p', 	$filter).text( $('#course-box input.result').val() ); } 
+			if ( !!cStatus ){ $('span.cstatus-cond p', 	$filter).text( $('#status-box input.result').val() ); } 
+			
+			$('span.cond-item', $filter).each ( function(){
+				if( !! $.trim($('p', this).text()) ){
+					$(this).show();
+				}else{
+					$(this).hide();
+				}
+			} );
 		},
 		/**
 		 * 初始化Select下拉列表
@@ -116,7 +239,7 @@ jQuery(function($){
 				});
 			};
 
-			$('#dancer-filter div.filter-combo').each(function(){
+			$('div.filter-combo', $filter).each(function(){
 				
 				initCombo($(this));
 			});
@@ -130,7 +253,7 @@ jQuery(function($){
 			
 			if ( this.resultList.length === 0 ) {
 				
-				$('#dancer-list table tbody').html(module.noResult);
+				$tableBody.html(module.noResult);
 				dancerListPg.init(1, 1);
 				return;
 			};
@@ -139,16 +262,16 @@ jQuery(function($){
 			dancerListPg.init(1, this.totalPage);
 
 			var html = this._renderRowHtml( this.resultList.slice(0, this.itemPerPage) );
-			$('#dancer-list table tbody').html(html);
-			$('#dancer-list table tbody tr:odd').css({background:'white'});
+			$tableBody.html(html);
+			$('tr:odd', $tableBody).css({background:'ivory'});
     		
     		dancerListPg.customClick = function(page){
 
     			var data = module.resultList.slice( (page - 1) * module.itemPerPage, 
     													   page * module.itemPerPage);
 				html = module._renderRowHtml( data );
-				$('#dancer-list table tbody').html(html);
-				$('#dancer-list table tbody tr:odd').css({background:'white'});
+				$tableBody.html(html);
+				$('tr:odd', $tableBody).css({background:'ivory'});
 			}
 		},
 		/**
@@ -212,7 +335,7 @@ jQuery(function($){
 				var data = 	module.resultList.slice( (currentPage - 1) * module.itemPerPage, 
 							currentPage * module.itemPerPage );
 	
-				$('#dancer-list table tbody').html(this._renderRowHtml( data ));
+				$tableBody.html(this._renderRowHtml( data ));
 
 		},
 		/**

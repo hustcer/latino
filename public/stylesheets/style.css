@@ -1,7 +1,7 @@
 body {
   padding: 50px 0;
   font: 13px "微软雅黑", tahoma;
-  background-color: ivory;
+  background-color: white;
   min-height:600px;
   margin: 0;
 }
@@ -40,7 +40,7 @@ input{font: 13px "微软雅黑", tahoma;}
 	-webkit-box-shadow: 2px 2px 8px #000000;
 	box-shadow: 2px 2px 8px #000000;
 }
-.comm-btn{
+.course-btn{
 	border:1px solid #B83B1C;
 	background: orange;
 	cursor: pointer;
@@ -54,7 +54,7 @@ input{font: 13px "微软雅黑", tahoma;}
 	line-height: 17px;
 	color: #333;
 }
-a.comm-btn:hover{text-decoration:none;color:blue;}
+a.course-btn:hover{text-decoration:none;color:blue;}
 /*.hr-line{height:2px;line-height:2px;background-color:gray;}*/
 .latin-header{margin: 5px 50px 20px 250px;/*display:none;*/}
 .dance-content .header-title{font-size: 18px;margin: 0 0 12px;}
@@ -62,7 +62,10 @@ a.comm-btn:hover{text-decoration:none;color:blue;}
 .dance-content .content-header{margin: 0 100px 15px;}
 
 .dance-content .apply-container{margin:9px 100px;clear: both;overflow: hidden;}
-.dance-content .course-info{float: right;border: 1px solid #C40000;width: 175px;height: 270px;padding:15px 5px 15px 7px;}
+.dance-content .course-info{float: right;border: 1px solid #DDD;width: 175px;height: 270px;padding:15px 5px 15px 7px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;}
 .dance-content .table-container{float: left;}
 .dance-content .table-container table{width:600px;}
 .dance-content .table-container table th{text-align:right;vertical-align: top;width:100px;}
@@ -72,9 +75,11 @@ a.comm-btn:hover{text-decoration:none;color:blue;}
 .dance-content .table-container .reset-btn {margin: 10px 10px 0 180px;}
 .dance-content .table-container label{margin: 0 10px 0 3px;}
 .dance-content .table-container .err-tip{color:red;font-size:11px;width: 235px;float: left;}
+.dance-content .table-container .over-tip{color:#C40000;font-size:11px;}
 
 .dance-content .apply-table-a{margin: 0 0 15px 5px;}
 .dance-content .apply-table-b{margin: 5px 0 10px 5px;}
+.dance-content .apply-table-b #email{width:70px;}
 
 .dance-content .operation-info{
 	display: block;
@@ -98,7 +103,7 @@ a.comm-btn:hover{text-decoration:none;color:blue;}
 	-webkit-border-radius: 3px;
 	border-radius: 3px;height: 20px;line-height: 20px;}
 
-.course-wrapper .comm-btn, .course-wrapper .course-tip{display:none;}
+.course-wrapper .course-btn, .course-wrapper .course-tip{display:none;}
 .dance-content .course-wrapper{margin: 0 8px;line-height: 27px;clear:both;}
 .dance-content .gender-wrapper{margin: 0 8px;}
 .dance-content .depart-select{margin: 0 8px;}
@@ -128,6 +133,19 @@ a.comm-btn:hover{text-decoration:none;color:blue;}
 .dancer-filter .course-box .comm-select{width:116px;}
 .dancer-filter .department-box .comm-select{width:100px;}
 
+.dancer-filter .bread-wrapper{clear: both;overflow: hidden;}
+.dancer-filter .bread-area{width:720px;float: left;margin-bottom: 16px;}
+.dancer-filter .bread-area .bread-holder{line-height:23px;}
+.dancer-filter .op-area{width:208px;float: left;}
+.dancer-filter .clear-btn{float: right;}
+.dancer-filter .email-btn{display: none;}
+.dancer-filter .cond-item p{display: inline-block;line-height: 22px;}
+.dancer-filter .cond-item{display: none;
+padding: 2px 0px 2px 6px;border: 1px solid #999;margin: 0 12px 0px 0;}
+.dancer-filter .cond-item .close{color: #777;border-left: 1px solid #999999;
+display: inline-block;padding: 0px 5px;height: 22px;
+line-height: 22px;cursor: pointer;margin-left: 8px;}
+
 .dancer-list table{width:100%;table-layout:fixed;}
 
 #list-content .content-header{margin: 0 30px 20px;border-bottom: 1px dashed gray;}
@@ -138,6 +156,7 @@ a.comm-btn:hover{text-decoration:none;color:blue;}
 #list-content .course-cell .ui-combobox-panel .list{width:116px;}
 #list-content .status-cell .ui-combobox .result {width: 65px;}
 #list-content .status-cell .ui-combobox-panel .list{width:86px;}
+#list-content .email-result{clear: both;}
 
 .dancer-list table tr{line-height: 17px;height: 23px;}
 .dancer-list table th{background: silver;border-right: 1px solid gray;}
@@ -154,8 +173,8 @@ a.comm-btn:hover{text-decoration:none;color:blue;}
 .dancer-list .loading img{margin-bottom:10px;}
 .dancer-list .list-empty{text-align: center;padding-top: 20px;color: #C40000;font-weight:700;}
  
-.admin-bg-nav{float:left;width:180px;padding: 20px 0 50px;background: snow;}
-.admin-bg-nav .admin-links li{line-height:23px;height:23px;padding: 3px 45px;background: snow;}
+.admin-bg-nav{float:left;width:180px;padding: 20px 0 50px;background: #ffe;}
+.admin-bg-nav .admin-links li{line-height:23px;height:23px;padding: 3px 45px;background: #ffe;}
 .admin-bg-nav .admin-links li a{color:#6D79E1;}
 .admin-bg-nav .admin-links li a:hover{text-decoration:none;}
 .admin-content h1.header-title{font-size:17px;font-weight:bold;margin-bottom:20px;}

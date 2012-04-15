@@ -24,6 +24,47 @@ exports.list = function(req, res){
 };
 
 /*
+ * 查询满足条件的会员的邮件列表
+ */
+exports.queryEmail = function(req, res){
+	var dancerModel = {};
+	// 根据课程状态，是否缴费来进行查询
+	if (!!req.query.dancerID) 		{dancerModel.dancerID 	= req.query.dancerID;};
+	if (!!req.query.gender) 		{dancerModel.gender 	= req.query.gender;};
+	if (!!req.query.department) 	{dancerModel.department = req.query.department;};
+
+	// 内嵌文档精确匹配
+	dancerModel.courses = {};
+	dancerModel.courses.$elemMatch = {};
+	if (!!req.query.course) {
+		dancerModel.courses.$elemMatch.courseVal = req.query.course;
+	};
+	if (!!req.query.status) {
+		dancerModel.courses.$elemMatch.status = req.query.status;
+	};
+	if (!!req.query.paid) {
+		// req.body.paid取得的是“true”、“false”字符串，需要转换
+		dancerModel.courses.$elemMatch.paid = JSON.parse(req.query.paid);
+	};
+
+	// console.log('User Current Search Condition:', dancerModel);
+
+	col.findDancerByCondition(dancerModel, function(err, result) {
+
+	    if (err) throw err;
+
+	    var emailArray = [];
+	    for(var i = 0, l = result.length; i < l; i++ ){
+	    	emailArray.push(result[i].email);
+	    }
+		res.contentType('application/json');
+		res.send({data:emailArray.join(';')});
+
+	});
+
+};
+
+/*
  * 会员列表筛选/搜索接口. TODO: 需要提示用户当前搜索条件
  */
 exports.search = function(req, res){

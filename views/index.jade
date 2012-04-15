@@ -14,7 +14,7 @@ include includes/header
 
 	#apply-container.apply-container
 		#course-info.course-info
-			p: em.BD 当前拉丁培训课程信息：
+			p: em.BD 当前舞蹈培训信息：
 			p &nbsp;
 			p: em.BD 培训一：#{cCourse.courseA.cName}
 			p 报名限额：
@@ -47,18 +47,24 @@ include includes/header
 							th: label 报名班级：
 							td(colspan="2")
 								#courseAWrapper.course-wrapper
-									input.comm-check(type="checkbox", value="#{cCourse.courseA.cValue}", name="courseA", id="courseA")
-									label(for="courseA", id="courseAName")&nbsp;#{cCourse.courseA.cName}
-									a(href="javascript:;", id="quitCourseA", class="comm-btn quit-apply")申请退课
-									a(href="javascript:;", id="cancelCourseA", class="comm-btn cancel-apply")取消报名
-									p.course-tip#tipA
+									if( !cCourse.locked )
+										input.comm-check(type="checkbox", value="#{cCourse.courseA.cValue}", name="courseA", id="courseA")
+										label(for="courseA", id="courseAName")&nbsp;#{cCourse.courseA.cName}
+										a(href="javascript:;", id="quitCourseA", class="course-btn quit-apply")申请退课
+										a(href="javascript:;", id="cancelCourseA", class="course-btn cancel-apply")取消报名
+										p.course-tip#tipA
+									else
+										span.over-tip 报名已结束或未开始
 
 								#courseBWrapper.course-wrapper
-									input.comm-check(type="checkbox", value="#{cCourse.courseB.cValue}", name="courseB", id="courseB")
-									label(for="courseB", id="courseBName")&nbsp;#{cCourse.courseB.cName}
-									a(href="javascript:;", id="quitCourseB", class="comm-btn quit-apply")申请退课
-									a(href="javascript:;", id="cancelCourseB", class="comm-btn cancel-apply")取消报名
-									p.course-tip#tipB
+									if( !cCourse.locked )
+										input.comm-check(type="checkbox", value="#{cCourse.courseB.cValue}", name="courseB", id="courseB")
+										label(for="courseB", id="courseBName")&nbsp;#{cCourse.courseB.cName}
+										a(href="javascript:;", id="quitCourseB", class="course-btn quit-apply")申请退课
+										a(href="javascript:;", id="cancelCourseB", class="course-btn cancel-apply")取消报名
+										p.course-tip#tipB
+									else
+										span.over-tip 报名已结束或未开始
 							
 				//.hr-line
 
@@ -83,7 +89,8 @@ include includes/header
 						tr
 							th: label 邮 箱：
 							td
-								input#email.comm-input(type="text", name="email", maxlength="30", data-valid="{required:true,type:'email'}")
+								input#email.comm-input(type="text", name="email", maxlength="30", data-valid="{required:true}")
+								span @alibaba-inc.com
 							td.err-tip *
 						tr
 							th: label 旺 旺：

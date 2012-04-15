@@ -8,7 +8,7 @@
 
 jQuery.namespace('dance.at.alibaba');             
 
-// TODO: 可以取消退课申请，课程报名状态：已申请，取消申请，报名通过，报名拒绝，申请退课，已退课
+// 课程报名状态：已申请，取消申请，报名通过，报名拒绝，申请退课，已退课
 jQuery(function($){
 
     var NS 			= dance.at.alibaba;    	
@@ -83,8 +83,8 @@ jQuery(function($){
 			$.getJSON('queryCourseInfo', function(data){
 				// console.log('queryCourseInfo:', data);
 				
-				$('#aWaiting').text(data.courseInfo.courseA.total + '人;');
-				$('#bWaiting').text(data.courseInfo.courseB.total + '人;');
+				$('#aWaiting') .text(data.courseInfo.courseA.total + '人;');
+				$('#bWaiting') .text(data.courseInfo.courseB.total + '人;');
 				$('#aApproved').text(data.courseInfo.courseA.approved + '人;');
 				$('#bApproved').text(data.courseInfo.courseB.approved + '人;');
 			});
@@ -131,7 +131,7 @@ jQuery(function($){
 				$('#applyForm')[0].reset();
 				// 清除课程操作按钮
 				$('div.operation-info').hide();
-				$('div.course-wrapper a.comm-btn').hide();
+				$('div.course-wrapper a.course-btn').hide();
 				$('div.course-wrapper p.course-tip').hide();
 				$('div.course-wrapper input.comm-check').prop('disabled', false);
 			});
@@ -151,7 +151,7 @@ jQuery(function($){
 					// 会员不存在的时候直接返回
 					if (!(data && data.data)) {return false;};
 
-					$('#email').val(data.data.email);
+					$('#email').val(data.data.email.replace(/@alibaba-inc.com/, ''));
 					$('#wangWang').val(data.data.wangWang);
 					$('#alipayID').val(data.data.alipayID);
 					$('#extNumber').val(data.data.extNumber);

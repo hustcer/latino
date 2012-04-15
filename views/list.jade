@@ -13,6 +13,30 @@ include includes/header
 		h1.header-title= title 
 
 	#dancer-filter.dancer-filter
+		.bread-wrapper
+			.bread-area#bread-area 
+				span.bread-holder &nbsp;
+				span.cond-item.id-cond
+					p  
+					span.close X
+				span.cond-item.dep-cond
+					p  
+					span.close X
+				span.cond-item.gender-cond
+					p  
+					span.close X
+				span.cond-item.cval-cond
+					p  
+					span.close X
+				span.cond-item.cstatus-cond
+					p  
+					span.close X
+				span.cond-item.cpay-cond
+					p  
+					span.close X
+			.op-area: button.email-btn.comm-button 导出邮件列表
+				button.clear-btn.comm-button 清除条件
+
 		form(name="searchForm", id="searchForm", class="search-form")
 			table
 				tr
