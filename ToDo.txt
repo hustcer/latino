@@ -23,7 +23,6 @@ ToDo:
 	班级配置成数组									H
 	后台表单验证：i-form 							H
 	各舞种班级列表分开 							H
-	*list页面combobox选项变化后更新bread 			H
 	
 	报名状态锁定
 	提示用户当前搜索条件

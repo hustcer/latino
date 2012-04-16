@@ -215,9 +215,21 @@ jQuery(function($){
 			if ( paid ) 	{ $('span.cpay-cond p', 	$filter).text('已缴费'); };
 			if ( unpay ) 	{ $('span.cpay-cond p', 	$filter).text('未缴费'); };
 			
-			if ( !!depVal ) { $('span.dep-cond p', 		$filter).text( $('#department-box input.result').val() ); }
-			if ( !!cVal ) 	{ $('span.cval-cond p', 	$filter).text( $('#course-box input.result').val() ); } 
-			if ( !!cStatus ){ $('span.cstatus-cond p', 	$filter).text( $('#status-box input.result').val() ); } 
+			if ( !!depVal ) { 
+				$('span.dep-cond p', 	$filter).text( $('#department-box input.result').val() ); 
+			}else{
+				$('span.dep-cond p', 	$filter).text(''); 
+			}
+			if ( !!cVal ) 	{ 
+				$('span.cval-cond p', 	$filter).text( $('#course-box input.result').val() ); 
+			} else{
+				$('span.cval-cond p', 	$filter).text('');
+			}
+			if ( !!cStatus ){ 
+				$('span.cstatus-cond p', $filter).text( $('#status-box input.result').val() ); 
+			}  else{
+				$('span.cstatus-cond p', $filter).text('')
+			}
 			
 			$('span.cond-item', $filter).each ( function(){
 				if( !! $.trim($('p', this).text()) ){
