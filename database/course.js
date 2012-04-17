@@ -15,17 +15,17 @@ var cCourse = exports.currentCourse = {
 	// **************	爵士数据存储在dance数据库中的	jazz   collecion中 		*************
 	// **************	街舞数据存储在dance数据库中的	hiphop collecion中 		*************
 	courseType: 'latin',		
-	courseA: 	{cValue: "2RE", cName: "第2期伦巴基础班", ps:"上课时间：每周四晚6:30~7:30, 公司舞房"},
-	courseB: 	{cValue: "2CI", cName: "第2期恰恰中级班", ps:"上课时间：每周四晚7:40~8:40, 公司舞房"},
-	cCapacity: 	25, 
+	courseA: 	{cValue: "13SE", cName: "第13期桑巴基础班", ps:"上课时间：每周四晚6:30~7:30, 公司舞房"},
+	courseB: 	{cValue: "13CI", cName: "第13期恰恰中级班", ps:"上课时间：每周四晚7:40~8:40, 公司舞房"},
+	cCapacity: 	22, 
 	// 锁定课程状态，禁止报名、退课等操作
-	locked: 	false,
+	locked: 	true,
 	// 是否开启报名自动审核
 	autoApprove:true,
 	// 是否男士报名优先，对于拉丁课男士优先则自动审核开启时男士报名自动审核通过
 	manFirst: 	true,
 	// 自动审核报名成功的人数限制
-	autoLimit: 	8,
+	autoLimit: 	16,
 	beginDate: 	'',
 	endingDate: ''
 };
@@ -36,14 +36,7 @@ var cCourse = exports.currentCourse = {
  * 最后一个大写字母表示课程级别：E: Elementary 基础班;I: Intermediate 中级班; A: Advanced 高级班
  */
 var courseLatin = exports.courseList = [
-		{courseVal:'1RE',courseName:'第1期伦巴基础班'},
-		{courseVal:'2RE',courseName:'第2期伦巴基础班'},
-		{courseVal:'3RE',courseName:'第3期伦巴基础班'},
-		{courseVal:'1CI',courseName:'第1期恰恰中级班'},
-		{courseVal:'2CI',courseName:'第2期恰恰中级班'},
-		{courseVal:'3CI',courseName:'第3期恰恰中级班'},
-		{courseVal:'12JA',courseName:'第12期牛仔高级班'},
-		{courseVal:'13RI',courseName:'第13期伦巴中级班'},
-		{courseVal:'13CE',courseName:'第13期恰恰基础班'}
+		{courseVal:'13SE',courseName:'第13期桑巴基础班'},
+		{courseVal:'13CI',courseName:'第13期恰恰中级班'}
 	];
 

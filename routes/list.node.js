@@ -47,6 +47,10 @@ exports.queryEmail = function(req, res){
 		dancerModel.courses.$elemMatch.paid = JSON.parse(req.query.paid);
 	};
 
+	// FIXME: 如果课程没有任何匹配条件就把该条件完全去掉,这种方法挺猥琐的感觉，以后可以改进下
+	if (JSON.stringify(dancerModel.courses.$elemMatch) === '{}') {
+		delete dancerModel.courses;
+	};
 	// console.log('User Current Search Condition:', dancerModel);
 
 	col.findDancerByCondition(dancerModel, function(err, result) {
@@ -89,6 +93,10 @@ exports.search = function(req, res){
 		dancerModel.courses.$elemMatch.paid = JSON.parse(req.body.paid);
 	};
 
+	// FIXME: 如果课程没有任何匹配条件就把该条件完全去掉,这种方法挺猥琐的感觉，以后可以改进下
+	if (JSON.stringify(dancerModel.courses.$elemMatch) === '{}') {
+		delete dancerModel.courses;
+	};
 	// console.log('User Current Search Condition:', dancerModel);
 
 	col.findDancerByCondition(dancerModel, function(err, result) {

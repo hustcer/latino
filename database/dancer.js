@@ -42,6 +42,9 @@ var CDO = exports.commonDancerOp = {
 
 		delete dancerModel.courseA;
 		delete dancerModel.courseB;
+		dancerModel.vip 		= 0; 	// lte 5
+		dancerModel.level 		= 1;	// lte 9
+		dancerModel.locked 		= false;
 		dancerModel.courses 	= courseAddArray;
 		dancerModel.gmtCreated 	= new Date();
 		dancerModel.gmtModified = new Date();

@@ -31,7 +31,7 @@ jQuery(function($){
     	/**
 		 * 每个分页记录数目
 		 */
-    	itemPerPage: 	20,
+    	itemPerPage: 	25,
 
     	/**
 		 * 总分页数

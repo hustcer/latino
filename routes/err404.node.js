@@ -9,7 +9,7 @@ exports.err404 = function(req, res){
 	
     res.render('err404', {
         status: 404,
-        title: 	'Alibaba Latin Dance',
+        title: 	'Dance @ Alibaba',
         msg: 	'不好意思哈! 您访问的链接不存在或者您没有足够的权限！'
     });
 };
