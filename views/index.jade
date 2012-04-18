@@ -33,6 +33,8 @@ include includes/header
 			p 报名成功：
 				em.R#bApproved
 			p:em.R #{cCourse.courseB.ps}
+			p &nbsp;
+			p:em.B #{cCourse.notice}
 
 		.table-container
 			form(name="applyForm", id="applyForm", method="post", action="/apply")

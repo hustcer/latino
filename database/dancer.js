@@ -145,8 +145,8 @@ var CDO = exports.commonDancerOp = {
 			result.gender = dancerModel.gender;
 			result.alipayID = dancerModel.alipayID;
 			result.department = dancerModel.department;
-			if(!!dancerModel.vip) result.vip = dancerModel.vip;
-			if(!!dancerModel.level) result.level = dancerModel.level;
+			if(!!dancerModel.vip) result.vip = +dancerModel.vip;
+			if(!!dancerModel.level) result.level = +dancerModel.level;
 			if(!!dancerModel.forever){
 				result.forever = true;
 			} else{
@@ -227,7 +227,7 @@ var CDO = exports.commonDancerOp = {
 					};
 
 					// -------------------Rule NO.3-----------------------------------
-					if ( !!result && ( result.level >= 3 || result.vip >= 3 ) ) {
+					if ( !!result && ( result.level >= 3 || result.vip >= 2 ) ) {
 
 						console.info('[INFO]----Auto Approve According to Rule NO.3: DancerID-', dancerModel.dancerID, 
 							', DancerName-', dancerModel.dancerName, ', Course-', courseVal);

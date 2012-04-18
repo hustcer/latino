@@ -1,5 +1,5 @@
 body {
-  padding: 30px 0;
+  padding: 18px 0;
   font: 13px "微软雅黑", tahoma;
   background-color: white;
   min-height:600px;
@@ -12,6 +12,7 @@ input{font: 13px "微软雅黑", tahoma;}
 
 .BW{word-break: break-all;word-wrap: break-word;}
 .R{color: #C40000;}
+.B{color: #6D79E1;}
 .BD{font-weight:700;}
 
 .none-exist{color: #C40000;margin: 20px 50px;font-weight: 700;}
@@ -56,18 +57,18 @@ input{font: 13px "微软雅黑", tahoma;}
 }
 a.course-btn:hover{text-decoration:none;color:blue;}
 /*.hr-line{height:2px;line-height:2px;background-color:gray;}*/
-.latin-header{margin: 5px 50px 20px 250px;/*display:none;*/}
+.latin-header{margin: 5px 50px 9px 250px;/*display:none;*/}
 .dance-content .header-title{font-size: 18px;margin: 0 0 12px;}
 .dance-content .welcome-msg{color:#999;font-size:12px;text-indent:2em;}
 .dance-content .content-header{margin: 0 100px 15px;}
 
 .dance-content .apply-container{margin:9px 100px;clear: both;overflow: hidden;}
-.dance-content .course-info{float: right;border: 1px solid #DDD;width: 175px;height: 270px;padding:15px 5px 15px 7px;
+.dance-content .course-info{float: right;border: 1px solid #DDD;width: 180px;padding:15px 5px 15px 7px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;}
 .dance-content .table-container{float: left;}
-.dance-content .table-container table{width:600px;}
+.dance-content .table-container table{width:596px;}
 .dance-content .table-container table th{text-align:right;vertical-align: top;width:100px;}
 .dance-content .table-container table tr{line-height:30px;}
 .dance-content .table-container table .em{font-size:14px;}

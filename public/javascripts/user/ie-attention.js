@@ -31,7 +31,7 @@ jQuery(function($){
 			$.use('web-sweet', function( ){
 				var template = '<div class="ie-attention">Oh, 天呐！您还在使用诸如<em>IE7甚至IE6之类的古董浏览器</em>么？很遗憾，'
 							 + '为了让您可以拥有更好的用户体验；为了让您的浏览器和系统更安全；同时也为了节省我们的开发、维护成本'
-							 + '；<em>强烈建议您珍爱生命，远离IE6！推荐您赶快升级到IE8或者以上版本的浏览器。我们更推荐您使用最新'
+							 + '；<em>强烈建议您珍爱生命，远离IE6！推荐您赶快升级到IE8或者以上版本的浏览器。尤其推荐您使用最新'
 							 + '版本的Chrome、FireFox、Safari 或 Opera等现代浏览器！</em>给您带来的不便深感抱歉，谢谢您的配合！</div>';
 				
 				var data = {};		

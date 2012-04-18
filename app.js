@@ -18,7 +18,7 @@ var app         = module.exports = express.createServer(),
 
 var gRouterMap  = require('./routes/router.node.js').gRouter,
 	pRouterMap  = require('./routes/router.node.js').pRouter,
-    agRouterMap  = require('./routes/router.node.js').adminRouter,
+    agRouterMap = require('./routes/router.node.js').adminRouter,
     apRouterMap = require('./routes/router.node.js').adminPostRouter;
     
 

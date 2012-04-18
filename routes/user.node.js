@@ -37,7 +37,7 @@ exports.user = function(req, res, next){
 	  		result.courses = courseNames;
 
 	    	res.render('user', {
-		        title: 	'用户拉丁培训信息',
+		        title: 	'舞者信息',
 		        dancer: result
 		    });
 
