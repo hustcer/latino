@@ -261,8 +261,12 @@ jQuery(function($){
 		 */
 		_initPagination: function(){
 			// FIXME:resultList IS NULL OR NOT?
+			var $countTip = $('#dancer-list span.count-tip');
+			var courseCount = 0;
+
 			dancerListPg = new dance.at.alibaba.Paging( $('#dancer-list-paging') );
-			
+			$('em.dcount', $countTip).text( this.resultList.length );
+
 			if ( this.resultList.length === 0 ) {
 				
 				$tableBody.html(module.noResult);

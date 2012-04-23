@@ -175,7 +175,8 @@ exports.editDancer = function(req, res){
 	    		if (err) throw err;
 
 	    		// 表单提交成功后返回首页, 没有错误消息就是好消息
-	    		res.redirect('back');
+	    		res.send();
+	    		// res.redirect('back');
 	    		// res.send({success:true, msg:'Dancer Information Updated Successfully!'});
 	    	});
 			

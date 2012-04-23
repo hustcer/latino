@@ -64,6 +64,7 @@ a.course-btn:hover{text-decoration:none;color:blue;}
 
 .dance-content .apply-container{margin:9px 100px;clear: both;overflow: hidden;}
 .dance-content .course-info{float: right;border: 1px solid #DDD;width: 180px;padding:15px 5px 15px 7px;
+	font-size: 12px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;}
@@ -118,7 +119,7 @@ a.course-btn:hover{text-decoration:none;color:blue;}
 #user-info table tr{line-height:24px;}
 #user-info table td{pading-left:12px;}
 
-.dancer-filter, .dancer-list{width:940px;margin: 0 30px 20px;border-bottom: 1px dashed gray;padding-bottom: 15px;}
+.dancer-filter, .dancer-list{width:940px;margin: 0 30px 9px;border-bottom: 1px dashed gray;padding-bottom: 15px;}
 .dancer-filter table td{padding: 0 7px 0 0;}
 .dancer-filter #queryBtn{height: 20px;line-height: 14px;margin-left: 10px;}
 .dancer-filter #dancerID.comm-input{width:60px;margin: 0 3px;}
@@ -173,6 +174,8 @@ line-height: 22px;cursor: pointer;margin-left: 8px;}
 .dancer-list .loading{text-align:center;padding-top: 20px;}
 .dancer-list .loading img{margin-bottom:10px;}
 .dancer-list .list-empty{text-align: center;padding-top: 20px;color: #C40000;font-weight:700;}
+.dancer-list .count-tip{color:#777;margin-bottom: 6px;display: inline-block;}
+.dancer-list .count-tip em{color: #C40000;font-weight:700;}
  
 .admin-bg-nav{float:left;width:180px;padding: 20px 0 50px;background: #ffe;}
 .admin-bg-nav .admin-links li{line-height:23px;height:23px;padding: 3px 45px;background: #ffe;}

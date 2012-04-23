@@ -145,6 +145,7 @@ var CDO = exports.commonDancerOp = {
 			result.gender = dancerModel.gender;
 			result.alipayID = dancerModel.alipayID;
 			result.department = dancerModel.department;
+			// + 会自动将字符串转换成数字
 			if(!!dancerModel.vip) result.vip = +dancerModel.vip;
 			if(!!dancerModel.level) result.level = +dancerModel.level;
 			if(!!dancerModel.forever){
@@ -183,7 +184,7 @@ var CDO = exports.commonDancerOp = {
 	 * 判断原则如下：
 	 * 0. 当前课程报名成功人数小于autoLimit，则自动审核通过
 	 * 1. 男生且当前课程报名成功人数小于班级限额则自动审核通过
-	 * 2. 女生，如果level >= 3，或者vip >= 3 且当前报名成功人数小于(班级限额-3)则自动审核通过
+	 * 2. 女生，如果level >= 3，或者vip >= 2 且当前报名成功人数小于(班级限额-3)则自动审核通过
 	 * 3. 其他情况不会修改课程审核状态
 	 * 4. 其他规则后续补充
 	 * @param dancerModel 	待判断是否可以自动审核通过的会员
@@ -227,7 +228,7 @@ var CDO = exports.commonDancerOp = {
 					};
 
 					// -------------------Rule NO.3-----------------------------------
-					if ( !!result && ( result.level >= 3 || result.vip >= 2 ) ) {
+					if ( !!result && ( result.level >= 3 || result.vip >= 2 || result.forever ) ) {
 
 						console.info('[INFO]----Auto Approve According to Rule NO.3: DancerID-', dancerModel.dancerID, 
 							', DancerName-', dancerModel.dancerName, ', Course-', courseVal);

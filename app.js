@@ -1,5 +1,6 @@
 /**
  * For More Reference about Package Format, Please Visit: http://package.json.nodejitsu.com/
+ * NODE_ENV=production forever start -m 1000 -a -l /tmp/latinode/out.log -e /tmp/latinode/err.log app.js -p 8024
  */
 
 /**
@@ -83,7 +84,14 @@ app.configure('production', function(){
     setRouters(false);
 });
 
-app.listen(3000);
+// 如果控制台传过来的有端口号参数则监听相应端口号，否则监听3000端口
+var portIndex   = process.argv.indexOf('-p'), port = 3000;
+
+if (portIndex != -1 && process.argv.length >= portIndex + 2) {
+    port = +process.argv[portIndex + 1];
+};
+
+app.listen(port);
 
 console.log("\nExpress server listening on port %d in %s mode\n", app.address().port, app.settings.env);
 

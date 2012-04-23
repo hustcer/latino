@@ -19,12 +19,19 @@ ToDo:
 	统计信息变化后主动通知前台						H
 	后台管理员手工无限制报名						H
 	*paid改成金额而非boolean						H
-	年卡会员自动报名forever						H
-	班级配置成数组									H
+	*年卡会员自动报名forever						H
+	*班级配置成数组	，各个班级参数分开设置			H
 	后台表单验证：i-form 							H
 	各舞种班级列表分开 							H
 	备注、描述信息
 	*个人信息加锁，lock则前台无法修改				H
+	*几个舞种同时报名，系统并存
+	课程预约										H
+	账务统计、版本升级日志、footer说明等
+	Use util.log or logger middleware instead	H
+	app.error									H
+	浏览器兼容性调整 								H
+	工号大小写统一转换为大写
 	
 	报名状态锁定
 	提示用户当前搜索条件
