@@ -46,6 +46,8 @@ var CDO = exports.commonDancerOp = {
 		dancerModel.level 		= 1;	// lte 9
 		dancerModel.locked 		= false;
 		dancerModel.courses 	= courseAddArray;
+		// 工号里面的小写统一转换成大写
+		dancerModel.dancerID 	= dancerModel.dancerID.toUpperCase();
 		dancerModel.gmtCreated 	= new Date();
 		dancerModel.gmtModified = new Date();
 
@@ -60,6 +62,7 @@ var CDO = exports.commonDancerOp = {
 	 * ATTENTION:$addToSet 方式报名有问题，会产生重复的课程却处于不同的状态
 	 */
 	updateDancerByID: function(dancerID, dancerModel, fn){
+		dancerModel.dancerID = dancerID = dancerID.toUpperCase();
 
 		// 新报名课程默认状态为 'waiting'
 		var courseAddArray = [], self = this, logMsg = '', courseStatus = 'waiting';
@@ -81,14 +84,14 @@ var CDO = exports.commonDancerOp = {
 		    	throw err;
 			}
 
-			result.dancerName = dancerModel.dancerName;
-			result.extNumber = dancerModel.extNumber;
-			result.email = dancerModel.email;
-			result.wangWang = dancerModel.wangWang;
+			result.dancerName 	= dancerModel.dancerName;
+			result.extNumber 	= dancerModel.extNumber;
+			result.email 		= dancerModel.email;
+			result.wangWang 	= dancerModel.wangWang;
 			// 性别一旦确定则不能修改
-			// result.gender = dancerModel.gender;
-			result.alipayID = dancerModel.alipayID;
-			result.department = dancerModel.department;
+			// result.gender 	= dancerModel.gender;
+			result.alipayID 	= dancerModel.alipayID;
+			result.department 	= dancerModel.department;
 
 			for (var exist, j = courseAddArray.length - 1; j >= 0; j--) {
 				exist = false;
@@ -107,8 +110,12 @@ var CDO = exports.commonDancerOp = {
 				// 未找到则插入数据
 				if ( !exist ) {
 					// 新插入数据库的课程根据规则设置报名状态,且未付款
-					result.courses.push( { courseVal:courseAddArray[j], status:courseStatus,
-										gmtStatusChanged:new Date(), applyTime: new Date(), paid:false } );
+					result.courses.push( { 	courseVal: 			courseAddArray[j], 
+											status: 			courseStatus,
+											gmtStatusChanged: 	new Date(), 
+											applyTime: 			new Date(), 
+											paid: 				false 
+										} );
 				};
 			};
 
@@ -127,6 +134,7 @@ var CDO = exports.commonDancerOp = {
 	 * @param dancerModel 	待更新的会员信息, 该model为前台用户提交的表单信息里面的数据
 	 */
 	updateDancerByAdmin: function(dancerID, dancerModel, fn){
+		dancerModel.dancerID = dancerID = dancerID.toUpperCase();
 
 		var self = this;
 
@@ -137,17 +145,17 @@ var CDO = exports.commonDancerOp = {
 		    	throw err;
 			}
 
-			result.dancerName = dancerModel.dancerName;
-			result.extNumber = dancerModel.extNumber;
-			result.email = dancerModel.email;
-			result.wangWang = dancerModel.wangWang;
+			result.dancerName 	= dancerModel.dancerName;
+			result.extNumber 	= dancerModel.extNumber;
+			result.email 		= dancerModel.email;
+			result.wangWang 	= dancerModel.wangWang;
 			// 性别管理员还是可以修改的哈
-			result.gender = dancerModel.gender;
-			result.alipayID = dancerModel.alipayID;
-			result.department = dancerModel.department;
+			result.gender 		= dancerModel.gender;
+			result.alipayID 	= dancerModel.alipayID;
+			result.department	= dancerModel.department;
 			// + 会自动将字符串转换成数字
-			if(!!dancerModel.vip) result.vip = +dancerModel.vip;
-			if(!!dancerModel.level) result.level = +dancerModel.level;
+			if(!!dancerModel.vip) 	result.vip 		= +dancerModel.vip;
+			if(!!dancerModel.level) result.level 	= +dancerModel.level;
 			if(!!dancerModel.forever){
 				result.forever = true;
 			} else{
@@ -192,6 +200,7 @@ var CDO = exports.commonDancerOp = {
 	 */
 	_approveCourse: function(dancerModel, courseVal){
 		// console.info('[INFO]----Auto Approve Dancer:', dancerModel.dancerID, ' CourseVal:', courseVal);
+		dancerModel.dancerID = dancerModel.dancerID.toUpperCase();
 
 		var condition = {courses:{	$elemMatch:
 							{'courseVal': 	courseVal,
@@ -213,7 +222,7 @@ var CDO = exports.commonDancerOp = {
 			}
 			
 			// 如果当前报名成功的会员数目小于课程总容量则继续下面的审核规则，否则不再继续审核
-			if( count < cCourse.cCapacity ){
+			if( count <= cCourse.cCapacity ){
 
 				CDO.findDancerByID(dancerModel.dancerID, function(err, result){
 					if (err) {throw err};
@@ -248,6 +257,7 @@ var CDO = exports.commonDancerOp = {
 	 *						eg. {dancerID:'29411', 'courses.courseVal':'13R', 'courses.paid':true}
 	 */
 	findDancerByCondition: function(condition, fn){
+		if (!!condition.dancerID) { condition.dancerID = condition.dancerID.toUpperCase();};
 		this.find(condition, {gmtCreated:0, gmtModified:0, _id:0}).toArray(fn);
 	},
 	/**
@@ -258,6 +268,7 @@ var CDO = exports.commonDancerOp = {
 	 *		eg. 查询某个课程报名成功人数 { 'courses.courseVal':'13RE', 'courses.status':'approved'}
 	 */
 	countDancerByCondition: function(condition, fn){
+		if (!!condition.dancerID) { condition.dancerID = condition.dancerID.toUpperCase();};
 		this.count(condition, fn);
 	},
 	/**
@@ -265,21 +276,21 @@ var CDO = exports.commonDancerOp = {
 	 * @param dancerID 		待查询的会员的dancerID
 	 */
 	findDancerByID: function(dancerID, fn){
-		col.findOne({'dancerID':dancerID}, {gmtCreated:0, gmtModified:0, _id:0}, fn);
+		col.findOne({'dancerID':dancerID.toUpperCase()}, {gmtCreated:0, gmtModified:0, _id:0, vip:0, level:0}, fn);
 	},
 	/**
 	 * 根据dancerID查询其全部保存在数据库里的会员信息
 	 * @param dancerID 		待查询的会员的dancerID
 	 */
 	findFullDancerInfoByID: function(dancerID, fn){
-		this.findOne({'dancerID':dancerID}, fn);
+		this.findOne({'dancerID':dancerID.toUpperCase()}, fn);
 	},
 	/**
 	 * 删除dancerID及其对应的所有信息
 	 * @param dancerID 		待删除的会员的dancerID
 	 */
 	deleteDancerByID: function(dancerID, fn){
-		this.remove({'dancerID':dancerID}, fn);
+		this.remove({'dancerID':dancerID.toUpperCase()}, fn);
 	},
 	/**
 	 * 设置会员缴费状态
@@ -289,7 +300,7 @@ var CDO = exports.commonDancerOp = {
 	 */
 	updateDancerPayStatus: function(dancerID, courseValue, isPaid, fn){
 
-		this.update({'dancerID':dancerID, 'courses.courseVal':courseValue}, {  $set:
+		this.update({'dancerID':dancerID.toUpperCase(), 'courses.courseVal':courseValue}, {  $set:
 			{'courses.$.paid':isPaid, 'courses.$.gmtPayChanged':new Date(), 'gmtModified': new Date()}
 
 		}, fn);
@@ -308,7 +319,7 @@ var CDO = exports.commonDancerOp = {
 	 */
 	updateDancerCourseStatus: function(dancerID, courseValue, status, fn){
 
-		col.update({'dancerID':dancerID, 'courses.courseVal':courseValue}, {  $set:
+		col.update({'dancerID':dancerID.toUpperCase(), 'courses.courseVal':courseValue}, {  $set:
 			{'courses.$.status':status, 'courses.$.gmtStatusChanged':new Date(), 'gmtModified': new Date()}
 
 		}, fn);

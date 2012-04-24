@@ -139,14 +139,18 @@ a.course-btn:hover{text-decoration:none;color:blue;}
 .dancer-filter .bread-area{width:720px;float: left;margin-bottom: 16px;}
 .dancer-filter .bread-area .bread-holder{line-height:23px;}
 .dancer-filter .op-area{width:205px;float: left;}
+@-moz-document url-prefix() {
+  .dancer-filter .op-area { width:211px; }
+  .dancer-filter #queryBtn{ height: 24px;}
+}
 .dancer-filter .clear-btn{float: right;}
 .dancer-filter .email-btn{display: none;}
-.dancer-filter .cond-item p{display: inline-block;line-height: 22px;}
-.dancer-filter .cond-item{display: none;
-padding: 2px 0px 2px 6px;border: 1px solid #999;margin: 0 12px 0px 0;}
+.dancer-filter .cond-item p{display: inline-block;line-height: 20px;}
 .dancer-filter .cond-item .close{color: #777;border-left: 1px solid #999999;
-display: inline-block;padding: 0px 5px;height: 22px;
-line-height: 22px;cursor: pointer;margin-left: 8px;}
+display: inline-block;padding: 0px 5px;height: 20px;
+line-height: 20px;cursor: pointer;margin-left: 8px;}
+.dancer-filter .cond-item{display: none;
+padding: 1px 0px 1px 6px;border: 1px solid #999;margin: 0 12px 0px 0;height:26px;}
 
 .dancer-list table{width:100%;table-layout:fixed;}
 

@@ -4,21 +4,21 @@
  * Author: 	justin.maj
  * Date: 	2012-1-19  
  */
-var gRouter = exports.gRouter 	= {};
+var gRouter = exports.gRouter 		= {};
 
-gRouter["/"] 					= require('./index.node.js').index;				// 首页
-gRouter["/index"] 				= gRouter["/"];									// 首页
+gRouter["/"] 						= require('./index.node.js').index;				// 首页
+gRouter["/index"] 					= gRouter["/"];									// 首页
 
-gRouter["/queryDancer/:id"] 	= require("./index.node.js").queryDancer;		// Ajax调用查询会员信息,用于动态加载报名表单会员信息数据
-gRouter["/queryCourseInfo"]		= require("./index.node.js").queryCourseInfo;	// Ajax请求获取当前开课课程报名统计信息
-gRouter["/quitCourse/:id"] 		= require("./index.node.js").quitCourse;		// Ajax调用会员申请退课
-gRouter["/cancelCourse/:id"] 	= require("./index.node.js").cancelCourse;		// Ajax调用会员取消报名
+gRouter["/queryDancer/:id"] 		= require("./index.node.js").queryDancer;		// Ajax调用查询会员信息,用于动态加载报名表单会员信息数据
+gRouter["/queryCourseInfo"]			= require("./index.node.js").queryCourseInfo;	// Ajax请求获取当前开课课程报名统计信息
+gRouter["/quitCourse/:id"] 			= require("./index.node.js").quitCourse;		// Ajax调用会员申请退课
+gRouter["/cancelCourse/:id"] 		= require("./index.node.js").cancelCourse;		// Ajax调用会员取消报名
 
-gRouter["/list"] 				= require("./list.node.js").list;				// 会员列表
-gRouter["/list/queryEmail"] 	= require("./list.node.js").queryEmail;			// 查询满足条件的会员的邮件列表
-gRouter["/user/:id"] 			= require("./user.node.js").user;				// 会员信息
-gRouter["/err404"] 				= require('./err404.node.js').err404;			// 404页面
-gRouter["/*"] 					= gRouter["/err404"];							// 其他页面跳转到404
+gRouter["/list"] 					= require("./list.node.js").list;				// 会员列表
+gRouter["/list/queryEmail"] 		= require("./list.node.js").queryEmail;			// 查询满足条件的会员的邮件列表
+gRouter["/user/:id"] 				= require("./user.node.js").user;				// 会员信息
+gRouter["/err404"] 					= require('./err404.node.js').err404;			// 404页面
+gRouter["/*"] 						= gRouter["/err404"];							// 其他页面跳转到404
 
 
 var adminRouter = exports.adminRouter = {};
@@ -35,10 +35,10 @@ adminRouter["/init/initdata"]		= require('./index.node.js').initdata;			// 初�
 /**
  * 提交表单路径映射
  */
-var pRouter = exports.pRouter 	= {};
+var pRouter = exports.pRouter 		= {};
 
-pRouter["/apply"] 				= require('./index.node.js').apply;				// 申请表单提交
-pRouter["/search"] 				= require("./list.node.js").search;				// 会员列表查询表单
+pRouter["/apply"] 					= require('./index.node.js').apply;				// 申请表单提交
+pRouter["/search"] 					= require("./list.node.js").search;				// 会员列表查询表单
 
 /**
  * 管理员提交表单路径映射

@@ -1,5 +1,6 @@
 /**
  * For More Reference about Package Format, Please Visit: http://package.json.nodejitsu.com/
+ * Logger config reference: http://www.senchalabs.org/connect/logger.html
  * NODE_ENV=production forever start -m 1000 -a -l /tmp/latinode/out.log -e /tmp/latinode/err.log app.js -p 8024
  */
 
@@ -28,6 +29,8 @@ app.configure(function(){
 
     app.set('views', __dirname + '/views');
     app.set('view engine', 'jade');
+
+    // app.use(express.logger({ format: ':method :url' }));
     app.use(express.bodyParser());
     app.use(express.methodOverride());
 
@@ -94,6 +97,7 @@ if (portIndex != -1 && process.argv.length >= portIndex + 2) {
 app.listen(port);
 
 console.log("\nExpress server listening on port %d in %s mode\n", app.address().port, app.settings.env);
+
 
 
 
