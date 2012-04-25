@@ -28,6 +28,9 @@ exports.index = function(req, res){
  */
 exports.apply = function(req, res){
 
+	// 邮箱不需要加后缀的，如果用户加了就统一去掉吧，没加也无妨
+	if (!!req.body.email) { req.body.email = req.body.email.replace(/@alibaba-inc.com/g, ""); };
+
 	var dancerModel = {
 		dancerID: 	req.body.dancerID,
 		courseA: 	req.body.courseA,

@@ -26,11 +26,13 @@ ToDo:
 	备注、描述信息
 	*个人信息加锁，lock则前台无法修改				H
 	*几个舞种同时报名，系统并存
-	课程预约										H
+	课程试听预约									H
 	账务统计、版本升级日志、footer说明等
 	Use util.log or logger middleware instead	H
 	app.error									H
-	工号大小写统一转换为大写						H-
+	google analysis
+	会员记录删除
+	
 	
 	报名状态锁定
 	提示用户当前搜索条件
@@ -78,6 +80,7 @@ production mode特殊处理						O
 @alibaba-inc email							O
 Lock则报名结束								O
 浏览器兼容性调整 								O
+工号大小写统一转换为大写						O
 
 
 技术实现：
