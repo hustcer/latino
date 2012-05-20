@@ -13,7 +13,7 @@ var col 		= require("../database/database.js").collection;
 // 当前开课信息
 var cCourse 	= require("../database/course.js").currentCourse;
 
-var CDO = exports.commonDancerOp = {
+var CDO 		= exports.commonDancerOp = {
 
 	/**
 	 * 插入新会员
@@ -111,7 +111,7 @@ var CDO = exports.commonDancerOp = {
 				if ( !exist ) {
 					// 新插入数据库的课程根据规则设置报名状态,且未付款
 					result.courses.push( { 	courseVal: 			courseAddArray[j], 
-											status: 			courseStatus,
+											status:  			courseStatus,
 											gmtStatusChanged: 	new Date(), 
 											applyTime: 			new Date(), 
 											paid: 				false 
@@ -155,7 +155,7 @@ var CDO = exports.commonDancerOp = {
 			result.department	= dancerModel.department;
 			// + 会自动将字符串转换成数字
 			if(!!dancerModel.vip) 	result.vip 		= +dancerModel.vip;
-			if(!!dancerModel.level) result.level 	= +dancerModel.level;
+			if(!!dancerModel.level) result.level  	= +dancerModel.level;
 			if(!!dancerModel.forever){
 				result.forever = true;
 			} else{

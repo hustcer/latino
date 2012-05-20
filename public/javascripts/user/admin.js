@@ -127,7 +127,7 @@ jQuery(function($){
 				$.use('ui-combobox', function(){
 
 					$box.combobox({
-					    data		: $('select', $box),
+					    data  : $('select', $box),
 						// 绑定data.value 到 input上
 						change: function(){
 							$('input.result', $box).data('courseVal',$(this).combobox('val'));
@@ -170,7 +170,7 @@ jQuery(function($){
 		_handlePaid: function(){
 			$("#payBtn").click(function(){
 
-				var dancerID  	= $("#course-pay .dancerID").val(), 
+				var dancerID 	= $("#course-pay .dancerID").val(), 
 					$tipWrapper = $('#course-pay p.course-tip'),
 					courseVal 	= $('input.result','#course-pay .course-box').data('courseVal');
 
@@ -197,7 +197,7 @@ jQuery(function($){
 		_handleRefuse: function(){
 			$("#refuseBtn").click(function(){
 
-				var dancerID  	= $("#refuse-apply .dancerID").val(), 
+				var dancerID 	= $("#refuse-apply .dancerID").val(), 
 					$tipWrapper = $('#refuse-apply p.course-tip'),
 					courseVal 	= $('input.result','#refuse-apply .course-box').data('courseVal');
 
@@ -224,7 +224,7 @@ jQuery(function($){
 		_handleRefund: function(){
 			$("#refundBtn").click(function(){
 
-				var dancerID  	= $("#course-refund .dancerID").val(), 
+				var dancerID 	= $("#course-refund .dancerID").val(), 
 					$tipWrapper = $('#course-refund p.course-tip'),
 					courseVal 	= $('input.result','#course-refund .course-box').data('courseVal');
 
@@ -251,7 +251,7 @@ jQuery(function($){
 		_handleQuit: function(){
 			$("#quitBtn").click(function(){
 
-				var dancerID  	= $("#quit-approve .dancerID").val(), 
+				var dancerID 	= $("#quit-approve .dancerID").val(), 
 					$tipWrapper = $('#quit-approve p.course-tip'),
 					courseVal 	= $('input.result','#quit-approve .course-box').data('courseVal');
 
@@ -278,7 +278,7 @@ jQuery(function($){
 		_handleRefuseQuit: function(){
 			$("#quitRefuseBtn").click(function(){
 
-				var dancerID  	= $("#quit-refuse .dancerID").val(), 
+				var dancerID 	= $("#quit-refuse .dancerID").val(), 
 					$tipWrapper = $('#quit-refuse p.course-tip'),
 					courseVal 	= $('input.result','#quit-refuse .course-box').data('courseVal');
 

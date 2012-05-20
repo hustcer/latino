@@ -29,7 +29,7 @@ exports.list = function(req, res){
 exports.queryEmail = function(req, res){
 	var dancerModel = {};
 	// 根据课程状态，是否缴费来进行查询
-	if (!!req.query.dancerID) 		{dancerModel.dancerID 	= req.query.dancerID;};
+	if (!!req.query.dancerID)		{dancerModel.dancerID 	= req.query.dancerID;};
 	if (!!req.query.gender) 		{dancerModel.gender 	= req.query.gender;};
 	if (!!req.query.department) 	{dancerModel.department = req.query.department;};
 

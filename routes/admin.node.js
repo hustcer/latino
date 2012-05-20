@@ -5,9 +5,9 @@
  * Date: 	2012-2-13   
  */
 
-var col 	= require("../database/database.js").collection;
+var col  	= require("../database/database.js").collection;
 // 取得课程值以及对应的中文描述映射信息
-var cList 	= require("../database/course.js").courseList;
+var cList  	= require("../database/course.js").courseList;
 var cCourse = require("../database/course.js").currentCourse;
 var nodeMsg = require("./nodemsg.node.js").nodeMessages;
 
