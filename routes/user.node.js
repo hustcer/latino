@@ -42,7 +42,7 @@ exports.user = function(req, res, next){
 		    });
 
 	  	} else {
-	  		// TODO: 如果会员不存在，直接给于提示不要抛出异常
+			// TODO: 如果会员不存在，直接给于提示不要抛出异常
 	    	// next(new Error('Failed to load user ' + req.params.id));
 	    	console.log('This Dancer Dose Not Exist, DancerID:', req.params.id);
 	  	}
