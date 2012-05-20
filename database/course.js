@@ -19,7 +19,7 @@ var cCourse = exports.currentCourse = {
 	courseB: 	{cValue: "13CI", cName: "第13期恰恰中级班", ps:"上课时间：每周四晚7:40~8:40"},
 	cCapacity: 	21, 
 	// 锁定课程状态，禁止报名、退课等操作
-	locked: 	true,
+	locked: 	false,
 	// 是否开启报名自动审核
 	autoApprove:true,
 	// 是否男士报名优先，对于拉丁课男士优先则自动审核开启时男士报名自动审核通过

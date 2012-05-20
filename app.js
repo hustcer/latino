@@ -94,10 +94,7 @@ if (portIndex != -1 && process.argv.length >= portIndex + 2) {
     port = +process.argv[portIndex + 1];
 };
 
-app.listen(port);
-
-console.log("\nExpress server listening on port %d in %s mode\n", app.address().port, app.settings.env);
-
-
-
+app.listen(port, function(){
+    console.log("\nExpress server listening on port %d in %s mode\n", app.address().port, app.settings.env);
+});
 
