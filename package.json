@@ -1,9 +1,9 @@
 
 {
-    "name":       "latino",
+    "name":       "latinode",
     "version":    "0.0.1",
-    "author":     "Justin <justin.maj@alibaba-inc.com>",
-    "description":"Alibaba Dance Training Management System.",
+    "author":     "Justin Ma",
+    "description":"A Dance Training Management System.",
     "private":    true,
     "main":       "./app.js",
     "dependencies": {
@@ -15,7 +15,7 @@
   	"contributors": [ 
 	    {
 	      "name":    "Justin Ma",
-	      "email":   "justin.maj@alibaba-inc.com"
+	      "email":   "hustcer(at)gmail.com"
 	    } 
 	],
   	"scripts": 		{
