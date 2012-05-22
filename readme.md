@@ -1,9 +1,9 @@
 # A Dance Training Manage System Based on MongoDB and Node
 
 ## Summary：
-This's a dance training manage system based on **NodeJS、Express Web Framework、Jade、MongoDB and MongoSkin, etc.**.This web application is built for dancers of Alibaba and the main goal is focused on dance course signing up management.
+This's a dance training manage system based on **NodeJS、Express Web Framework、Jade、MongoDB and MongoSkin, etc.**.The web application is built for dancers of Alibaba and the goal is mainly focused on dance course signing up management.
 ## Features
-System consists of dancer forground and admin background. When started in production mode dancers can visit the basic forground pages without login. And when started in development mode the application will give you the admin's rights. Detailed as follows:
+System consists of dancer forground and admin background. When started in production mode dancers can visit the basic forground pages without login. And if started in development mode the application will give you the admin's rights. Detailed as follows:
 ### Dancer Forground：
 * **Online Course Signing Up:**<br/>
 	- The sign up page will show you the realtime infomation of current courses, such as dance type, course capacity, total applied dancers, total approved dancers, and some other notice.<br/>
@@ -14,7 +14,7 @@ System consists of dancer forground and admin background. When started in produc
 	- Quiting of course should be audited too: Namely, could be refused or approved by admin in background.<br/>
 * Dancers can view their personal information and the courses they have taken.
 * Dancers could be searched or filtered according to their job number, department, gender, courses, course status or payment status.
-* The filtered result will be paged, and could be sorted according to certain filed by forground user.
+* The filtered result will be paged, and could be sorted according to certain field by forground user.
 * Generate the mailing list of dancers which satisfy certain condition.<br/>
 
 ### Admin Background:
