@@ -24,7 +24,7 @@ exports.mdrender= function(req, res){
     fs.readFile(markdownFile, 'utf8', function (err, data) {
         if (err) res.redirect('/err404');
 
-        var head = '<head><title>PSD To Html - ' + req.params.md + '</title>' + 
+        var head = '<head><title>Alibaba舞蹈培训 - ' + req.params.md + '</title>' + 
             '<link rel="stylesheet" href="/stylesheets/style.css"><link rel="stylesheet" href="/stylesheets/fdev-float.css"></head>';
         var html = head + '<body class="content markdown">' + md.parse(data) + '</body>';
 
