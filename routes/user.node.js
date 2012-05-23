@@ -2,7 +2,7 @@
  * User operations.
  * Ref：http://www.hacksparrow.com/mongoskin-tutorial-with-examples.html
  *
- * Author: 	justin.maj
+ * Author: 	hustcer
  * Date: 	2012-2-13 
  */
 

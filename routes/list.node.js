@@ -1,7 +1,7 @@
 /**
  * Dancer list page
  *
- * Author: 	justin.maj
+ * Author: 	hustcer
  * Date: 	2012-2-12   
  */
 

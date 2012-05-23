@@ -7,7 +7,7 @@
 /**
  * Module dependencies.
  *
- * Author:  justin.maj
+ * Author:  hustcer
  * Date:    2012-1-19 
  */
 

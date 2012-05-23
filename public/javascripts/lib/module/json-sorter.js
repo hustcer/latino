@@ -1,5 +1,5 @@
 /*
- * Author: 	justin.maj
+ * Author: 	hustcer
  * Date: 	20120215
 */
 jQuery.namespace('json.array');             

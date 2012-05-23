@@ -1,7 +1,7 @@
 /**
  * 路径映射
  *
- * Author: 	justin.maj
+ * Author: 	hustcer
  * Date: 	2012-1-19  
  */
 var gRouter = exports.gRouter       = {};

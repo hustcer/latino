@@ -1,6 +1,6 @@
 /**
  * 分页JS
- * Imported by justin.maj
+ * Imported by hustcer
  * 
  * (从fdev3的代码片段中修改产生)
  * 修改点:   1：YUI实现改成jquery实现

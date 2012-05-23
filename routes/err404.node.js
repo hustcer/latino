@@ -2,7 +2,7 @@
 /**
  * GET 404 page.
  *
- * Author: 	justin.maj
+ * Author: 	hustcer
  * Date: 	2012-1-19   
  */
 exports.err404 = function(req, res){

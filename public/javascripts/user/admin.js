@@ -2,7 +2,7 @@
 /**
  * Admin front.
  *
- * Author: 	justin.maj
+ * Author: 	hustcer
  * Date: 	2012-02-25   
  */
 

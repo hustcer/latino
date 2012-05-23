@@ -4,7 +4,7 @@
  * 会员Collection 常规操作绑定方法
  * Ref：http://www.hacksparrow.com/mongoskin-tutorial-with-examples.html
  *
- * Author: 	justin.maj
+ * Author: 	hustcer
  * Date: 	2012-1-20  
  */
 

@@ -2,7 +2,7 @@
 /**
  * Dancer list front.
  *
- * Author: 	justin.maj
+ * Author: 	hustcer
  * Date: 	2012-1-20   
  */
 

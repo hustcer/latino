@@ -2,7 +2,7 @@
 /**
  * IE 浏览器监测提示等.
  *
- * Author: 	justin.maj
+ * Author: 	hustcer
  * Date: 	2012-03-19   
  */
 

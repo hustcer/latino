@@ -1,7 +1,7 @@
 /**
  * 后台返回给前台的信息.
  *
- * Author: 	justin.maj
+ * Author: 	hustcer
  * Date: 	2012-04-06   
  */
 var messages = exports.nodeMessages = {

@@ -1,7 +1,7 @@
 /**
  * GET 404 page.
  *
- * Author: 	justin.maj
+ * Author: 	hustcer
  * Date: 	2012-2-13   
  */
 
