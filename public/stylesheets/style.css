@@ -8,6 +8,17 @@ body {
 
 input{font: 13px "微软雅黑", tahoma;}
 
+.markdown{width:1000px;margin: 0 auto;clear: both;overflow: hidden;}
+.markdown,.markdown pre,.markdown code,.markdown p,.markdown strong,.markdown em {font: 13px "Century Gothic", "Tahoma", "Microsoft YaHei", "SimSun";}
+.markdown strong,.markdown em{font-weight: bold;}
+.markdown p{line-height: 22px;}
+.markdown h1{line-height: 44px;}
+.markdown h2{line-height: 44px;margin-bottom: 12px;background:none;border-bottom: 1px solid #9A9ACE;color:#333;}
+.markdown h3{line-height: 30px;font-weight:700;}
+.markdown pre{text-indent: 2em;color:#6D79E1;font-weight:bold!important;}
+.markdown ul{padding-left: 30px;display: block;list-style-type: disc;line-height:24px;}
+.markdown ol{padding-left: 30px;list-style-type: decimal;line-height:24px;}
+
 .i-sort-default,.i-sort-down,.i-sort-up{font-style: normal;float: right;margin-right: 3px;}
 
 .BW{word-break: break-all;word-wrap: break-word;}

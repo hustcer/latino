@@ -240,7 +240,7 @@ jQuery(function($){
 		 */
 		_courseQuitHandler: function( courseNumber ){
 
-			$("#quitCourse" + courseNumber).live('click',function(){
+			$("#quitCourse" + courseNumber).on('click', function(){
 				$.getJSON('quitCourse/' + $("#dancerID").val(), 
 					{ courseVal: $("#course" + courseNumber).val() }, function(data){
 						if (data.success === true) {
@@ -258,7 +258,7 @@ jQuery(function($){
 		 */
 		_courseCancelHandler: function( courseNumber ){
 
-			$("#cancelCourse" + courseNumber).live('click',function(){
+			$("#cancelCourse" + courseNumber).on('click',function(){
 				$.getJSON('cancelCourse/' + $("#dancerID").val(), 
 					{ courseVal: $("#course" + courseNumber).val() }, function(data){
 

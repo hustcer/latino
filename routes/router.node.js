@@ -8,6 +8,7 @@ var gRouter = exports.gRouter       = {};
 
 gRouter["/"]                        = require('./index.node.js').index;	            // 首页
 gRouter["/index"]                   = gRouter["/"];	                                // 首页
+gRouter["/doc/:md"]                 = require("./markdown.node.js").mdrender;       // MarkDown 页面渲染处理
 
 gRouter["/queryDancer/:id"]         = require("./index.node.js").queryDancer;       // Ajax调用查询会员信息,用于动态加载报名表单会员信息数据
 gRouter["/queryCourseInfo"]	        = require("./index.node.js").queryCourseInfo;   // Ajax请求获取当前开课课程报名统计信息
