@@ -3,3 +3,8 @@
 node_modules/
 *.sh
 ToDo.txt
+database/course?*.js
+tools/*
+public/javascripts/usermin/*
+public/stylesheets/all*.css
+database/examples.js
