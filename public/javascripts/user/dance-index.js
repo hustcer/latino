@@ -49,10 +49,8 @@ jQuery(function($){
 			this._idBlurHandler();
 			this._formActionHandler();
 
-			this._courseQuitHandler('A');
-			this._courseQuitHandler('B');
-			this._courseCancelHandler('A');
-			this._courseCancelHandler('B');
+			this._courseQuitHandler();
+			this._courseCancelHandler();
 		},
 		/**
 		 * 初始化部门选择下拉列表
@@ -81,12 +79,12 @@ jQuery(function($){
 		 */
 		_queryCourseInfo: function(){
 			$.getJSON('queryCourseInfo', function(data){
-				// console.log('queryCourseInfo:', data);
-				
-				$('#aWaiting') .text(data.courseInfo.courseA.total + '人;');
-				$('#bWaiting') .text(data.courseInfo.courseB.total + '人;');
-				$('#aApproved').text(data.courseInfo.courseA.approved + '人;');
-				$('#bApproved').text(data.courseInfo.courseB.approved + '人;');
+				// console.log(data.courseInfo);
+				for(var i = 0, l = data.courseInfo.length; i < l; i ++){
+					$('#waiting'  + i) .text(data.courseInfo[i].total    + '人;');
+					$('#approved' + i) .text(data.courseInfo[i].approved + '人;');
+				}
+
 			});
 
 		},
@@ -146,6 +144,7 @@ jQuery(function($){
 				var mid = $.trim($(this).val());
 				if (mid === '') {return false;};
 
+				// 该接口会包含会员所有课程信息
 				$.getJSON('queryDancer/' + mid, function(data){
 					var $selectInput = $("div.depart-select input.result", '#dance-content');
 					// 会员不存在的时候直接返回
@@ -185,30 +184,34 @@ jQuery(function($){
 		 * 初始化课程可用操作
 		 */
 		_initCourseOperation: function(data){
-			var courses = data.data.courses, 
-				cA = $('#courseA').val(), 
-				cB = $('#courseB').val(),
+			// courses 中包含会员所有参与的课程，包括不在当前开课列表的历史课程
+			// cCourseList 为当前开课课程信息
+			var courses 	 = data.data.courses, 
+				cCourseList  = [], 
+				cLength 	 = $('#courseLen').val(),
 				checkedCount = 0;
 
+			for( var i = 0, l = cLength; i < l; i ++ ){
+				cCourseList.push($('#course' + i).val());
+			}
+
 			if (courses && courses.length > 0) {
+				// 从后面的课程开始匹配，因为后来报名的课程总是在后面的，这样匹配命中概率高些
 				for (var i = courses.length - 1; i >= 0; i--) {
-					if(courses[i].courseVal === cA){
+					for (var j = cCourseList.length - 1; j >= 0; j--) {
 						
-						module._initCourseItemOperation(courses[i], 'A');
-						checkedCount ++;
-						// 不会开两个同样的课程（即便内容相同也会有不同的value），所以一旦匹配上就不再继续比较下去
-						continue;
-
-					}else if (courses[i].courseVal === cB) {
-
-						module._initCourseItemOperation(courses[i], 'B');
-
-						checkedCount ++;
-						continue;
-
+						// 如果当前开课课程中有在该会员课程记录中的，说明该会员已经申请过报名
+						if(courses[i].courseVal === cCourseList[j]){
+							
+							module._initCourseItemOperation(courses[i], j);
+							checkedCount ++;
+							// 不会开两个同样的课程（即便内容相同也会有不同的value），所以一旦匹配上就不再继续比较下去
+							continue;
+						}
 					};
-					// 如果有两个课程被选中说明已经到达本期可报名课程上限，不用再继续检查了
-					if (checkedCount >= 2) {break;};
+					
+					// 如果课程被选中数目已经到达本期可报名课程上限，不用再继续检查了
+					if (checkedCount >= cLength) {break;};
 				};
 			}; // end outer if
 		},
@@ -236,17 +239,18 @@ jQuery(function($){
 		},
 		/**
 		 * 用户申请退课事件处理
-		 * param courseNumber: A or B
 		 */
-		_courseQuitHandler: function( courseNumber ){
+		_courseQuitHandler: function( ){
 
-			$("#quitCourse" + courseNumber).on('click', function(){
+			$('a.quit-apply').on('click', function(){
+				var $btn = $(this);
+
 				$.getJSON('quitCourse/' + $("#dancerID").val(), 
-					{ courseVal: $("#course" + courseNumber).val() }, function(data){
+					{ courseVal: $btn.parent().find('input.comm-check').val() }, function(data){
+
 						if (data.success === true) {
 							// 申请退课成功后要把该按钮删掉
-							$("#quitCourse" + courseNumber).hide();
-							$('#tip' + courseNumber).text(module.QUIT_MSG).css('display','inline-block');
+							$btn.hide().parent().find('p.course-tip').text(module.QUIT_MSG).css('display','inline-block');
 							
 						};
 				});
@@ -254,17 +258,17 @@ jQuery(function($){
 		},
 		/**
 		 * 用户取消报名事件处理
-		 * param courseNumber: A or B
 		 */
-		_courseCancelHandler: function( courseNumber ){
+		_courseCancelHandler: function( ){
 
-			$("#cancelCourse" + courseNumber).on('click',function(){
+			$('a.cancel-apply').on('click',function(){
+				var $btn = $(this);
+
 				$.getJSON('cancelCourse/' + $("#dancerID").val(), 
-					{ courseVal: $("#course" + courseNumber).val() }, function(data){
+					{ courseVal: $btn.parent().find('input.comm-check').val() }, function(data){
 
 						if (data.success === true) {
-							$("#cancelCourse" + courseNumber).hide();
-							$('#tip' + courseNumber).text(module.CANCEL_MSG).css('display','inline-block');
+							$btn.hide().parent().find('p.course-tip').text(module.CANCEL_MSG).css('display','inline-block');
 						};
 				});
 			});

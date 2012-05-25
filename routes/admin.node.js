@@ -150,8 +150,6 @@ exports.quitRefuse = function(req, res){
 exports.editDancer = function(req, res){
 	var dancerModel = {
 		dancerID: 	req.body.dancerID,
-		// courseA: 	req.body.courseA,
-		// courseB: 	req.body.courseB,
 		dancerName: req.body.dancerName,
 		gender: 	req.body.gender,
 		email: 		req.body.email,

@@ -63,7 +63,7 @@ include includes/header
 							select.comm-select(name="course", id="course")
 								option(value="") 请选择...
 								each course in courseList
-									if (course.courseVal == cCourse.courseA.cValue)
+									if (course.courseVal == cCourse.courses[0].cValue)
 										option(value="#{course.courseVal}", selected='selected') #{course.courseName}
 									else
 										option(value="#{course.courseVal}") #{course.courseName}
@@ -74,8 +74,8 @@ include includes/header
 							select.comm-select(name="status", id="status")
 								option(value="") 请选择...
 								option(value="waiting") 等待审核
-								option(value="approved", selected='selected') 报名成功
-								option(value="refused") 报名失败
+								option(value="approved", selected='selected') 报名通过
+								option(value="refused") 报名拒绝
 								option(value="quitApplied") 申请退课
 								option(value="quit") 已退课
 

@@ -23,25 +23,20 @@ var CDO 		= exports.commonDancerOp = {
 		// 新报名课程默认状态为 'waiting'
 		var courseAddArray = [], logMsg = '', courseStatus = 'waiting';
 
-		if( !!dancerModel.courseA ) {
+		if( !!dancerModel.courseArray ) {
 			
-			// 新插入数据库的学员如果报名课程的话根据规则设置报名状态,且未付款
-			courseAddArray.push({courseVal:dancerModel.courseA, status:courseStatus,
-				gmtStatusChanged: new Date(), applyTime: new Date(), paid:false});
+			for(var i = 0, l = dancerModel.courseArray.length; i < l; i ++){
+				if( !!dancerModel.courseArray[i] ) {
+					// 新插入数据库的学员如果报名课程的话根据规则设置报名状态,且未付款
+					courseAddArray.push({courseVal:dancerModel.courseArray[i], status:courseStatus,
+						gmtStatusChanged: new Date(), applyTime: new Date(), paid:false});
 
-			logMsg += 'A--' + dancerModel.courseA;
-		}
-		if( !!dancerModel.courseB ) {
-			
-			// 新插入数据库的学员如果报名课程的话根据规则设置报名状态,且未付款
-			courseAddArray.push({courseVal:dancerModel.courseB, status:courseStatus,
-				gmtStatusChanged: new Date(), applyTime: new Date(), paid:false});
-
-			logMsg += ' B--' + dancerModel.courseB;
+					logMsg += i + '--' + dancerModel.courseArray[i] + '; ';
+				}
+			}
 		}
 
-		delete dancerModel.courseA;
-		delete dancerModel.courseB;
+		delete dancerModel.courseArray;
 		dancerModel.vip 		= 0; 	// lte 5
 		dancerModel.level 		= 1;	// lte 9
 		dancerModel.locked 		= false;
@@ -67,14 +62,14 @@ var CDO 		= exports.commonDancerOp = {
 		// 新报名课程默认状态为 'waiting'
 		var courseAddArray = [], self = this, logMsg = '', courseStatus = 'waiting';
 
-		if( !!dancerModel.courseA ) {
-			courseAddArray.push( dancerModel.courseA );
-			logMsg += 'A--' + dancerModel.courseA;
-		}
-
-		if( !!dancerModel.courseB ) {
-			courseAddArray.push( dancerModel.courseB );
-			logMsg += ' B--' + dancerModel.courseB;
+		if( !!dancerModel.courseArray ) {
+			
+			for(var i = 0, l = dancerModel.courseArray.length; i < l; i ++){
+				if( !!dancerModel.courseArray[i] ) {
+					courseAddArray.push( dancerModel.courseArray[i] );
+					logMsg += i + '--' + dancerModel.courseArray[i] + '; ';
+				}
+			}
 		}
 
 		this.findOne({'dancerID':dancerID}, function(err, result) {
@@ -100,9 +95,9 @@ var CDO 		= exports.commonDancerOp = {
 				
 					if (result.courses[i].courseVal === courseAddArray[j]) {
 
-						result.courses[i].status 	= courseStatus;
-						result.courses[i].applyTime = new Date();
-						result.courses[i].gmtStatusChanged = new Date();
+						result.courses[i].status 			= courseStatus;
+						result.courses[i].applyTime 		= new Date();
+						result.courses[i].gmtStatusChanged 	= new Date();
 						exist = true;
 						break;
 					};
@@ -178,14 +173,15 @@ var CDO 		= exports.commonDancerOp = {
 	 */
 	autoApprove: function(dancerModel){
 
-		if( !!dancerModel.courseA ) {
-			CDO._approveCourse(dancerModel, dancerModel.courseA );
-		}
+		if( !!dancerModel.courseArray ) {
+			
+			for(var i = 0, l = dancerModel.courseArray.length; i < l; i ++){
+				if( !!dancerModel.courseArray[i] ) {
 
-		if( !!dancerModel.courseB ) {
-			CDO._approveCourse(dancerModel, dancerModel.courseB );
+					CDO._approveCourse( dancerModel, dancerModel.courseArray[i] );
+				}
+			}
 		}
-
 	},
 	/**
 	 * 根据一定的判断原则决定该会员初始报名的时候是否可以自动被审核通过
@@ -199,7 +195,7 @@ var CDO 		= exports.commonDancerOp = {
 	 * @param courseVal 	待自动审核的课程
 	 */
 	_approveCourse: function(dancerModel, courseVal){
-		// console.info('[INFO]----Auto Approve Dancer:', dancerModel.dancerID, ' CourseVal:', courseVal);
+		console.info('[INFO]----Auto Approve Dancer:', dancerModel.dancerID, ' CourseVal:', courseVal);
 		dancerModel.dancerID = dancerModel.dancerID.toUpperCase();
 
 		var condition = {courses:{	$elemMatch:
@@ -210,7 +206,7 @@ var CDO 		= exports.commonDancerOp = {
 
 		// 此处内部调用时还没有绑定方法所以要调用原生db
 		col.count(condition, function(err, count){
-
+			console.log("count:",count,' cCourse.autoLimit:', cCourse.autoLimit, ' cCourse.cCapacity', cCourse.cCapacity);
 			// -------------------Rule NO.1-----------------------------------
 			// 如果当前报名成功的会员数目小于允许的自动审核限额则自动审核通过
 			if( count < cCourse.autoLimit ){

@@ -15,24 +15,17 @@ include includes/header
 	#apply-container.apply-container
 		#course-info.course-info
 			p: em.BD 当前舞蹈培训信息：
-			p &nbsp;
-			p: em.BD 培训一：#{cCourse.courseA.cName}
-			p 报名限额：
-				em.R #{cCourse.cCapacity}人;
-			p 已预报名：
-				em.R#aWaiting
-			p 报名成功：
-				em.R#aApproved
-			p: em.R #{cCourse.courseA.ps}
-			p &nbsp;
-			p: em.BD 培训二：#{cCourse.courseB.cName}
-			p 报名限额：
-				em.R #{cCourse.cCapacity}人;
-			p 已预报名：
-				em.R#bWaiting
-			p 报名成功：
-				em.R#bApproved
-			p: em.R #{cCourse.courseB.ps}
+			each course,i in cCourse.courses
+				p &nbsp;
+				p: em.BD #{course.cName}
+				p 报名限额：
+					em.R #{cCourse.cCapacity}人;
+				p 已预报名：
+					em.R(id='waiting#{i}')
+				p 报名成功：
+					em.R(id='approved#{i}')
+				p: em.R #{course.ps}
+
 			p &nbsp;
 			p: em.B #{cCourse.notice}
 
@@ -48,25 +41,17 @@ include includes/header
 						tr.row-sep.em
 							th: label 报名班级：
 							td(colspan="2")
-								#courseAWrapper.course-wrapper
-									if( !cCourse.locked )
-										input.comm-check(type="checkbox", value="#{cCourse.courseA.cValue}", name="courseA", id="courseA")
-										label(for="courseA", id="courseAName")&nbsp;#{cCourse.courseA.cName}
-										a(href="javascript:;", id="quitCourseA", class="course-btn quit-apply")申请退课
-										a(href="javascript:;", id="cancelCourseA", class="course-btn cancel-apply")取消报名
-										p.course-tip#tipA
-									else
-										span.over-tip 报名已结束或未开始
-
-								#courseBWrapper.course-wrapper
-									if( !cCourse.locked )
-										input.comm-check(type="checkbox", value="#{cCourse.courseB.cValue}", name="courseB", id="courseB")
-										label(for="courseB", id="courseBName")&nbsp;#{cCourse.courseB.cName}
-										a(href="javascript:;", id="quitCourseB", class="course-btn quit-apply")申请退课
-										a(href="javascript:;", id="cancelCourseB", class="course-btn cancel-apply")取消报名
-										p.course-tip#tipB
-									else
-										span.over-tip 报名已结束或未开始
+								input(type="hidden", name="courseLen", id="courseLen", value="#{cCourse.courses.length}")
+								each course,i in cCourse.courses
+									.course-wrapper
+										if( !cCourse.locked )
+											input.comm-check(type="checkbox", value="#{course.cValue}", name="course#{i}", id="course#{i}")
+											label(for="course#{i}")&nbsp;#{course.cName}
+											a(href="javascript:;", class="course-btn quit-apply", id="quitCourse#{i}")申请退课
+											a(href="javascript:;", class="course-btn cancel-apply", id="cancelCourse#{i}")取消报名
+											p.course-tip(id = "tip#{i}")
+										else
+											span.over-tip 报名已结束或未开始
 							
 				//.hr-line
 

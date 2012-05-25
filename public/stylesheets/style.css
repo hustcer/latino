@@ -104,11 +104,10 @@ a.course-btn:hover{text-decoration:none;color:blue;}
 	margin: 30px 100px;
 }
 
-.comm-input{margin: 0 9px;border:1px solid #B83B1C;width: 180px;
-	height: 16px;line-height: 20px;padding: 3px 6px;background-color: ghostWhite;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;}
+.comm-input{
+	margin: 0 9px;border: 1px solid #E3E3E6;width: 180px;
+	height: 16px;line-height: 20px;padding: 3px 6px;
+	background-color: #F3F3F3;}
 
 .course-tip{color: #C40000;font-size: 12px;padding: 0px 11px;margin: 0 10px 0 49px;display: none;
 	border: 1px solid silver;

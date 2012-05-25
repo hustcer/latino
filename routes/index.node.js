@@ -8,7 +8,6 @@
 var col 	= require("../database/database.js").collection;
 // 当前开课信息
 var cCourse = require("../database/course.js").currentCourse;
-var Step 	= require('step');
 
 /*
  * GET home page.
@@ -31,10 +30,11 @@ exports.apply = function(req, res){
 	// 邮箱不需要加后缀的，如果用户加了就统一去掉吧，没加也无妨
 	if (!!req.body.email) { req.body.email = req.body.email.replace(/@alibaba-inc.com/g, ""); };
 
-	var dancerModel = {
+	var cCourseLength = +req.body.courseLen, 
+		courseArray	  = [];
+
+	var dancerModel   = {
 		dancerID: 	req.body.dancerID,
-		courseA: 	req.body.courseA,
-		courseB: 	req.body.courseB,
 		dancerName: req.body.dancerName,
 		gender: 	req.body.gender,
 		email: 		req.body.email + '@alibaba-inc.com',
@@ -43,6 +43,11 @@ exports.apply = function(req, res){
 		alipayID: 	req.body.alipayID,
 		department: req.body.department
 	};
+	for (var i = 0, l = cCourseLength; i < l; i ++) {
+		courseArray.push(req.body['course' + i]);
+	};
+
+	dancerModel.courseArray	= courseArray;
 
 	col.findDancerByID( dancerModel.dancerID, function(err, result) {
 	    if (err) throw err;
@@ -67,11 +72,9 @@ exports.apply = function(req, res){
 
 			    if (!!addResult) {
 
-				    // 如果开启课程自动审核则在这里进行自动审核
+				    // FIXME:如果开启课程自动审核则在这里进行自动审核
 	    			if(cCourse.autoApprove){
-	    				// 会员信息插入的时候把courseA、courseB删掉了，自动审核时需要回填回来
-	    				dancerModel.courseA = req.body.courseA;
-	    				dancerModel.courseB = req.body.courseB;
+	    				
 	    				col.autoApprove(dancerModel);
 	    			}
 			    }
@@ -116,54 +119,44 @@ exports.queryDancer = function(req, res){
  * 查询当前开课课程报名统计信息. eg:http://localhost:3000/queryCourseInfo
  */
 exports.queryCourseInfo = function(req, res){
-	var courseInfo = { courseA:{}, courseB:{} };
+	var courseInfoList = [], counter = 0;
+	
+	for (var i = 0, l = cCourse.courses.length; i < l; i ++) {
 
-	// DO IT USING STEP!
-	Step(
-			function countByCondition(){
-				col.countDancerByCondition(
-					{ courses:{$elemMatch: {'courseVal':cCourse.courseA.cValue,'status':'waiting'}}}, this);
-			},
-			function fillResult(err, count){
+		(function(){
+			// NOTICE: courseInfo不能放在for循环外面定义，否则三个异步查询的回调都会修改同一个courseInfo引用，造成前面查询的结果被覆盖
+			var courseVal = cCourse.courses[i].cValue, courseInfo = {}, 
+				// 申请退课但尚未审核批准的也算报名成功的
+				cond1 	  = { courses:{$elemMatch: {'courseVal':courseVal,'status':'waiting'}}  },
+				cond2 	  = { courses:{$elemMatch: {'courseVal':courseVal,'status':{$in: ['approved', 'quitApplied']} }} };
+
+			col.countDancerByCondition(cond1, function(err, count){
 				if (err) throw err;
-				courseInfo.courseA.total = count;
-				return courseInfo;
-			},
-			function countByCondition(){
-				col.countDancerByCondition(
-					{ courses:{$elemMatch: {'courseVal':cCourse.courseA.cValue,'status':'approved'}}}, this);
-			},
-			function fillResult(err, count){
-				if (err) throw err;
-				courseInfo.courseA.approved = count;
-				// 申请报名总人数等于处于申请审核状态的人数加报名成功的人数
-				courseInfo.courseA.total += count;
-				return courseInfo;
-			},
-			function countByCondition(){
-				col.countDancerByCondition(
-					{ courses:{$elemMatch: {'courseVal':cCourse.courseB.cValue,'status':'waiting'}}}, this);
-			},
-			function fillResult(err, count){
-				if (err) throw err;
-				courseInfo.courseB.total = count;
-				return courseInfo;
-			},
-			function countByCondition(){
-				col.countDancerByCondition(
-					{ courses:{$elemMatch: {'courseVal':cCourse.courseB.cValue,'status':'approved'}}}, this);
-			},
-			function fillResult(err, count){
-				if (err) throw err;
-				courseInfo.courseB.approved = count;
-				// 申请报名总人数等于处于申请审核状态的人数加报名成功的人数
-				courseInfo.courseB.total += count;
-				return courseInfo;
-			},
-			function sendRes(){
-				res.send( {courseInfo:courseInfo} );
-			}
-		);
+				courseInfo.total = count;
+
+				col.countDancerByCondition(cond2, function(err, count){
+						if (err) throw err;
+						courseInfo.approved  = count;
+						courseInfo.total 	+= count;
+						// NOTICE: 由于是异步并行执行push不一定能保证顺序，最好还是严格根据数组索引赋值 ???
+						courseInfoList.push(courseInfo);
+						// courseInfoList[i] 	 = courseInfo;
+						// console.log(courseInfoList);
+						// 如果所有需要的课程信息已经查询完毕则返回
+						if(++counter == l){
+							res.send( {courseInfo:courseInfoList} );
+						}
+				});
+
+			});
+
+		})(i, l);
+
+	};
+
+	// WARN: 如果在此处返回则 courseInfoList 中的数据可能为空，因为循环很快执行完毕，而循环体内的代码是异步执行的，不会阻塞执行。
+	// res.send( {courseInfo:courseInfoList} );
+
 }
 
 /*

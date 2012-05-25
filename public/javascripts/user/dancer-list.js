@@ -156,7 +156,6 @@ jQuery(function($){
 				$('#department-box input.field').val('');
 				$('#department-box input.result').val('请选择...');
 				$('#department-box div.ui-combobox-panel ul li').removeClass('ui-combobox-selected');
-
 			});
 			$('span.gender-cond span.close', $filter).click(function(){
 				$(this).parent().find('p').text('').end().hide();
@@ -372,7 +371,7 @@ jQuery(function($){
 		    	$.use("util-date",function(){
 				        
 				    for (var m = 0,l = data[i].courses.length; m < l; m++) {
-				    	// 本方法在ie浏览器下有问题，故而用util-date取代
+				    	// FIXME: 本方法在ie浏览器下有问题，故而用util-date取代
 			    		// date = new Date(Date.parse(data[i].courses[m].applyTime)).format('yyyy/MM/dd hh:mm:ss');
 
 			    		date = Date.parseDate(data[i].courses[m].applyTime, "yyyy-MM-dd hh:mm:ss").format('yyyy/MM/dd hh:mm:ss');
@@ -434,10 +433,10 @@ jQuery(function($){
 	    			status = ('等待审核;');
 	    			break;
 	    		case 'approved':
-	    			status = ('报名成功;');
+	    			status = ('报名通过;');
 	    			break;
 	    		case 'refused':
-	    			status = ('报名失败;');
+	    			status = ('报名拒绝;');
 	    			break;
 	    		case 'quitApplied':
 	    			status = ('申请退课;');

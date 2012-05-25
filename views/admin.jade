@@ -167,16 +167,11 @@ include includes/header
 								tr.row-sep.em
 									th: label 报名班级：
 									td(colspan="2")
-										#courseAWrapper.course-wrapper
-											input.comm-check(type="checkbox", value="#{cCourse.courseA.cValue}", name="courseA", id="courseA", disabled)
-											label(for="courseA", id="courseAName")&nbsp;#{cCourse.courseA.cName}
-											p.course-tip#tipA
-
-										#courseBWrapper.course-wrapper
-											input.comm-check(type="checkbox", value="#{cCourse.courseB.cValue}", name="courseB", id="courseB", disabled)
-											label(for="courseB", id="courseBName")&nbsp;#{cCourse.courseB.cName}						
-											p.course-tip#tipB
-		
+										each course,i in cCourse.courses
+											.course-wrapper
+												input.comm-check(type="checkbox", value="#{course.cValue}", name="course#{i}", id="course#{i}", disabled)
+												label(for="course#{i}")&nbsp;#{course.cName}
+												p.course-tip(id="tip#{i}")
 
 						table.edit-table-b
 							tbody
