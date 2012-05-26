@@ -72,9 +72,11 @@ a.course-btn:hover{text-decoration:none;color:blue;}
 .dance-content .header-title{font-size: 18px;margin: 0 0 12px;}
 .dance-content .welcome-msg{color:#999;font-size:12px;text-indent:2em;}
 .dance-content .content-header{margin: 0 100px 15px;}
+.dance-content .course-name{font-size:13px;}
+.dance-content .capacity{color: #999;font-size:12px;margin-left:8px;}
 
-.dance-content .apply-container{margin:9px 100px;clear: both;overflow: hidden;}
-.dance-content .course-info{float: right;border: 1px solid #DDD;width: 180px;padding:15px 5px 15px 7px;
+.dance-content .apply-container{margin:9px 80px 9px 100px;clear: both;overflow: hidden;}
+.dance-content .course-info{float: right;border: 1px solid #DDD;width: 195px;padding:15px 5px 15px 7px;
 	font-size: 12px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
@@ -87,8 +89,9 @@ a.course-btn:hover{text-decoration:none;color:blue;}
 .dance-content .table-container .apply-btn {margin: 10px 10px 0 15px;}
 .dance-content .table-container .reset-btn {margin: 10px 10px 0 180px;}
 .dance-content .table-container label{margin: 0 10px 0 3px;}
+.dance-content .course-wrapper  label{overflow: hidden;width: 203px;display: inline-block;}
 .dance-content .table-container .err-tip{color:red;font-size:11px;width: 235px;float: left;}
-.dance-content .table-container .over-tip{color:#C40000;font-size:11px;}
+.dance-content .table-container .over-tip{color:#C40000;font-size:11px;margin-left: 18px;}
 
 .dance-content .apply-table-a{margin: 0 0 15px 5px;}
 .dance-content .apply-table-b{margin: 5px 0 10px 5px;}

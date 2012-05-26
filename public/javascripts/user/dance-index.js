@@ -132,6 +132,7 @@ jQuery(function($){
 				$('div.course-wrapper a.course-btn').hide();
 				$('div.course-wrapper p.course-tip').hide();
 				$('div.course-wrapper input.comm-check').prop('disabled', false);
+				$('div.gender-wrapper input.comm-radio').prop('disabled', false);
 			});
 		},
 		/**

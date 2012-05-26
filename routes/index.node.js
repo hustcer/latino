@@ -43,6 +43,7 @@ exports.apply = function(req, res){
 		alipayID: 	req.body.alipayID,
 		department: req.body.department
 	};
+
 	for (var i = 0, l = cCourseLength; i < l; i ++) {
 		courseArray.push(req.body['course' + i]);
 	};
@@ -72,9 +73,10 @@ exports.apply = function(req, res){
 
 			    if (!!addResult) {
 
-				    // FIXME:如果开启课程自动审核则在这里进行自动审核
+				    // 如果开启课程自动审核则在这里进行自动审核
 	    			if(cCourse.autoApprove){
-	    				
+	    				// 新插入会员的时候会把dancerModel 的courseArray属性删除掉，而课程自动审核需要该属性
+	    				dancerModel.courseArray	= courseArray;
 	    				col.autoApprove(dancerModel);
 	    			}
 			    }

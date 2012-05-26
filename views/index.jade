@@ -17,11 +17,15 @@ include includes/header
 			p: em.BD 当前舞蹈培训信息：
 			each course,i in cCourse.courses
 				p &nbsp;
-				p: em.BD #{course.cName}
-				p 报名限额：
-					em.R #{cCourse.cCapacity}人;
+				p
+					em.course-name.BD #{course.cName}
+					if(!!course.cCapacity)
+						span.capacity (限:#{course.cCapacity}人)
+					else
+						span.capacity (限:#{cCourse.cCapacity}人)
+
 				p 已预报名：
-					em.R(id='waiting#{i}')
+					em(id='waiting#{i}')
 				p 报名成功：
 					em.R(id='approved#{i}')
 				p: em.R #{course.ps}
@@ -44,14 +48,18 @@ include includes/header
 								input(type="hidden", name="courseLen", id="courseLen", value="#{cCourse.courses.length}")
 								each course,i in cCourse.courses
 									.course-wrapper
-										if( !cCourse.locked )
+										if( course.hasOwnProperty('locked') )
+											- var locked = course.locked;
+										else
+											- var locked = cCourse.locked;
+										if( !locked )
 											input.comm-check(type="checkbox", value="#{course.cValue}", name="course#{i}", id="course#{i}")
 											label(for="course#{i}")&nbsp;#{course.cName}
 											a(href="javascript:;", class="course-btn quit-apply", id="quitCourse#{i}")申请退课
 											a(href="javascript:;", class="course-btn cancel-apply", id="cancelCourse#{i}")取消报名
 											p.course-tip(id = "tip#{i}")
 										else
-											span.over-tip 报名已结束或未开始
+											span.over-tip #{course.cName}报名已结束
 							
 				//.hr-line
 

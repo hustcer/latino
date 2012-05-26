@@ -48,7 +48,7 @@ var CDO 		= exports.commonDancerOp = {
 
 		this.insert(dancerModel, fn);
 		console.info('[INFO]----New Dancer Added, With DancerID:', dancerModel.dancerID, 
-			', DancerName:', dancerModel.dancerName, ", Courses:", (logMsg ? logMsg: 'None') );
+			', DancerName:', dancerModel.dancerName, ", Courses:", (logMsg ? logMsg: 'NONE') );
 	},
 	/**
 	 * 更新会员dancerID的相关信息
@@ -118,7 +118,7 @@ var CDO 		= exports.commonDancerOp = {
 			self.save(result, fn);
 
 			console.info('[INFO]----Dancer Infomation Updated With ID:', dancerModel.dancerID,
-    						', DancerName:', dancerModel.dancerName, ", Updated Courses:", (logMsg ? logMsg: 'None') );
+    						', DancerName:', dancerModel.dancerName, ", Updated Courses:", (logMsg ? logMsg: 'NONE') );
 
 		});
 		
@@ -198,6 +198,11 @@ var CDO 		= exports.commonDancerOp = {
 		console.info('[INFO]----Auto Approve Dancer:', dancerModel.dancerID, ' CourseVal:', courseVal);
 		dancerModel.dancerID = dancerModel.dancerID.toUpperCase();
 
+		var autoApprove = CDO._getPropValue(courseVal, 'autoApprove'),
+			cCapacity	= CDO._getPropValue(courseVal, 'cCapacity'),
+			manFirst	= CDO._getPropValue(courseVal, 'manFirst'),
+			autoLimit	= CDO._getPropValue(courseVal, 'autoLimit');
+
 		var condition = {courses:{	$elemMatch:
 							{'courseVal': 	courseVal,
 							 'status': 		{$in: ['approved', 'quitApplied']}
@@ -206,10 +211,10 @@ var CDO 		= exports.commonDancerOp = {
 
 		// 此处内部调用时还没有绑定方法所以要调用原生db
 		col.count(condition, function(err, count){
-			console.log("count:",count,' cCourse.autoLimit:', cCourse.autoLimit, ' cCourse.cCapacity', cCourse.cCapacity);
+			// console.log("Success Count:",count,' autoLimit:', autoLimit, ' cCapacity:', cCapacity);
 			// -------------------Rule NO.1-----------------------------------
 			// 如果当前报名成功的会员数目小于允许的自动审核限额则自动审核通过
-			if( count < cCourse.autoLimit ){
+			if( count < autoLimit ){
 				console.info('[INFO]----Auto Approve According to Rule NO.1: DancerID-', dancerModel.dancerID, 
 					', DancerName-', dancerModel.dancerName, ', Course-', courseVal);
 				CDO.updateDancerCourseStatus(dancerModel.dancerID, courseVal, 'approved');
@@ -218,14 +223,14 @@ var CDO 		= exports.commonDancerOp = {
 			}
 			
 			// 如果当前报名成功的会员数目小于课程总容量则继续下面的审核规则，否则不再继续审核
-			if( count <= cCourse.cCapacity ){
+			if( count <= cCapacity ){
 
 				CDO.findDancerByID(dancerModel.dancerID, function(err, result){
 					if (err) {throw err};
 
 					// -------------------Rule NO.2-----------------------------------
 					// 如果该舞种报名男士优先则直接审核通过
-					if ( !!result && result.gender === 'male' && cCourse.manFirst ) {
+					if ( !!result && result.gender === 'male' && manFirst ) {
 						console.info('[INFO]----Auto Approve According to Rule NO.2: DancerID-', dancerModel.dancerID, 
 							', DancerName-', dancerModel.dancerName, ', Course-', courseVal);
 						CDO.updateDancerCourseStatus(dancerModel.dancerID, courseVal, 'approved');
@@ -246,6 +251,25 @@ var CDO 		= exports.commonDancerOp = {
 			} // end if count < cCourse.cCapacity
 			return;
 		});
+	},
+	/**
+	 * 取得courseVal 相应属性的有效 value，局部 value 可以覆盖全局 value
+	 * @param courseVal 	需要查询的课程值
+	 * @param propName		需要获得其值的属性名			
+	 */
+	_getPropValue: function(courseVal, propName){
+
+		for (var i = cCourse.courses.length - 1, courseItem; i >= 0; i--) {
+			courseItem = cCourse.courses[i];
+
+			if(courseItem.cValue === courseVal){
+				if( courseItem.hasOwnProperty(propName) ){
+					return courseItem[propName];
+				}else{
+					return cCourse[propName];
+				}
+			}
+		};
 	},
 	/**
 	 * 根据条件查询其基本会员信息，不含创建，修改时间，_id等
