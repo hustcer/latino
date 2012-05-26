@@ -2,7 +2,7 @@
 .DS_Store
 node_modules/
 *.sh
-ToDo.txt
+ToDo.*
 database/course?*.js
 tools/*
 public/javascripts/usermin/*
