@@ -40,6 +40,7 @@
     * 【H】不同舞种数据存储在不同的Collecion中 
     * 【M】快速、批量生成测试数据，初始化数据库                               
     * 【H】Production mode/ development mode 路由处理/权限控制 
+    * 【M】错误提示或者无权限页面：404
     * 【H】各舞种开课班级配置文件合并：具体开课班级列表、课程相应参数分开定义 
     * 【H】当前开课班级配置成数组，各个班级配置参数可以分开设置，也可以采用全局默认设置
     * 【H】Markdown File Render Support ----------Very Important !!!                                      
