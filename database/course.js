@@ -28,7 +28,7 @@ var cCourseLatin = {
 	manFirst: 	true,
 	// 自动审核报名成功的人数限制
 	autoLimit: 	18,
-	notice: 	'上课地点:公司舞房.每个培训舞种共12次课,累计费用120.00元,开课时间5月初,可能5.3,具体情况等通知.报名成功的同学请付款到本人支付宝: http://me.alipay.com/hustcer,逾期未付课程将被取消.',
+	notice: 	'上课地点:公司舞房.每个培训舞种共12次课,累计费用120.00元,开课时间05.17,具体情况等通知.报名成功的同学请付款到本人支付宝: http://me.alipay.com/hustcer,逾期未付课程将被取消.',
 	beginDate: 	'',
 	endingDate: ''
 };

@@ -1,7 +1,7 @@
 
 {
     "name":       "latinode",
-    "version":    "0.2.0",
+    "version":    "0.1.6",
     "author":     "Justin Ma",
     "description":"A Dance Training Management System.",
     "private":    true,

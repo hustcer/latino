@@ -85,9 +85,9 @@ a.course-btn:hover{text-decoration:none;color:blue;}
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;}
-.dance-content .course-info .course-name{font-size:13px;margin-top: 5px;display: inline-block;}
-.dance-content .course-info .ps{margin-top: 5px;}
-
+.dance-content .course-info .course-name{font-size:13px;margin-top: 7px;display: inline-block;}
+.dance-content .course-info .ps{margin-top: 7px;}
+.dance-content .course-info .info-title{font-size:13px;}
 .dance-content .table-container{float: left;}
 .dance-content .table-container table{width:596px;}
 .dance-content .table-container table th{text-align:right;vertical-align: top;width:100px;}

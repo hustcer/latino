@@ -14,7 +14,7 @@ include includes/header
 
 	#apply-container.apply-container
 		#course-info.course-info
-			p: em.BD 当前舞蹈培训信息：
+			p.info-title: em.BD 当前舞蹈培训信息：
 			each course,i in cCourse.courses
 				p
 					em.course-name.BD #{course.cName}
