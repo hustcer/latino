@@ -8,8 +8,7 @@
  * Date: 	2012-1-20  
  */
 
-// 注意：将collection与方法绑定是在app.js里进行的，在内部调用的时候绑定尚未发生，所以需要引入col
-var col 		= require("../database/database.js").collection;
+
 // 当前开课信息
 var cCourse 	= require("../database/course.js").currentCourse;
 
@@ -178,7 +177,7 @@ var CDO 		= exports.commonDancerOp = {
 			for(var i = 0, l = dancerModel.courseArray.length; i < l; i ++){
 				if( !!dancerModel.courseArray[i] ) {
 
-					CDO._approveCourse( dancerModel, dancerModel.courseArray[i] );
+					this._approveCourse( dancerModel, dancerModel.courseArray[i] );
 				}
 			}
 		}
@@ -208,16 +207,17 @@ var CDO 		= exports.commonDancerOp = {
 							 'status': 		{$in: ['approved', 'quitApplied']}
 							}
 						 }};
+		var self = this;
 
 		// 此处内部调用时还没有绑定方法所以要调用原生db
-		col.count(condition, function(err, count){
+		this.count(condition, function(err, count){
 			// console.log("Success Count:",count,' autoLimit:', autoLimit, ' cCapacity:', cCapacity);
 			// -------------------Rule NO.1-----------------------------------
 			// 如果当前报名成功的会员数目小于允许的自动审核限额则自动审核通过
 			if( count < autoLimit ){
 				console.info('[INFO]----Auto Approve According to Rule NO.1: DancerID-', dancerModel.dancerID, 
 					', DancerName-', dancerModel.dancerName, ', Course-', courseVal);
-				CDO.updateDancerCourseStatus(dancerModel.dancerID, courseVal, 'approved');
+				self.updateDancerCourseStatus(dancerModel.dancerID, courseVal, 'approved');
 				// 每条自动审核规则执行完后都要return，否则会继续执行下面的规则，下同。
 				return;
 			}
@@ -225,7 +225,7 @@ var CDO 		= exports.commonDancerOp = {
 			// 如果当前报名成功的会员数目小于课程总容量则继续下面的审核规则，否则不再继续审核
 			if( count <= cCapacity ){
 
-				CDO.findDancerByID(dancerModel.dancerID, function(err, result){
+				self.findDancerByID(dancerModel.dancerID, function(err, result){
 					if (err) {throw err};
 
 					// -------------------Rule NO.2-----------------------------------
@@ -233,7 +233,7 @@ var CDO 		= exports.commonDancerOp = {
 					if ( !!result && result.gender === 'male' && manFirst ) {
 						console.info('[INFO]----Auto Approve According to Rule NO.2: DancerID-', dancerModel.dancerID, 
 							', DancerName-', dancerModel.dancerName, ', Course-', courseVal);
-						CDO.updateDancerCourseStatus(dancerModel.dancerID, courseVal, 'approved');
+						self.updateDancerCourseStatus(dancerModel.dancerID, courseVal, 'approved');
 						return;
 					};
 
@@ -242,7 +242,7 @@ var CDO 		= exports.commonDancerOp = {
 
 						console.info('[INFO]----Auto Approve According to Rule NO.3: DancerID-', dancerModel.dancerID, 
 							', DancerName-', dancerModel.dancerName, ', Course-', courseVal);
-						CDO.updateDancerCourseStatus(dancerModel.dancerID, courseVal, 'approved');
+						self.updateDancerCourseStatus(dancerModel.dancerID, courseVal, 'approved');
 						return;
 					};
 
@@ -296,7 +296,7 @@ var CDO 		= exports.commonDancerOp = {
 	 * @param dancerID 		待查询的会员的dancerID
 	 */
 	findDancerByID: function(dancerID, fn){
-		col.findOne({'dancerID':dancerID.toUpperCase()}, {gmtCreated:0, gmtModified:0, _id:0, vip:0, level:0}, fn);
+		this.findOne({'dancerID':dancerID.toUpperCase()}, {gmtCreated:0, gmtModified:0, _id:0, vip:0, level:0}, fn);
 	},
 	/**
 	 * 根据dancerID查询其全部保存在数据库里的会员信息
@@ -339,7 +339,7 @@ var CDO 		= exports.commonDancerOp = {
 	 */
 	updateDancerCourseStatus: function(dancerID, courseValue, status, fn){
 
-		col.update({'dancerID':dancerID.toUpperCase(), 'courses.courseVal':courseValue}, {  $set:
+		this.update({'dancerID':dancerID.toUpperCase(), 'courses.courseVal':courseValue}, {  $set:
 			{'courses.$.status':status, 'courses.$.gmtStatusChanged':new Date(), 'gmtModified': new Date()}
 
 		}, fn);

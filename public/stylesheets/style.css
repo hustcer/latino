@@ -7,10 +7,10 @@ body {
 }
 
 input{font: 13px "微软雅黑", tahoma;}
-
+input.comm-check{height:30px;line-height:27px;display: inline-block;}
 @media screen and (-webkit-min-device-pixel-ratio:0) {
 	/* 针对Google Chrome、Safari 3.0、Opera 9 的CSS样式 */
-	
+	input.comm-check{height:12px;line-height:27px;}
 }
 
 .markdown{width:1000px;margin: 0 auto;clear: both;overflow: hidden;}
@@ -96,7 +96,7 @@ a.course-btn:hover{text-decoration:none;color:blue;}
 .dance-content .table-container .apply-btn {margin: 10px 10px 0 15px;}
 .dance-content .table-container .reset-btn {margin: 10px 10px 0 180px;}
 .dance-content .table-container label{margin: 0 10px 0 3px;}
-.dance-content .course-wrapper  label{overflow: hidden;width: 203px;}
+.dance-content .course-wrapper  label{overflow: hidden;width: 203px;display: inline-block;}
 .dance-content .table-container .err-tip{color:red;font-size:11px;width: 235px;float: left;}
 .dance-content .table-container .over-tip{color:#C40000;font-size:11px;margin-left: 18px;}
 
@@ -229,6 +229,7 @@ padding: 1px 0px 1px 6px;border: 1px solid #999;margin: 0 12px 0px 0;height:26px
 .admin-op .table-container table .em{font-size:14px;}
 .admin-op .table-container .reset-btn {margin: 10px 10px 0 180px;}
 .admin-op .table-container label{margin: 0 10px 0 3px;}
+.admin-op .course-wrapper label{overflow: hidden;width: 203px;display: inline-block;}
 .admin-op .table-container .err-tip{color:red;font-size:11px;width: 235px;float: left;}
 .admin-op .course-wrapper{margin: 0 8px;line-height: 27px;clear:both;}
 .admin-op .depart-select,.admin-op .forever,.admin-op .gender-wrapper{margin: 0 8px;}
