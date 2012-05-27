@@ -16,7 +16,6 @@ include includes/header
 		#course-info.course-info
 			p: em.BD 当前舞蹈培训信息：
 			each course,i in cCourse.courses
-				p &nbsp;
 				p
 					em.course-name.BD #{course.cName}
 					if(!!course.cCapacity)
@@ -30,8 +29,7 @@ include includes/header
 					em.R(id='approved#{i}')
 				p: em.R #{course.ps}
 
-			p &nbsp;
-			p: em.B #{cCourse.notice}
+			p.ps: em.B #{cCourse.notice}
 
 		.table-container
 			form(name="applyForm", id="applyForm", method="post", action="/apply")

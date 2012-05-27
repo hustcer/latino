@@ -16,7 +16,7 @@ jQuery(function($){
 	// Begin Module Definition
     var module = NS.index = {
 		QUIT_MSG: 	"您已经申请退课，请等待管理员审核！",
-		CANCEL_MSG: "您好，你的报名取消成功，欢迎下次报名！",
+		CANCEL_MSG: "您的报名取消成功，欢迎下次报名！",
 
 		/**
 		 * 静态模块的初始化入口
