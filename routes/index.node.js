@@ -14,7 +14,7 @@ exports.index = function(req, res){
 	var col 	= getCollection(req);
 	var dType 	= req.params.dType;
 
-	if( dType != 'latin' && dType != 'jazz' & dType != 'hiphop'){
+	if( !!dType && dType != 'latin' && dType != 'jazz' & dType != 'hiphop' ){
 		res.redirect('/err404');
         return;
 	}
