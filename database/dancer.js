@@ -8,7 +8,7 @@
  * Date: 	2012-1-20  
  */
 
-var CDO 		= exports.commonDancerOp = {
+exports.commonDancerOp = {
 
 	/**
 	 * 插入新会员
