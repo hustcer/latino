@@ -20,7 +20,7 @@ include includes/header
 			li: a(href="#quit-refuse") 退课拒绝
 			li: a(href="#dancer-edit") 会员管理
 
-	section.op-container#op-container
+	section.op-container#op-container(dType='#{cCourse.courseType}')
 
 		//---------------------------------------------------------------------
 		.admin-op#approve-apply
@@ -156,7 +156,7 @@ include includes/header
 			#edit-container.edit-container
 		
 				.table-container
-					form(name="editForm", id="editForm", method="post", action="/man/editDancer")
+					form(name="editForm", id="editForm", method="post", action="")
 						table.edit-table-a
 							tbody
 								tr.em

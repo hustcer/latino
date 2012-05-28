@@ -6,14 +6,18 @@
  * Date: 	2012-2-13 
  */
 
-var col 	= require("../database/database.js").collection;
+
 // 取得课程值以及对应的中文描述映射信息
-var cList 	= require("../database/course.js").courseList;
+var cCoursesList  	= require("../database/course.js").cCoursesList;
+var getCollection 	= require("./util.node.js").getCollection;
 
 /*
  * 显示某一用户报名信息.
  */
 exports.user = function(req, res, next){
+
+	var col = getCollection(req);
+	var cList 	= cCoursesList[col.cCourse.courseType + 'List'];
 
 	col.findOne( {dancerID: req.params.id}, function(err, result) {
 
@@ -37,8 +41,9 @@ exports.user = function(req, res, next){
 	  		result.courses = courseNames;
 
 	    	res.render('user', {
-		        title: 	'舞者信息',
-		        dancer: result
+		        title: 		'舞者信息',
+		        cCourse: 	col.cCourse,
+		        dancer: 	result
 		    });
 
 	  	} else {

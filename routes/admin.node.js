@@ -5,29 +5,31 @@
  * Date: 	2012-2-13   
  */
 
-var col  	= require("../database/database.js").collection;
 // 取得课程值以及对应的中文描述映射信息
-var cList  	= require("../database/course.js").courseList;
-var cCourse = require("../database/course.js").currentCourse;
-var nodeMsg = require("./nodemsg.node.js").nodeMessages;
-
+var cList  			= require("../database/course.js").cCoursesList;
+var nodeMsg 		= require("./nodemsg.node.js").nodeMessages;
+var getCollection 	= require("./util.node.js").getCollection;
 
 exports.man = function(req, res, next){
 
+	var col = getCollection(req);
+
 	res.render('admin', {
         title: 		'管理员后台',
-        courseList: cList,
-        cCourse: 	cCourse
+        courseList: cList[col.cCourse.courseType + 'List'],
+        cCourse: 	col.cCourse
     });
 
 };
 
 
 /*
- * 设置会员为某课程缴费. eg:http://localhost:3000/man/pay/29411?courseVal=13CB
+ * 设置会员为某课程缴费. eg:http://localhost:3000/man/pay/latin/29411?courseVal=13CB
  * 注意只有课程状态为 approved 的，即报名通过的用户才可以设置其状态为缴费
  */
 exports.pay = function(req, res){
+
+	var col = getCollection(req);
 
 	console.log("Set Paid For User With ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 	
@@ -42,10 +44,12 @@ exports.pay = function(req, res){
 };
 
 /*
- * 设置会员未为某课程缴费. eg:http://localhost:3000/man/unpay/29411?courseVal=13CB
+ * 设置会员未为某课程缴费. eg:http://localhost:3000/man/unpay/latin/29411?courseVal=13CB
  * 注意只有课程状态为 quitApplied、quit 的，即申请过退课的用户才可以退费
  */
 exports.unpay = function(req, res){
+
+	var col = getCollection(req);
 
 	console.log("Set Unpaid For User With ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 	
@@ -61,10 +65,12 @@ exports.unpay = function(req, res){
 };
 
 /*
- * 设置会员报名成功. eg:http://localhost:3000/man/approve/29411?courseVal=13CB
+ * 设置会员报名成功. eg:http://localhost:3000/man/approve/latin/29411?courseVal=13CB
  * 注意只有课程状态为 waiting 的才可以报名审核通过
  */
 exports.approve = function(req, res){
+
+	var col = getCollection(req);
 
 	console.log("Approve Course With ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 	checkCourseStatus(req, res, 'waiting', function(){
@@ -79,10 +85,12 @@ exports.approve = function(req, res){
 };
 
 /*
- * 设置会员报名不通过. eg:http://localhost:3000/man/refuse/29411?courseVal=13CB
+ * 设置会员报名不通过. eg:http://localhost:3000/man/refuse/latin/29411?courseVal=13CB
  * 注意只有课程状态为 waiting 的才可以报名审核不通过
  */
 exports.refuse = function(req, res){
+
+	var col = getCollection(req);
 
 	console.log("Refuse Course With ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 
@@ -100,10 +108,12 @@ exports.refuse = function(req, res){
 
 
 /*
- * 设置会员退课成功. eg:http://localhost:3000/man/quit/29411?courseVal=13CB
+ * 设置会员退课成功. eg:http://localhost:3000/man/quit/latin/29411?courseVal=13CB
  * 注意只有课程状态为 quitApplied 且已经退费，或者未缴费时，发出过退课申请的用户才可以退课成功
  */
 exports.quit = function(req, res){
+
+	var col = getCollection(req);
 
 	console.log("Quit Course With dancerID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 
@@ -123,10 +133,12 @@ exports.quit = function(req, res){
 };
 
 /*
- * 设置拒绝会员退课. eg:http://localhost:3000/man/quitRefuse/29411?courseVal=13CB
+ * 设置拒绝会员退课. eg:http://localhost:3000/man/quitRefuse/latin/29411?courseVal=13CB
  * 注意只有课程状态为 quitApplied 时，发出过退课申请的用户才可以拒绝退课
  */
 exports.quitRefuse = function(req, res){
+
+	var col = getCollection(req);
 
 	console.log("Refuse Quiting With dancerID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 
@@ -144,10 +156,12 @@ exports.quitRefuse = function(req, res){
 };
 
 /*
- * 管理员修改保存会员信息. eg:http://localhost:3000/man/editDancer
+ * 管理员修改保存会员信息. eg:http://localhost:3000/man/editDancer/latin
  * 
  */
 exports.editDancer = function(req, res){
+	var col = getCollection(req);
+
 	var dancerModel = {
 		dancerID: 	req.body.dancerID,
 		dancerName: req.body.dancerName,
@@ -194,6 +208,8 @@ exports.editDancer = function(req, res){
  */
 var checkCourseStatus = function(req, res, status, callback){
 
+	var col = getCollection(req);
+
 	col.findDancerByID(req.params.id, function(err, result){
 		if (err) throw err;
 		var satisfied = false;
@@ -232,6 +248,8 @@ var checkCourseStatus = function(req, res, status, callback){
  * @param callback 	满足期望状态后执行的回调
  */
 var checkPayStatus = function(req, res, isPaid, callback){
+
+	var col = getCollection(req);
 
 	col.findDancerByID(req.params.id, function(err, result){
 		if (err) throw err;

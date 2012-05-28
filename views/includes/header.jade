@@ -6,10 +6,10 @@
 //-
 
 .dw: header.dance-header
-	#latin-header.latin-header
-		img(src='../images/latinHeader.png')
-	nav.dance-nav#dance-nav
-		ul.nav-links
-			li: a(href="/") 首页
-			li: a(href="/list") 报名情况
-			li: a(href="/man") 会员管理
+    #latin-header.latin-header
+        img(src='/images/latinHeader.png')
+    nav.dance-nav#dance-nav
+        ul.nav-links
+            li: a(href="/#{cCourse.courseType}") 首页
+            li: a(href="/list/#{cCourse.courseType}") 报名情况
+            li: a(href="/man/#{cCourse.courseType}") 会员管理

@@ -15,7 +15,7 @@ var express     = require('express');
 
 var app         = module.exports = express.createServer(),
     db          = require("./database/database.js").db,
-    cCourse     = require("./database/course.js").currentCourse,
+    cCourses    = require("./database/course.js").cCourses,
     dancerOp    = require("./database/dancer.js").commonDancerOp;
 
 var gRouterMap  = require('./routes/router.node.js').gRouter,
@@ -42,7 +42,13 @@ app.configure(function(){
  */
 var setRouters = function( fullFeature ){
     // 将相应的操作绑定到Collection上
-    db.bind(cCourse.courseType, dancerOp);
+    // 顺便也将对应舞种的当前开课信息也绑定到相应舞种上
+    dancerOp.cCourse = cCourses.cLatin;
+    db.bind('latin' , dancerOp);
+    dancerOp.cCourse = cCourses.cJazz;
+    db.bind('jazz'  , dancerOp);
+    dancerOp.cCourse = cCourses.cHiphop;
+    db.bind('hiphop', dancerOp);
 
     // 管理员相关功能，目前只允许测试环境下访问
     if( fullFeature ){

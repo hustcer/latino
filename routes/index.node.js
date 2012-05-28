@@ -5,18 +5,17 @@
  * Date: 	2012-1-19   
  */
 
-var col 	= require("../database/database.js").collection;
-// 当前开课信息
-var cCourse = require("../database/course.js").currentCourse;
+var getCollection 	= require("./util.node.js").getCollection;
 
 /*
  * GET home page.
  */
 exports.index = function(req, res){
-	
+	var col = getCollection(req);
+
 	res.render('index', {
         title: 			'Alibaba 舞蹈培训',
-        cCourse: 		cCourse,
+        cCourse: 		col.cCourse,
         showDancerLink: false
     });
     
@@ -26,6 +25,8 @@ exports.index = function(req, res){
  * 会员注册、报名课程、更新个人信息.注意：课程只能报名添加不能随意删除。
  */
 exports.apply = function(req, res){
+
+	var col = getCollection(req), cCourse = col.cCourse;
 
 	// 邮箱不需要加后缀的，如果用户加了就统一去掉吧，没加也无妨
 	if (!!req.body.email) { req.body.email = req.body.email.replace(/@alibaba-inc.com/g, ""); };
@@ -97,9 +98,10 @@ exports.apply = function(req, res){
 };
 
 /*
- * 查询会员信息. eg:http://localhost:3000/queryDancer/29411
+ * 查询会员信息. eg:http://localhost:3000/queryDancer/latin/29411
  */
 exports.queryDancer = function(req, res){
+	var col = getCollection(req);
 
 	col.findDancerByID(req.params.id, function(err, result) {
 	    if (err) throw err;
@@ -118,9 +120,10 @@ exports.queryDancer = function(req, res){
 };
 
 /*
- * 查询当前开课课程报名统计信息. eg:http://localhost:3000/queryCourseInfo
+ * 查询当前开课课程报名统计信息. eg:http://localhost:3000/queryCourseInfo/latin
  */
 exports.queryCourseInfo = function(req, res){
+	var col = getCollection(req), cCourse = col.cCourse;
 	var courseInfoList = [], counter = 0;
 	
 	for (var i = 0, l = cCourse.courses.length; i < l; i ++) {
@@ -162,9 +165,10 @@ exports.queryCourseInfo = function(req, res){
 }
 
 /*
- * 查询会员信息. eg:http://localhost:3000/quitCourse/29411?courseVal=13CB
+ * 查询会员信息. eg:http://localhost:3000/quitCourse/latin/29411?courseVal=13CB
  */
 exports.quitCourse = function(req, res){
+	var col = getCollection(req);
 
 	console.log("Applying Course Quiting With dancerID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 
@@ -179,9 +183,11 @@ exports.quitCourse = function(req, res){
 };
 
 /*
- * 会员取消课程报名. eg:http://localhost:3000/cancelCourse/29411?courseVal=13CB
+ * 会员取消课程报名. eg:http://localhost:3000/cancelCourse/latin/29411?courseVal=13CB
  */
 exports.cancelCourse = function(req, res){
+
+	var col = getCollection(req);
 
 	console.log("Course Cancel With dancerID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 
@@ -195,9 +201,11 @@ exports.cancelCourse = function(req, res){
 };
 
 /*
- * 初始化测试数据，该代码上线后应当被移除. eg:http://localhost:3000/init/initdata
+ * 初始化测试数据，该代码上线后应当被移除. eg:http://localhost:3000/init/initdata/latin
  */
 exports.initdata = function(req, res){
+
+	var col = getCollection(req);
 
 	var dancerModel;
 	for (var i = 60; i >= 10; i--) {

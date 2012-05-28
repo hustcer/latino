@@ -8,10 +8,6 @@
  * Date: 	2012-1-20  
  */
 
-
-// 当前开课信息
-var cCourse 	= require("../database/course.js").currentCourse;
-
 var CDO 		= exports.commonDancerOp = {
 
 	/**
@@ -197,10 +193,10 @@ var CDO 		= exports.commonDancerOp = {
 		console.info('[INFO]----Auto Approve Dancer:', dancerModel.dancerID, ' CourseVal:', courseVal);
 		dancerModel.dancerID = dancerModel.dancerID.toUpperCase();
 
-		var autoApprove = CDO._getPropValue(courseVal, 'autoApprove'),
-			cCapacity	= CDO._getPropValue(courseVal, 'cCapacity'),
-			manFirst	= CDO._getPropValue(courseVal, 'manFirst'),
-			autoLimit	= CDO._getPropValue(courseVal, 'autoLimit');
+		var autoApprove = this._getPropValue(courseVal, 'autoApprove'),
+			cCapacity	= this._getPropValue(courseVal, 'cCapacity'),
+			manFirst	= this._getPropValue(courseVal, 'manFirst'),
+			autoLimit	= this._getPropValue(courseVal, 'autoLimit');
 
 		var condition = {courses:{	$elemMatch:
 							{'courseVal': 	courseVal,
@@ -248,7 +244,7 @@ var CDO 		= exports.commonDancerOp = {
 
 				})
 
-			} // end if count < cCourse.cCapacity
+			} // end if count < cCapacity
 			return;
 		});
 	},
@@ -259,14 +255,14 @@ var CDO 		= exports.commonDancerOp = {
 	 */
 	_getPropValue: function(courseVal, propName){
 
-		for (var i = cCourse.courses.length - 1, courseItem; i >= 0; i--) {
-			courseItem = cCourse.courses[i];
+		for (var i = this.cCourse.courses.length - 1, courseItem; i >= 0; i--) {
+			courseItem = this.cCourse.courses[i];
 
 			if(courseItem.cValue === courseVal){
 				if( courseItem.hasOwnProperty(propName) ){
 					return courseItem[propName];
 				}else{
-					return cCourse[propName];
+					return this.cCourse[propName];
 				}
 			}
 		};

@@ -78,7 +78,8 @@ jQuery(function($){
 		 * 通过Ajax请求取得当前开课课程的报名统计信息
 		 */
 		_queryCourseInfo: function(){
-			$.getJSON('queryCourseInfo', function(data){
+			
+			$.getJSON('/queryCourseInfo/' + $('#apply-container').attr('dType'), function(data){
 				// console.log(data.courseInfo);
 				for(var i = 0, l = data.courseInfo.length; i < l; i ++){
 					$('#waiting'  + i) .text(data.courseInfo[i].total    + '人;');
@@ -117,6 +118,7 @@ jQuery(function($){
 					});
 
 					if (validApply.valid()) {
+						$applyForm.attr('action','/apply/'+ $('#apply-container').attr('dType'));
 						$applyForm[0].submit();
 					};
 
@@ -146,7 +148,7 @@ jQuery(function($){
 				if (mid === '') {return false;};
 
 				// 该接口会包含会员所有课程信息
-				$.getJSON('queryDancer/' + mid, function(data){
+				$.getJSON('/queryDancer/' + $('#apply-container').attr('dType') + '/' + mid, function(data){
 					var $selectInput = $("div.depart-select input.result", '#dance-content');
 					// 会员不存在的时候直接返回
 					if (!(data && data.data)) {return false;};
@@ -246,7 +248,7 @@ jQuery(function($){
 			$('a.quit-apply').on('click', function(){
 				var $btn = $(this);
 
-				$.getJSON('quitCourse/' + $("#dancerID").val(), 
+				$.getJSON('/quitCourse/' + $('#apply-container').attr('dType') + '/' + $("#dancerID").val(), 
 					{ courseVal: $btn.parent().find('input.comm-check').val() }, function(data){
 
 						if (data.success === true) {
@@ -265,7 +267,7 @@ jQuery(function($){
 			$('a.cancel-apply').on('click',function(){
 				var $btn = $(this);
 
-				$.getJSON('cancelCourse/' + $("#dancerID").val(), 
+				$.getJSON('/cancelCourse/' + $('#apply-container').attr('dType') + '/' + $("#dancerID").val(), 
 					{ courseVal: $btn.parent().find('input.comm-check').val() }, function(data){
 
 						if (data.success === true) {

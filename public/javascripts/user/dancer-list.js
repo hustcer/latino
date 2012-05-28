@@ -46,7 +46,7 @@ jQuery(function($){
     	/**
 		 * 显示正在加载数据的HTML
 		 */
-    	loadingHtml: 	'<tr><td colspan="8" class="loading"><img src="./images/loading.gif"><p>数据正在加载请稍后...</p></td></tr>',
+    	loadingHtml: 	'<tr><td colspan="8" class="loading"><img src="/images/loading.gif"><p>数据正在加载请稍后...</p></td></tr>',
 
 		/**
 		 * 静态模块的初始化入口
@@ -103,7 +103,7 @@ jQuery(function($){
 
 				$tableBody.html(module.loadingHtml);
 
-				$.post('/search', $("#searchForm").serialize(), function(data) {
+				$.post('/search/' + $("#list-content").attr('dType'), $("#searchForm").serialize(), function(data) {
 
 					module.resultList = data.data;
 
@@ -185,7 +185,7 @@ jQuery(function($){
 		 */
 		_getMailListHandler: function(){
 			$('button.email-btn', $filter).click(function(){
-				$.getJSON('/list/queryEmail', $("#searchForm").serialize(), function(data) {
+				$.getJSON('/list/queryEmail/' + $("#list-content").attr('dType'), $("#searchForm").serialize(), function(data) {
 
 					$('#list-content').append('<p class="email-result"></p>')
 									  .find('p.email-result').empty()
@@ -360,7 +360,7 @@ jQuery(function($){
 			var cCourseCond = $('#course-box input.field').val(), html = [], date;
 
 			for (var i = 0, n = data.length; i < n; i++) {
-		    	html.push('<tr><td><a href="/user/' + data[i].dancerID +' " target="_blank" >');
+		    	html.push('<tr><td><a href="/user/' + $("#list-content").attr('dType') + '/' + data[i].dancerID +' " target="_blank" >');
 		    	html.push(data[i].dancerID);
 		    	html.push('</a></td><td>');
 		    	html.push(data[i].dancerName);

@@ -153,7 +153,7 @@ jQuery(function($){
 					return;	
 				}
 
-				$.getJSON('man/approve/' + dancerID, 
+				$.getJSON('/man/approve/' + $('#op-container').attr('dType') + '/' + dancerID, 
 					{ courseVal: courseVal }, function(data){
 						if (data.success === true) {
 							module._showTipInfo( $tipWrapper, module.APPROVE_MSG );
@@ -180,7 +180,7 @@ jQuery(function($){
 					return;	
 				}
 
-				$.getJSON('man/pay/' + dancerID, 
+				$.getJSON('/man/pay/' + $('#op-container').attr('dType') + '/' + dancerID, 
 					{ courseVal: courseVal }, function(data){
 						if (data.success === true) {
 							module._showTipInfo( $tipWrapper, module.PAY_MSG );
@@ -207,7 +207,7 @@ jQuery(function($){
 					return;	
 				}
 
-				$.getJSON('man/refuse/' + dancerID, 
+				$.getJSON('/man/refuse/' + $('#op-container').attr('dType') + '/' + dancerID, 
 					{ courseVal: courseVal }, function(data){
 						if (data.success === true) {
 							module._showTipInfo( $tipWrapper, module.REFUSE_MSG);
@@ -234,7 +234,7 @@ jQuery(function($){
 					return;	
 				}
 
-				$.getJSON('man/unpay/' + dancerID, 
+				$.getJSON('/man/unpay/' + $('#op-container').attr('dType') + '/' + dancerID, 
 					{ courseVal: courseVal }, function(data){
 						if (data.success === true) {
 							module._showTipInfo( $tipWrapper, module.UNPAY_MSG );
@@ -261,7 +261,7 @@ jQuery(function($){
 					return;	
 				}
 
-				$.getJSON('man/quit/' + dancerID, 
+				$.getJSON('/man/quit/' + $('#op-container').attr('dType') + '/' + dancerID, 
 					{ courseVal: courseVal }, function(data){
 						if (data.success === true) {
 							module._showTipInfo( $tipWrapper, module.QUIT_MSG );
@@ -288,7 +288,7 @@ jQuery(function($){
 					return;	
 				}
 
-				$.getJSON('man/quitRefuse/' + dancerID, 
+				$.getJSON('/man/quitRefuse/' + $('#op-container').attr('dType') + '/' + dancerID, 
 					{ courseVal: courseVal }, function(data){
 						if (data.success === true) {
 							
@@ -332,7 +332,7 @@ jQuery(function($){
 				var mid = $.trim($(this).val());
 				if (mid === '') {return false;};
 
-				$.getJSON('/queryDancer/' + mid, function(data){
+				$.getJSON('/queryDancer/' + $('#op-container').attr('dType') + '/' + mid, function(data){
 					var $selectInput = $("div.depart-select input.result", '#dancer-edit');
 					// 会员不存在的时候直接返回
 					if (!(data && data.data)) {return false;};
@@ -400,6 +400,7 @@ jQuery(function($){
 					});
 
 					if (validApply.valid()) {
+						$editForm.attr('action', '/man/editDancer/'+ $('#op-container').attr('dType'));
 						$editForm[0].submit();
 					};
 

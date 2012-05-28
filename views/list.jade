@@ -8,7 +8,7 @@
 
 include includes/header
 
-.dw: section.dance-content#list-content
+.dw: section.dance-content#list-content(dType='#{cCourse.courseType}')
 	.content-header
 		h1.header-title= title 
 
@@ -116,7 +116,7 @@ include includes/header
 			tbody
 				tr
 					td.loading(colspan="10")
-						img(src='./images/loading.gif') 
+						img(src='/images/loading.gif') 
 						p 数据正在加载请稍后...
 				
 

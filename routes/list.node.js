@@ -5,20 +5,21 @@
  * Date: 	2012-2-12   
  */
 
-var col 		= require("../database/database.js").collection;
-var cCourse 	= require("../database/course.js").currentCourse;
-var courseList 	= require("../database/course.js").courseList;
-
+var getCollection 	= require("./util.node.js").getCollection;
+var cList  			= require("../database/course.js").cCoursesList;
 
 /*
  * 会员信息列表接口. 默认情况应当以当前开设课程为查询条件
  */
 exports.list = function(req, res){
 
+	var col 		= getCollection(req),
+		courseList 	= cList[col.cCourse.courseType + 'List'];
+
 	res.render('list', {
         title: 		'课程报名信息',
         courseList: courseList,
-        cCourse: 	cCourse	    
+        cCourse: 	col.cCourse	    
     });
 	
 };
@@ -27,6 +28,7 @@ exports.list = function(req, res){
  * 查询满足条件的会员的邮件列表
  */
 exports.queryEmail = function(req, res){
+	var col 		= getCollection(req);
 	var dancerModel = {};
 	// 根据课程状态，是否缴费来进行查询
 	if (!!req.query.dancerID)		{dancerModel.dancerID 	= req.query.dancerID;};
@@ -72,7 +74,7 @@ exports.queryEmail = function(req, res){
  * 会员列表筛选/搜索接口. TODO: 需要提示用户当前搜索条件
  */
 exports.search = function(req, res){
-
+	var col 		= getCollection(req);
 	var dancerModel = {};
 	// 根据课程状态，是否缴费来进行查询
 	if (!!req.body.dancerID) 	{dancerModel.dancerID 	= req.body.dancerID;};
@@ -86,11 +88,11 @@ exports.search = function(req, res){
 		dancerModel.courses.$elemMatch.courseVal = req.body.course;
 	};
 	if (!!req.body.status) {
-		dancerModel.courses.$elemMatch.status = req.body.status;
+		dancerModel.courses.$elemMatch.status 	 = req.body.status;
 	};
 	if (!!req.body.paid) {
 		// req.body.paid取得的是“true”、“false”字符串，需要转换
-		dancerModel.courses.$elemMatch.paid = JSON.parse(req.body.paid);
+		dancerModel.courses.$elemMatch.paid 	 = JSON.parse(req.body.paid);
 	};
 
 	// FIXME: 如果课程没有任何匹配条件就把该条件完全去掉,这种方法挺猥琐的感觉，以后可以改进下

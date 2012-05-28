@@ -12,7 +12,7 @@ include includes/header
 		h1.header-title= title 
 		p.welcome-msg 欢迎参加 #{title}，请您填写报名信息!
 
-	#apply-container.apply-container
+	#apply-container.apply-container(dType='#{cCourse.courseType}')
 		#course-info.course-info
 			p.info-title: em.BD 当前舞蹈培训信息：
 			each course,i in cCourse.courses
@@ -32,7 +32,7 @@ include includes/header
 			p.ps: em.B #{cCourse.notice}
 
 		.table-container
-			form(name="applyForm", id="applyForm", method="post", action="/apply")
+			form(name="applyForm", id="applyForm", method="post", action="")
 				table.apply-table-a
 					tbody
 						tr.em
@@ -114,7 +114,7 @@ include includes/header
 			if (!!showDancerLink)
 				.operation-info#operation-info
 					p 您的操作已经成功 
-						a(href="/user/" + dancerID,id="user-info-link")点此
+						a(href="/user/#{cCourse.courseType}/" + dancerID,id="user-info-link")点此
 						&nbsp;查看个人详情, 或者
 						a(href="/",id="home-link")返回
 
