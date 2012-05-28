@@ -16,7 +16,7 @@ var getCollection 	= require("./util.node.js").getCollection;
  */
 exports.user = function(req, res, next){
 
-	var col = getCollection(req);
+	var col 	= getCollection(req);
 	var cList 	= cCoursesList[col.cCourse.courseType + 'List'];
 
 	col.findOne( {dancerID: req.params.id}, function(err, result) {

@@ -18,11 +18,10 @@ gRouter["/cancelCourse/:dType/:id"]        = require("./index.node.js").cancelCo
 gRouter["/list"]                           = require("./list.node.js").list;               // 会员列表
 gRouter["/list/:dType"]                    = gRouter["/list"];                             // 会员列表
 gRouter["/list/queryEmail/:dType"]         = require("./list.node.js").queryEmail;         // 查询满足条件的会员的邮件列表
-gRouter["/:dType"]                         = gRouter["/"];                                 // 相应舞种页
 gRouter["/user/:dType/:id"]                = require("./user.node.js").user;               // 会员信息
 gRouter["/err404"]                         = require('./err404.node.js').err404;           // 404页面
+gRouter["/:dType"]                         = gRouter["/"];                                 // 相应舞种页
 gRouter["/*"]                              = gRouter["/err404"];                           // 其他页面跳转到404
-
 
 var adminRouter = exports.adminRouter      = {};
 adminRouter["/man"]                        = require("./admin.node.js").man;               // 管理员后台URL

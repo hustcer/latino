@@ -11,7 +11,13 @@ var getCollection 	= require("./util.node.js").getCollection;
  * GET home page.
  */
 exports.index = function(req, res){
-	var col = getCollection(req);
+	var col 	= getCollection(req);
+	var dType 	= req.params.dType;
+
+	if( dType != 'latin' && dType != 'jazz' & dType != 'hiphop'){
+		res.redirect('/err404');
+        return;
+	}
 
 	res.render('index', {
         title: 			'Alibaba 舞蹈培训',

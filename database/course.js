@@ -61,7 +61,7 @@ var cCourseJazz = {
  */
 var cCourseHiphop = {
    courseType: 'hiphop', 
-   courses:     [{cValue: "6JZE1", cName: "第6期Jazz基础1班", ps:"上课时间：每周一晚7:40~8:30", cCapacity: 24, autoLimit: 24}
+   courses:     [{cValue: "6HPI", cName: "第6期HipHop中级班", ps:"上课时间：每周一晚7:40~8:30", cCapacity: 24, autoLimit: 24}
                  ],
    cCapacity:   24, 
    // 锁定课程状态，禁止报名、退课等操作
@@ -109,7 +109,7 @@ var courseHiphopList = [
     ];
 
 
-exports.cCourses        = {cLatin:cCourseLatin, cJazz:cCourseJazz, cHipHop:cCourseHiphop};
+exports.cCourses        = {cLatin:cCourseLatin, cJazz:cCourseJazz, cHiphop:cCourseHiphop};
 exports.cCoursesList    = {latinList:courseLatinList, jazzList:courseJazzList, hiphopList:courseHiphopList};
 
 
