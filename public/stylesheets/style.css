@@ -13,13 +13,13 @@ input.comm-check{height:30px;line-height:27px;display: inline-block;}
 	input.comm-check{height:12px;line-height:27px;}
 }
 
-.markdown{width:1000px;margin: 0 auto;clear: both;overflow: hidden;}
+.markdown{width:1000px;margin: 0 auto 30px;clear: both;overflow: hidden;}
 .markdown,.markdown pre,.markdown code,.markdown p,.markdown strong,.markdown em {font: 13px "Century Gothic", "Tahoma", "Microsoft YaHei", "SimSun";}
-.markdown strong,.markdown em{font-weight: bold;}
+.markdown strong,.markdown em,.markdown h1,.markdown h2,.markdown h3{font-weight: bold;}
 .markdown p{line-height: 22px;}
-.markdown h1{line-height: 44px;}
+.markdown h1{line-height: 44px;font-size: 22px;margin-top:12px;}
 .markdown h2{line-height: 44px;margin-bottom: 12px;background:none;border-bottom: 1px solid #9A9ACE;color:#333;}
-.markdown h3{line-height: 30px;font-weight:700;}
+.markdown h3{line-height: 30px;font-weight:700;margin-top: 10px;}
 .markdown pre{text-indent: 2em;color:#6D79E1;font-weight:bold!important;}
 .markdown ul{padding-left: 30px;display: block;list-style-type: disc;line-height:24px;}
 .markdown ol{padding-left: 30px;list-style-type: decimal;line-height:24px;}
@@ -73,7 +73,9 @@ input.comm-check{height:30px;line-height:27px;display: inline-block;}
 }
 a.course-btn:hover{text-decoration:none;color:blue;}
 /*.hr-line{height:2px;line-height:2px;background-color:gray;}*/
-.latin-header{margin: 5px 50px 9px 250px;/*display:none;*/}
+.latin-header{margin: 5px 50px 9px 250px; position: relative;}
+.latin-header .version-log{display: inline-block;width: 50px;height: 20px;
+	position: absolute;top: 11px;left: 305px;}
 .dance-content .header-title{font-size: 18px;margin: 0 0 12px;}
 .dance-content .welcome-msg{color:#999;font-size:12px;text-indent:2em;}
 .dance-content .content-header{margin: 0 100px 15px;}
@@ -242,3 +244,11 @@ padding: 1px 0px 1px 6px;border: 1px solid #999;margin: 0 12px 0px 0;height:26px
 
 .admin-op .edit-table-a{margin: 0 0 15px 5px;}
 .admin-op .edit-table-b{margin: 5px 0 10px 5px;}
+
+.footer-nav {padding: 15px 150px 20px;border-top: 1px solid #DDD;margin-top: 60px;}
+.footer-nav span{color: #AAA;height: 20px;line-height: 20px;font-weight:700;}
+.footer-nav .nav-links{display: inline-block;}
+.footer-nav .nav-links li{float: left;padding: 0 12px;height: 20px;line-height: 28px;}
+.footer-nav .nav-links li a{color: #999;}
+.footer-nav .nav-links li a:hover{color: #999;text-decoration:none;}
+
