@@ -7,6 +7,7 @@
  * Author: 	hustcer
  * Date: 	2012-1-20  
  */
+var sendMail 		= require("../routes/mail.node.js").sendMail;
 
 exports.commonDancerOp = {
 
@@ -213,7 +214,14 @@ exports.commonDancerOp = {
 			if( count < autoLimit ){
 				console.info('[INFO]----Auto Approve According to Rule NO.1: DancerID-', dancerModel.dancerID, 
 					', DancerName-', dancerModel.dancerName, ', Course-', courseVal);
-				self.updateDancerCourseStatus(dancerModel.dancerID, courseVal, 'approved');
+				self.updateDancerCourseStatus(dancerModel.dancerID, courseVal, 'approved', function(){
+
+					self.findDancerEmailByID(dancerModel.dancerID, function(err, dancer){
+				    	if (err) throw err;
+				    	sendMail(dancer.email, '您的报名申请已自动审核通过', self.cCourse.successMsg + '课程类型：' + courseVal);
+				    });
+
+				});
 				// 每条自动审核规则执行完后都要return，否则会继续执行下面的规则，下同。
 				return;
 			}
@@ -229,7 +237,13 @@ exports.commonDancerOp = {
 					if ( !!result && result.gender === 'male' && manFirst ) {
 						console.info('[INFO]----Auto Approve According to Rule NO.2: DancerID-', dancerModel.dancerID, 
 							', DancerName-', dancerModel.dancerName, ', Course-', courseVal);
-						self.updateDancerCourseStatus(dancerModel.dancerID, courseVal, 'approved');
+
+						self.updateDancerCourseStatus(dancerModel.dancerID, courseVal, 'approved', function(){
+
+						    sendMail(result.email, '您的报名申请已自动审核通过', self.cCourse.successMsg + '课程类型：' + courseVal);
+
+						});
+
 						return;
 					};
 
@@ -238,7 +252,13 @@ exports.commonDancerOp = {
 
 						console.info('[INFO]----Auto Approve According to Rule NO.3: DancerID-', dancerModel.dancerID, 
 							', DancerName-', dancerModel.dancerName, ', Course-', courseVal);
-						self.updateDancerCourseStatus(dancerModel.dancerID, courseVal, 'approved');
+
+						self.updateDancerCourseStatus(dancerModel.dancerID, courseVal, 'approved', function(){
+
+						    sendMail(result.email, '您的报名申请已自动审核通过', self.cCourse.successMsg + '课程类型：' + courseVal);
+
+						});
+
 						return;
 					};
 
@@ -293,6 +313,13 @@ exports.commonDancerOp = {
 	 */
 	findDancerByID: function(dancerID, fn){
 		this.findOne({'dancerID':dancerID.toUpperCase()}, {gmtCreated:0, gmtModified:0, _id:0, vip:0, level:0}, fn);
+	},
+	/**
+	 * 根据dancerID查询会员email地址
+	 * @param dancerID 		待查询的会员的dancerID
+	 */
+	findDancerEmailByID: function(dancerID, fn){
+		this.findOne({'dancerID':dancerID.toUpperCase()}, {email:1, _id:0}, fn);
 	},
 	/**
 	 * 根据dancerID查询其全部保存在数据库里的会员信息

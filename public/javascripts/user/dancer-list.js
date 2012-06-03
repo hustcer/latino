@@ -63,6 +63,8 @@ jQuery(function($){
 			
 			// 初始化combobox通用化
 			this._initFilterCombo();
+			// FIXME:此处代码在多处重复出现可以重构
+			this._setCurrentDance();
 		},
 		/**
 		 * DOM事件绑定
@@ -254,6 +256,21 @@ jQuery(function($){
 				
 				initCombo($(this));
 			});
+		},
+		/**
+		 * 保存当前舞种类型到localStorage
+		 * FIXME:此处代码在多处重复出现可以重构
+		 */
+		_setCurrentDance: function(){
+			$.use("util-storage",function(){
+
+		        /* 所有的操作都必须放在ready里面 */
+		        var STORE = jQuery.util.storage;
+		        STORE.ready(function(){
+		            STORE.setItem('danceType', $("#list-content").attr('dType'));
+		        });
+		        
+		    });
 		},
 		/**
 		 * 分页组件相关初始化

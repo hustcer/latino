@@ -25,6 +25,9 @@ gRouter["/*"]                              = gRouter["/err404"];                
 
 var adminRouter = exports.adminRouter      = {};
 adminRouter["/man"]                        = require("./admin.node.js").man;               // 管理员后台URL
+
+adminRouter["/man/mail"]                   = require('./mail.node.js').mail;               // 发邮件
+
 adminRouter["/man/:dType"]                 = adminRouter["/man"]                           // 管理员后台URL
 adminRouter["/man/pay/:dType/:id"]         = require("./admin.node.js").pay;               // Ajax调用设置会员为课程缴费
 adminRouter["/man/unpay/:dType/:id"]       = require("./admin.node.js").unpay;	           // Ajax调用设置会员未缴费
@@ -33,7 +36,8 @@ adminRouter["/man/refuse/:dType/:id"]      = require("./admin.node.js").refuse; 
 adminRouter["/man/quit/:dType/:id"]        = require("./admin.node.js").quit;	           // Ajax调用设置会员退课成功
 adminRouter["/man/quitRefuse/:dType/:id"]  = require("./admin.node.js").quitRefuse;        // Ajax调用设置会员退课拒绝
 
-adminRouter["/init/initdata/:dType"]       = require('./index.node.js').initdata;	       // 初始化测试数据，该代码上线后应当被移除
+adminRouter["/init/initdata/:dType"]       = require('./index.node.js').initdata;          // 初始化测试数据，该代码上线后应当被移除
+
 
 /**
  * 提交表单路径映射

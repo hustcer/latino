@@ -32,6 +32,8 @@ jQuery(function($){
 		_initUI: function(){
 			this._initDepartment();
 			this._queryCourseInfo();
+			// FIXME:此处代码在多处重复出现可以重构
+			this._setCurrentDance();
 		},
 		/**
 		 * DOM事件绑定
@@ -88,6 +90,21 @@ jQuery(function($){
 
 			});
 
+		},
+		/**
+		 * 保存当前舞种类型到localStorage
+		 * FIXME:此处代码在多处重复出现可以重构
+		 */
+		_setCurrentDance: function(){
+			$.use("util-storage",function(){
+
+		        /* 所有的操作都必须放在ready里面 */
+		        var STORE = jQuery.util.storage;
+		        STORE.ready(function(){
+		            STORE.setItem('danceType', $('#apply-container').attr('dType'));
+		        });
+		        
+		    });
 		},
 		/**
 		 * 表单提交、重置按钮事件

@@ -7,8 +7,9 @@
 
 // 取得课程值以及对应的中文描述映射信息
 var cList  			= require("../database/course.js").cCoursesList;
-var nodeMsg 		= require("./nodemsg.node.js").nodeMessages;
+var nodeMsg 		= require("../conf/nodemsg.node.js").nodeMessages;
 var getCollection 	= require("./util.node.js").getCollection;
+var sendMail 		= require("./mail.node.js").sendMail;
 
 exports.man = function(req, res, next){
 
@@ -78,6 +79,11 @@ exports.approve = function(req, res){
 		col.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'approved', function(err, result) {
 		    if (err) throw err;
 
+		    col.findDancerEmailByID(req.params.id, function(err, dancer){
+		    	if (err) throw err;
+		    	sendMail(dancer.email, '您的报名申请已审核通过', col.cCourse.successMsg + '课程类型：' + req.query.courseVal);
+		    });
+
 		    res.contentType('application/json');
 		    res.send({success:true});
 		});
@@ -122,6 +128,11 @@ exports.quit = function(req, res){
 		checkPayStatus(req, res, false, function(){
 			col.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'quit', function(err, result) {
 			    if (err) throw err;
+
+			    col.findDancerEmailByID(req.params.id, function(err, dancer){
+			    	if (err) throw err;
+			    	sendMail(dancer.email, '您的退课申请已审核通过', col.cCourse.quitMsg + '课程类型：' + req.query.courseVal);
+			    });
 
 			    res.contentType('application/json');
 			    res.send({success:true});
