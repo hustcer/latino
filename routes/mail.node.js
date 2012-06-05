@@ -24,12 +24,12 @@ exports.mail = function(req, res){
 
 var initSmtpTransport = function(){
 
-    var confFile = __dirname + '/../conf/conf.json';
+    var confFile = path.normalize(__dirname + '/../conf/conf.json');
 
     // 邮箱配置文件不存在则停止发邮件
     if ( !path.existsSync(confFile) ){
 
-        console.log('Can Not Find Email Account Config File ' + confFile + ', Stop Mail Sending...');
+        console.error('[ERRO]----Can not find email account config file ' + confFile + ', Stop mail sending...');
         return;
     }
 
@@ -59,8 +59,13 @@ var sendMail = exports.sendMail = function(toAddress, title, msg){
         initSmtpTransport();
 
         if( smtpTransport === null ){
-            console.log('Smtp Transport Init Failed, Stop Mail Sending...');
+            console.error('[ERRO]----Smtp transport init failed, stop mail sending...');
         }
+        return false;
+    }
+
+    if(!toAddress){
+        console.error('[ERRO]----Mail address empty, stop mail sending...');
     }
 
     // setup e-mail data with unicode symbols
@@ -75,9 +80,9 @@ var sendMail = exports.sendMail = function(toAddress, title, msg){
     // send mail with defined transport object
     smtpTransport.sendMail(mailOptions, function(error, response){
         if(error){
-            console.log(error);
+            console.error('[ERRO]----' + error);
         }else{
-            console.log("Message Sent: " + response.message);
+            console.log("[INFO]----Mail message sent: " + response.message);
         }
 
         // if you don't want to use this transport object anymore, uncomment following line

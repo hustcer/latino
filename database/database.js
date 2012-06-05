@@ -10,18 +10,18 @@
 var fs          = require('fs'),
     path        = require('path');
 
-var confFile    = __dirname + '/../conf/conf.json';
+var confFile    = path.normalize(__dirname + '/../conf/conf.json');
 
-// 邮箱配置文件不存在则停止发邮件
+// 数据库配置文件不存在则尝试采用匿名方式访问
 if ( !path.existsSync(confFile) ){
 
-    console.log('Can Not Find Database Config File ' + confFile + ', Using Default Config...');
+    console.log('[INFO]----Can not find database config file ' + confFile + ', using default config...');
 
     exports.db      = require('mongoskin').db('localhost:27017/dance');
 
 }else{
 
-    console.log('Connect to Database Using Config File ' + confFile);
+    console.log('[INFO]----Connect to database using config file ' + confFile);
 
     var data        = JSON.parse(fs.readFileSync(confFile));
     var connection  = 'mongo://' + data.dbAuth.username + ':' + data.dbAuth.password + '@localhost:27017/dance';

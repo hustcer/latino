@@ -32,7 +32,7 @@ exports.pay = function(req, res){
 
 	var col = getCollection(req);
 
-	console.log("Set Paid For User With ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
+	console.log("[INFO]----Set paid for user with ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 	
 	checkCourseStatus(req, res, 'approved', function(){
 		col.updateDancerPayStatus(req.params.id, req.query.courseVal, true, function(err, result) {
@@ -52,7 +52,7 @@ exports.unpay = function(req, res){
 
 	var col = getCollection(req);
 
-	console.log("Set Unpaid For User With ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
+	console.log("[INFO]----Set unpaid for user with ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 	
 	checkCourseStatus(req, res, 'quitApplied', function(){
 
@@ -73,7 +73,7 @@ exports.approve = function(req, res){
 
 	var col = getCollection(req);
 
-	console.log("Approve Course With ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
+	console.log("[INFO]----Approve course with ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 	checkCourseStatus(req, res, 'waiting', function(){
 
 		col.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'approved', function(err, result) {
@@ -98,7 +98,7 @@ exports.refuse = function(req, res){
 
 	var col = getCollection(req);
 
-	console.log("Refuse Course With ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
+	console.log("[INFO]----Refuse course with ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 
 	checkCourseStatus(req, res, 'waiting', function(){
 
@@ -121,7 +121,7 @@ exports.quit = function(req, res){
 
 	var col = getCollection(req);
 
-	console.log("Quit Course With dancerID: "+ req.params.id + " courseVal: " + req.query.courseVal)
+	console.log("[INFO]----Quit course with dancerID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 
 	checkCourseStatus(req, res, 'quitApplied', function(){
 
@@ -151,7 +151,7 @@ exports.quitRefuse = function(req, res){
 
 	var col = getCollection(req);
 
-	console.log("Refuse Quiting With dancerID: "+ req.params.id + " courseVal: " + req.query.courseVal)
+	console.log("[INFO]----Refuse quiting with dancerID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 
 	checkCourseStatus(req, res, 'quitApplied', function(){
 
@@ -237,7 +237,7 @@ var checkCourseStatus = function(req, res, status, callback){
 				result.courses[i].status === status) {
 
 				satisfied = true;
-				console.log("Course Status Satisfied With Status: " + status, ',For Dancer With ID:', req.params.id);
+				// console.log("[INFO]----Course Status Satisfied With Status: " + status, ',For Dancer With ID:', req.params.id);
 				
 				callback();
 				break;
@@ -279,7 +279,7 @@ var checkPayStatus = function(req, res, isPaid, callback){
 				result.courses[i].paid === isPaid) {
 
 				satisfied = true;
-				console.log("Pay Status Satisfied With Status: " + isPaid, ', For Dancer With ID:', req.params.id);
+				// console.log("[INFO]----Pay Status Satisfied With Status: " + isPaid, ', For Dancer With ID:', req.params.id);
 				
 				callback();
 				break;

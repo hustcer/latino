@@ -12,7 +12,7 @@ var fs          = require('fs'),
 
 exports.mdrender= function(req, res){
 	
-    var markdownFile    = './doc/' + req.params.md + '.md';
+    var markdownFile    = path.normalize(__dirname + '/../doc/' + req.params.md + '.md');
 
     // 对应的markdown文件不存在则重定向到404
     if (!path.existsSync(markdownFile)){
@@ -22,7 +22,10 @@ exports.mdrender= function(req, res){
 
     // markdown文件存在则渲染该页面
     fs.readFile(markdownFile, 'utf8', function (err, data) {
-        if (err) res.redirect('/err404');
+        if (err) {
+            console.error('[ERRO]----Failed reading file: ' + markdownFile);
+            res.redirect('/err404');
+        }
 
         var head = '<head><title>Alibaba舞蹈培训 - ' + req.params.md + '</title>' + 
             '<link rel="stylesheet" href="/stylesheets/style.css"><link rel="stylesheet" href="/stylesheets/fdev-float.css"></head>';

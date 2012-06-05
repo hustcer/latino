@@ -16,6 +16,7 @@ System consists of dancer forground and admin background. When started in produc
 * Dancers could be searched or filtered according to their job number, department, gender, courses, course status or payment status.
 * The filtered result will be paged, and could be sorted according to certain field by forground user.
 * Generate the mailing list of dancers which satisfy certain condition.<br/>
+* Get a mail notification for those who have applied successfully or quit successfully.
 
 ### Admin Background:
 * **Course Life Cycle Management:**<br/>

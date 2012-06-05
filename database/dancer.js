@@ -43,7 +43,7 @@ exports.commonDancerOp = {
 		dancerModel.gmtModified = new Date();
 
 		this.insert(dancerModel, fn);
-		console.info('[INFO]----New Dancer Added, With DancerID:', dancerModel.dancerID, 
+		console.info('[INFO]----New dancer added, with dancerID:', dancerModel.dancerID, 
 			', DancerName:', dancerModel.dancerName, ", Courses:", (logMsg ? logMsg: 'NONE') );
 	},
 	/**
@@ -71,7 +71,7 @@ exports.commonDancerOp = {
 		this.findOne({'dancerID':dancerID}, function(err, result) {
 
 		    if (err) {
-		    	console.log('Find Dancer Failed While Updating Dancer Info of dancerID', dancerID);
+		    	console.error('[ERRO]----Find dancer failed while updating dancer info of dancerID', dancerID);
 		    	throw err;
 			}
 
@@ -113,8 +113,8 @@ exports.commonDancerOp = {
 			result.gmtModified = new Date();
 			self.save(result, fn);
 
-			console.info('[INFO]----Dancer Infomation Updated With ID:', dancerModel.dancerID,
-    						', DancerName:', dancerModel.dancerName, ", Updated Courses:", (logMsg ? logMsg: 'NONE') );
+			console.info('[INFO]----Dancer infomation updated with ID:', dancerModel.dancerID,
+    						', DancerName:', dancerModel.dancerName, ", Updated courses:", (logMsg ? logMsg: 'NONE') );
 
 		});
 		
@@ -132,7 +132,7 @@ exports.commonDancerOp = {
 		this.findOne({'dancerID':dancerID}, function(err, result) {
 
 		    if (err) {
-		    	console.log('Find Dancer Failed While Updating Dancer Info of dancerID', dancerID);
+		    	console.error('[ERRO]----Find dancer failed while updating dancer info of dancerID', dancerID);
 		    	throw err;
 			}
 
@@ -157,7 +157,7 @@ exports.commonDancerOp = {
 			// result.gmtModified = new Date();
 			self.save(result, fn);
 
-			console.info('[INFO]----Dancer Information was Updated by Admin, ID:', dancerModel.dancerID,
+			console.info('[INFO]----Dancer information was updated by admin, ID:', dancerModel.dancerID,
     						', DancerName:', dancerModel.dancerName, ', at', new Date() );
 
 		});
@@ -191,7 +191,7 @@ exports.commonDancerOp = {
 	 * @param courseVal 	待自动审核的课程
 	 */
 	_approveCourse: function(dancerModel, courseVal){
-		console.info('[INFO]----Auto Approve Dancer:', dancerModel.dancerID, ' CourseVal:', courseVal);
+		console.info('[INFO]----Try to auto approve dancer:', dancerModel.dancerID, ' CourseVal:', courseVal);
 		dancerModel.dancerID = dancerModel.dancerID.toUpperCase();
 
 		var autoApprove = this._getPropValue(courseVal, 'autoApprove'),
@@ -212,7 +212,7 @@ exports.commonDancerOp = {
 			// -------------------Rule NO.1-----------------------------------
 			// 如果当前报名成功的会员数目小于允许的自动审核限额则自动审核通过
 			if( count < autoLimit ){
-				console.info('[INFO]----Auto Approve According to Rule NO.1: DancerID-', dancerModel.dancerID, 
+				console.info('[INFO]----Auto approved according to rule NO.1: dancerID-', dancerModel.dancerID, 
 					', DancerName-', dancerModel.dancerName, ', Course-', courseVal);
 				self.updateDancerCourseStatus(dancerModel.dancerID, courseVal, 'approved', function(){
 
@@ -235,7 +235,7 @@ exports.commonDancerOp = {
 					// -------------------Rule NO.2-----------------------------------
 					// 如果该舞种报名男士优先则直接审核通过
 					if ( !!result && result.gender === 'male' && manFirst ) {
-						console.info('[INFO]----Auto Approve According to Rule NO.2: DancerID-', dancerModel.dancerID, 
+						console.info('[INFO]----Auto approved according to rule NO.2: dancerID-', dancerModel.dancerID, 
 							', DancerName-', dancerModel.dancerName, ', Course-', courseVal);
 
 						self.updateDancerCourseStatus(dancerModel.dancerID, courseVal, 'approved', function(){
@@ -250,7 +250,7 @@ exports.commonDancerOp = {
 					// -------------------Rule NO.3-----------------------------------
 					if ( !!result && ( result.level >= 3 || result.vip >= 2 || result.forever ) ) {
 
-						console.info('[INFO]----Auto Approve According to Rule NO.3: DancerID-', dancerModel.dancerID, 
+						console.info('[INFO]----Auto approved according to rule NO.3: dancerID-', dancerModel.dancerID, 
 							', DancerName-', dancerModel.dancerName, ', Course-', courseVal);
 
 						self.updateDancerCourseStatus(dancerModel.dancerID, courseVal, 'approved', function(){

@@ -176,7 +176,7 @@ exports.queryCourseInfo = function(req, res){
 exports.quitCourse = function(req, res){
 	var col = getCollection(req);
 
-	console.log("Applying Course Quiting With dancerID: "+ req.params.id + " courseVal: " + req.query.courseVal)
+	console.log("[INFO]----Apply for course quiting with dancerID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 
 	col.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'quitApplied', function(err) {
 	    if (err) throw err;
@@ -195,7 +195,7 @@ exports.cancelCourse = function(req, res){
 
 	var col = getCollection(req);
 
-	console.log("Course Cancel With dancerID: "+ req.params.id + " courseVal: " + req.query.courseVal)
+	console.log("[INFO]----Course cancel with dancerID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 
 	col.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'cancelled', function(err) {
 	    if (err) throw err;
@@ -236,7 +236,7 @@ exports.initdata = function(req, res){
 			    if (err) throw err;
 
 			    if (addResult) {
-				    console.log('index.node.js: [INFO]---',dancerModel.dancerName + ' Added!');
+				    console.log('index.node.js: [INFO]---',dancerModel.dancerName + ' added!');
 			    }
 			});
 
