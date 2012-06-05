@@ -10,7 +10,7 @@
 var fs          = require('fs'),
     path        = require('path');
 
-var confFile = __dirname + '/../conf/conf.json';
+var confFile    = __dirname + '/../conf/conf.json';
 
 // 邮箱配置文件不存在则停止发邮件
 if ( !path.existsSync(confFile) ){
