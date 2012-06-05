@@ -62,7 +62,6 @@ var setRouters = function( fullFeature ){
 
     // 普通用户get请求
     for (router in gRouterMap) {
-        // console.log("\nHandle Get Path:'" + router + "' \tHandler: " + gRouterMap[router]);
         app.get(router, gRouterMap[router]);
     }
     // 普通用户post请求
