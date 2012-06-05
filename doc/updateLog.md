@@ -24,7 +24,7 @@
 * 【H】Markdown File Render Support 
 * 【H】前端首页JS及模板重构、优化
 * 【L】输入框、课程统计信息栏样式调整
-* 【L】添加Google Analysis(由于只能内网通过ip访问，善待测试完善)
+* 【L】添加Google Analysis 支持
 
 ------------ 
  M.J.@ 2012/05/26 21:07:07, HangZhou, BJ.S

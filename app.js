@@ -6,7 +6,7 @@
 
 /**
  * App's Main Start Script, Usage:
- * node app.js -p 8024 -t jazz; '-p' stands for the port number, and '-t' stands for course type, eg: latin/jazz/hiphop
+ * node app.js -p 8024; '-p' stands for the port number;
  * Author:  hustcer
  * Date:    2012-1-19 
  */
