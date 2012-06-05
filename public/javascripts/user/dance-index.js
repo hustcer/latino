@@ -30,6 +30,12 @@ jQuery(function($){
 		 * 模块的主要UI相关初始化
 		 */
 		_initUI: function(){
+
+			$('#apply-container input[type="text"]').on({
+				'focus' : function(){ $(this).addClass('ipt-focus'); },
+				'blur' 	: function(){ $(this).removeClass('ipt-focus'); }
+			});
+
 			this._initDepartment();
 			this._queryCourseInfo();
 			// FIXME:此处代码在多处重复出现可以重构

@@ -120,6 +120,7 @@ a.course-btn:hover{text-decoration:none;color:blue;}
 	margin: 0 9px;border: 1px solid #E3E3E6;width: 180px;
 	height: 16px;line-height: 20px;padding: 3px 6px;
 	background-color: #F3F3F3;}
+.ipt-focus{border: 1px solid #4D90FE;}
 
 .course-tip{color: #C40000;font-size: 12px;padding: 0px 11px;margin: 0 10px 0 0px;display: none;
 	border: 1px solid silver;
