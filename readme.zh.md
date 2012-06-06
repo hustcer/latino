@@ -1,7 +1,8 @@
+
 # 基于MongoDB和NodeJS的舞蹈培训管理系统
 
 ## 摘要：
-本应用为基于**NodeJS、Express Web Framework、Jade、MongoDB、MongoSkin**等技术构建的Alibaba舞蹈培训管理系统。目前以舞蹈培训报名管理功能为主。
+本应用为基于**NodeJS、Express Web Framework、Jade、MongoDB、MongoSkin、Nodemailer**等技术构建的Alibaba舞蹈培训管理系统。目前以舞蹈培训报名管理功能为主。
 ## 功能描述
 本应用分前台、后台两部分：前台以production模式启动，用户免登陆访问；后台以development模式启动，兼有会员管理功能。具体描述如下：
 ### 用户前台功能：
@@ -40,7 +41,7 @@ level(<=9)、vip等级(<=5)、forever状态（年卡）、lock状态等。
 # 应用部署说明：
 1. 安装NodeJs；
 2. 安装MongoDB并启动；
-3. Clone代码：git clone ……git;
+3. Clone代码：git clone https://github.com/hustcer/latinode.git;
 4. cd latinode & npm install -d & node app.js;
 5. That's All! 访问：http://localhost:3000 即可。
 <br/>

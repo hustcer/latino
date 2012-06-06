@@ -1,7 +1,8 @@
+
 # A Dance Training Manage System Based on MongoDB and Node
 
 ## Summary：
-This's a dance training manage system based on **NodeJS、Express Web Framework、Jade、MongoDB and MongoSkin, etc.**.The web application is built for dancers of Alibaba and the goal is mainly focused on dance course signing up management.
+This's a dance training manage system based on **NodeJS、Express Web Framework、Jade、MongoDB、MongoSkin and Nodemailer, etc.**.The web application is built for dancers of Alibaba and the goal is mainly focused on dance course signing up management.
 ## Features
 System consists of dancer forground and admin background. When started in production mode dancers can visit the basic forground pages without login. And if started in development mode the application will give you the admin's rights. Detailed as follows:
 ### Dancer Forground：
@@ -39,6 +40,6 @@ System consists of dancer forground and admin background. When started in produc
 # Deploy Instruction：
 1. Install NodeJs;
 2. Install MongoDB and start the service;
-3. Clone the repository: git clone ……latinode.git;
+3. Clone the repository: git clone https://github.com/hustcer/latinode.git;
 4. cd latinode & npm install -d & node app.js;
 5. That's All! Visit http://localhost:3000 in your browser, You will have it!<br/><br/>

@@ -46,7 +46,7 @@ var cCourseJazz = {
 	 			 {cValue: "6JZA",  cName: "第6期Jazz提高班",  ps:"上课时间：每周二晚6:40~7:30", cCapacity: 20, autoLimit: 20}],
    cCapacity:   24, 
    // 锁定课程状态，禁止报名、退课等操作
-   locked:    	false,
+   locked:    	true,
    // 是否开启报名自动审核
    autoApprove: true,
    // 是否男士报名优先，对于拉丁课男士优先则自动审核开启时男士报名自动审核通过
