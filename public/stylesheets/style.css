@@ -100,7 +100,7 @@ a.course-btn:hover{text-decoration:none;color:blue;}
 .dance-content .table-container label{margin: 0 10px 0 3px;}
 .dance-content .course-wrapper  label{overflow: hidden;width: 203px;display: inline-block;}
 .dance-content .table-container .err-tip{color:red;font-size:11px;width: 235px;float: left;}
-.dance-content .table-container .over-tip{color:#C40000;font-size:11px;margin-left: 18px;}
+.dance-content .table-container .over-tip{color:#555;font-size:11px;margin-left: 18px;}
 
 .dance-content .apply-table-a{margin: 0 0 15px 5px;}
 .dance-content .apply-table-b{margin: 5px 0 10px 5px;}
