@@ -218,7 +218,7 @@ exports.commonDancerOp = {
 
 					self.findDancerEmailByID(dancerModel.dancerID, function(err, dancer){
 				    	if (err) throw err;
-				    	sendMail(dancer.email, '您的报名申请已自动审核通过', self.cCourse.successMsg + '课程类型：' + courseVal);
+				    	sendMail(dancer.email, '您的报名申请已自动审核通过', self.cCourse.successMsg + '课程代码：' + courseVal);
 				    });
 
 				});
@@ -240,7 +240,7 @@ exports.commonDancerOp = {
 
 						self.updateDancerCourseStatus(dancerModel.dancerID, courseVal, 'approved', function(){
 
-						    sendMail(result.email, '您的报名申请已自动审核通过', self.cCourse.successMsg + '课程类型：' + courseVal);
+						    sendMail(result.email, '您的报名申请已自动审核通过', self.cCourse.successMsg + '课程代码：' + courseVal);
 
 						});
 
@@ -255,7 +255,7 @@ exports.commonDancerOp = {
 
 						self.updateDancerCourseStatus(dancerModel.dancerID, courseVal, 'approved', function(){
 
-						    sendMail(result.email, '您的报名申请已自动审核通过', self.cCourse.successMsg + '课程类型：' + courseVal);
+						    sendMail(result.email, '您的报名申请已自动审核通过', self.cCourse.successMsg + '课程代码：' + courseVal);
 
 						});
 

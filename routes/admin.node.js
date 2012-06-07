@@ -11,7 +11,7 @@ var nodeMsg 		= require("../conf/nodemsg.node.js").nodeMessages;
 var getCollection 	= require("./util.node.js").getCollection;
 var sendMail 		= require("./mail.node.js").sendMail;
 
-exports.man = function(req, res, next){
+exports.man = function(req, res, nlolext){
 
 	var col = getCollection(req);
 
@@ -81,7 +81,7 @@ exports.approve = function(req, res){
 
 		    col.findDancerEmailByID(req.params.id, function(err, dancer){
 		    	if (err) throw err;
-		    	sendMail(dancer.email, '您的报名申请已审核通过', col.cCourse.successMsg + '课程类型：' + req.query.courseVal);
+		    	sendMail(dancer.email, '您的报名申请已审核通过', col.cCourse.successMsg + '课程代码：' + req.query.courseVal);
 		    });
 
 		    res.contentType('application/json');
@@ -131,7 +131,7 @@ exports.quit = function(req, res){
 
 			    col.findDancerEmailByID(req.params.id, function(err, dancer){
 			    	if (err) throw err;
-			    	sendMail(dancer.email, '您的退课申请已审核通过', col.cCourse.quitMsg + '课程类型：' + req.query.courseVal);
+			    	sendMail(dancer.email, '您的退课申请已审核通过', col.cCourse.quitMsg + '课程代码：' + req.query.courseVal);
 			    });
 
 			    res.contentType('application/json');
