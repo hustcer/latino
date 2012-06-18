@@ -10,8 +10,13 @@
     #latin-header.latin-header
         img(src='/images/latinHeader.png')
         a.version-log(href='/doc/updateLog', target='_blank')
+
     nav.dance-nav#dance-nav
         ul.nav-links
             li: a(href="/latin", class='apply') 首页
             li: a(href="/list/latin", class='list') 报名情况
             li: a(href="/man/latin", class='manage') 会员管理
+    div.dance-type
+        a.dance-btn#latin-btn(ddata="latin", href="javascript:;") 拉丁舞
+        a.dance-btn#jazz-btn(ddata="jazz", href="javascript:;") 爵士舞
+

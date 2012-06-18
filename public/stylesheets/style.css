@@ -39,6 +39,10 @@ input.comm-check{height:30px;line-height:27px;display: inline-block;}
 .ie-attention{width: 565px;margin: 50px auto;line-height: 30px;color: black;font-size: 14px;}
 .ie-attention em{font-weight: 700;color:red;}
 
+.dance-header{overflow: hidden;position: relative;}
+.dance-type{position: absolute;top: 82px;left: 350px;}
+.dance-type .dance-btn{line-height: 30px;height: 30px;padding: 3px 15px;font-size: 18px;color: #666;margin: 0 5px;}
+.dance-type a:hover,.dance-type .current-d{text-decoration: none;background: #1d8be9;color:#FFF;}
 .dance-nav{clear: both;display: inline-block;float: right;overflow: hidden;margin:0 55px 20px;}
 .dance-nav .nav-links li{float: left;padding: 3px 15px;background: orange;margin: 0 3px;}
 .dance-nav .nav-links li a{color: #333;}

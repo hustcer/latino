@@ -23,6 +23,7 @@ jQuery(function($){
         init: function(){
         
             this._initUI();
+            this._initHandler();
         },
         /**
          * 模块的主要UI相关初始化
@@ -39,10 +40,28 @@ jQuery(function($){
                     $('#dance-nav a.apply').attr('href', '/' + dType);
                     $('#dance-nav a.list').attr('href', '/list/' + dType);
                     $('#dance-nav a.manage').attr('href', '/man/' + dType);
+                    // 设置当前选中的舞种
+                    $('a.dance-btn', 'header.dance-header').removeClass('current-d');
+                    $('#' + dType + '-btn').addClass('current-d');
                 });
                 
             });
             
+        },
+        /**
+         * 舞种导航相关事件处理
+         */
+        _initHandler : function(){
+            
+            $('a.dance-btn', 'header.dance-header').on('click', function(){
+   
+                var href    = window.location.href,
+                    dIndex  = href.lastIndexOf('/'),
+                    nref    = href.substring(0, dIndex + 1) + $(this).attr('ddata');
+                    
+                window.location.href = nref;
+                     
+            });
         }
     };
     // End Module Definition
