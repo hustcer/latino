@@ -214,33 +214,47 @@ exports.initdata = function(req, res){
 	var col = getCollection(req);
 
 	var dancerModel;
-	for (var i = 60; i >= 10; i--) {
+	for (var i = 70; i >= 10; i--) {
 
 		var insertDancer = function(i){
 			dancerModel = {
-				dancerID: 	'299' + i,
-				courseA: 	Math.ceil(Math.random()*3) + 'RE',
-				courseB: 	Math.ceil(Math.random()*3) + 'CI',
-				dancerName: 'M.J.' + i,
+				dancerID: 	'IIM9' + i,
+				dancerName: 'D.M.' + i,
 				gender: 	Math.random() >= 0.5 ? 'male':'female',
-				email: 		'hustcer' + i + '@alibaba-inc.com',
-				wangWang: 	'hustcer' + i,
-				extNumber: 	'599' + i,
-				alipayID: 	'hustcer' + i + '@gmail.com',
+				email: 		'dancer' + i + '@alibaba-inc.com',
+				wangWang: 	'dancer' + i,
+				extNumber: 	'NA00' + i,
+				alipayID: 	'dancerno' + i + '@gmail.com',
 				department: Math.random() >= 0.5 ? 'tech':'other',
 				vip: 		Math.ceil(Math.random()*5), 
 				level: 		Math.ceil(Math.random()*9)	
 			};
 
+			var courseArray	  = [];
+			// Math.ceil(Math.random()*3) + 'RE',
+			// Math.ceil(Math.random()*3) + 'CI',
+			courseArray.push('13CI');
+			courseArray.push('13SE');
+			
+			dancerModel.courseArray = courseArray;
+
 			col.insertDancer(dancerModel, function(err, addResult) {
 			    if (err) throw err;
 
-			    if (addResult) {
-				    console.log('index.node.js: [INFO]---',dancerModel.dancerName + ' added!');
+			    if (!!addResult) {
+
+			    	console.log('index.node.js: [INFO]---',dancerModel.dancerName + ' added!');
+				    // 如果开启课程自动审核则在这里进行自动审核
+	    			if(col.cCourse.autoApprove){
+	    				// 新插入会员的时候会把dancerModel 的courseArray属性删除掉，而课程自动审核需要该属性
+	    				dancerModel.courseArray	= courseArray;
+	    				col.autoApprove(dancerModel);
+	    			}
 			    }
 			});
 
 		};
+
 		insertDancer(i);
 
 	};
