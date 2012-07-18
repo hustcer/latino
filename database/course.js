@@ -40,11 +40,13 @@ var cCourseLatin = {
  */
 var cCourseJazz = {
    courseType  : 'jazz', 
-   courses     :[{cValue: "6JZE1", cName: "第6期Jazz基础1班", ps:"上课时间：每周一晚7:40~8:30", cCapacity: 24, autoLimit: 24},
-	 			     {cValue: "6JZE2", cName: "第6期Jazz基础2班", ps:"上课时间：每周二晚7:40~8:30", cCapacity: 24, autoLimit: 24},
-	 			     {cValue: "6JZI",  cName: "第6期Jazz中级班",  ps:"上课时间：每周一晚6:40~7:30", cCapacity: 20, autoLimit: 20},
-	 			     {cValue: "6JZA",  cName: "第6期Jazz提高班",  ps:"上课时间：每周二晚6:40~7:30", cCapacity: 20, autoLimit: 20}],
-   cCapacity   : 24, 
+   courses     :[{cValue: "7JZE1", cName: "第7期JAZZ基础1班", ps:"上课时间：每周一晚7:40~8:30", cCapacity: 20, autoLimit: 20},
+	 			     {cValue: "7JZE2", cName: "第7期JAZZ基础2班", ps:"上课时间：每周二晚7:40~8:30", cCapacity: 20, autoLimit: 20},
+	 			     {cValue: "7JZA1",  cName: "第7期JAZZ提高1班",  ps:"上课时间：每周一晚6:40~7:30", cCapacity: 20, autoLimit: 20},
+	 			     {cValue: "7JZA2",  cName: "第7期JAZZ提高2班",  ps:"上课时间：每周二晚6:40~7:30", cCapacity: 20, autoLimit: 20}],
+
+ 
+   cCapacity   : 20, 
    // 锁定课程状态，禁止报名、退课等操作
    locked      : true,
    // 是否开启报名自动审核
@@ -52,8 +54,8 @@ var cCourseJazz = {
    // 是否男士报名优先，对于拉丁课男士优先则自动审核开启时男士报名自动审核通过
    manFirst    : false,
    // 自动审核报名成功的人数限制
-   autoLimit   : 24,
-   notice      : '上课地点:公司舞房.每个培训舞种共9次课,基础班费用50.00元,中级班或提高班费用60.00元,开课时间可能5月中旬,具体情况等通知.报名成功的同学请付款到本人支付宝: https://me.alipay.com/starsun,逾期未付款报名将被取消.',
+   autoLimit   : 20,
+   notice      : '上课地点：公司舞房。每期培训9次课，学费90.00元，胸牌押金10.00元[课程结束后退还胸牌押金退回]。每个班如不足15人取消开课，开课时间8月6日，报名结束后会邮件通知。报名成功后请及时付款到支付宝: https://me.alipay.com/starsun，每周五未付款的报名将被取消。',
    successMsg  : '您好，您的Jazz报名申请已经审核通过，烦请迅速缴费，逾期未付则课程将被取消。敬请谅解!',
    quitMsg     : '您好，您的Jazz退课申请已经审核通过，欢迎下次报名!',
    beginDate   : '',
@@ -99,6 +101,10 @@ var courseLatinList = [
  * 最后一个大写字母表示课程级别：E: Elementary 基础班;I: Intermediate 中级班; A: Advanced 高级班
  */
 var courseJazzList = [
+		{courseVal:'7JZA1',  courseName:'第7期Jazz提高1班'},
+		{courseVal:'7JZA2',  courseName:'第7期Jazz提高2班'},
+		{courseVal:'7JZE1', courseName:'第7期Jazz基础1班'},
+		{courseVal:'7JZE2', courseName:'第7期Jazz基础2班'},
 		{courseVal:'6JZI',  courseName:'第6期Jazz中级班'},
 		{courseVal:'6JZA',  courseName:'第6期Jazz提高班'},
 		{courseVal:'6JZE1', courseName:'第6期Jazz基础1班'},
