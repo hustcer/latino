@@ -146,7 +146,8 @@ a.course-btn:hover{text-decoration:none;color:blue;}
 #user-info table tr{line-height:24px;}
 #user-info table td{pading-left:12px;}
 
-.dancer-filter, .dancer-list{width:940px;margin: 0 30px 9px;border-bottom: 1px dashed gray;padding-bottom: 15px;}
+.dancer-filter, .dancer-list{width:990px;margin: 0 5px 9px;border-bottom: 1px dashed gray;padding-bottom: 15px;}
+.dancer-filter{padding-left: 20px;}
 .dancer-filter table td{padding: 0 7px 0 0;}
 .dancer-filter #queryBtn{height: 20px;line-height: 14px;margin-left: 10px;}
 .dancer-filter #dancerID.comm-input{width:60px;margin: 0 3px;}
@@ -181,7 +182,7 @@ padding: 1px 0px 1px 6px;border: 1px solid #999;margin: 0 12px 0px 0;height:26px
 
 .dancer-list table{width:100%;table-layout:fixed;}
 
-#list-content .content-header{margin: 0 30px 20px;border-bottom: 1px dashed gray;}
+#list-content .content-header{margin: 0 5px 20px;border-bottom: 1px dashed gray;}
 #list-content .search-form{float: left;}
 #list-content .department-cell .ui-combobox .result {width: 75px;}
 #list-content .department-cell .ui-combobox-panel .list{width:96px;}
@@ -197,7 +198,7 @@ padding: 1px 0px 1px 6px;border: 1px solid #999;margin: 0 12px 0px 0;height:26px
 .dancer-list .dancerID-header{width:60px;text-align:center;cursor: pointer;}
 .dancer-list .dancerName-header{width:65px;cursor: pointer;}
 .dancer-list .gender-header{width:45px;cursor: pointer;}
-.dancer-list .course-header{width:310px;}
+.dancer-list .course-header{width:338px;}
 .dancer-list .email-header{width:200px;cursor: pointer;}
 .dancer-list .wangWang-header{width:95px;cursor: pointer;}
 .dancer-list .ext-header{width:65px;cursor: pointer;}
