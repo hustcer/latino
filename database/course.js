@@ -17,7 +17,7 @@ var cCourseLatin = {
 	courseType : 'latin',
    // 每个课程可以有：cCapacity、locked、autoApprove、manFirst、autoLimit等局部配置，可以覆盖相应的全局配置
    courses    :[{cValue: "14RE", cName: "伦巴基础班", ps:"上课时间：每周四晚6:30~7:30",locked: false},
-                {cValue: "14CE", cName: "恰恰基础班", ps:"上课时间：每周四晚7:40~8:40",locked: false}],
+                {cValue: "14CE", cName: "恰恰基础班", ps:"上课时间：每周四晚7:40~8:40",locked: true}],
    // 课程额定容量，此为全局配置可以被各课程的对应配置所覆盖
    cCapacity  : 15,
    // 锁定课程状态，禁止报名、退课等操作
@@ -40,10 +40,10 @@ var cCourseLatin = {
  */
 var cCourseJazz = {
    courseType  : 'jazz', 
-   courses     :[{cValue: "7JZE1", cName: "第7期JAZZ基础1班", ps:"上课时间：每周一晚7:40~8:30"},
-	 			     {cValue: "7JZE2", cName: "第7期JAZZ基础2班", ps:"上课时间：每周二晚7:40~8:30"},
-	 			     {cValue: "7JZA1", cName: "第7期JAZZ提高1班", ps:"上课时间：每周一晚6:40~7:30"},
-	 			     {cValue: "7JZA2", cName: "第7期JAZZ提高2班", ps:"上课时间：每周二晚6:40~7:30", cCapacity: 20, autoLimit: 20}],
+   courses     :[{cValue: "7JZE1", cName: "第7期Jazz基础1班", ps:"上课时间：每周一晚7:40~8:30"},
+	 			     {cValue: "7JZE2", cName: "第7期Jazz基础2班", ps:"上课时间：每周二晚7:40~8:30"},
+	 			     {cValue: "7JZA1", cName: "第7期Jazz提高1班", ps:"上课时间：每周一晚6:40~7:30"},
+	 			     {cValue: "7JZA2", cName: "第7期Jazz提高2班", ps:"上课时间：每周二晚6:40~7:30", cCapacity: 20, autoLimit: 20}],
 
    cCapacity   : 20, 
    // 锁定课程状态，禁止报名、退课等操作
