@@ -227,7 +227,7 @@ exports.commonDancerOp = {
 			}
 			
 			// 如果当前报名成功的会员数目小于课程总容量则继续下面的审核规则，否则不再继续审核
-			if( count <= cCapacity ){
+			if( count < cCapacity ){
 
 				self.findDancerByID(dancerModel.dancerID, function(err, result){
 					if (err) {throw err};
