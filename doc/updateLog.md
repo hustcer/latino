@@ -1,6 +1,17 @@
 
 # UPDATE LOGS:
 
+
+## V 0.2.0Beta2 :
+Add Express 3.0 and node 0.8+ Support.
+
+* 【H】Add Express 3.0 and node 0.8+ Support.
+* 【L】Fix user infomation display page
+
+------------ 
+ M.J.@ 2012/07/26 16:07:07, HangZhou, BJ.A 
+
+
 ## V 0.2.0Beta :
 主要更新：舞种合并、邮件通知、增强数据库等账号安全性
 

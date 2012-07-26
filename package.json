@@ -1,13 +1,13 @@
 
 {
     "name":       "latinode",
-    "version":    "0.2.0beta",
+    "version":    "0.2.0beta2",
     "author":     "Justin Ma",
     "description":"A Dance Training Management System.",
     "private":    true,
     "main":       "./app.js",
     "dependencies": {
-      "express":  "2.5.5",
+      "express":  ">= 3.0.0rc1",
       "jade":     ">= 0.0.1",
       "mongoskin":">= 0.3.5",
       "discount": ">= 0.2.3",
@@ -22,7 +22,8 @@
   	"scripts": 		{
     	"start":   "node app.js"
   	},
-  	"repository": 	{
+    "engines":    { "node": ">= 0.8.0" },
+  	"repository": {
     	"type":    "git",
     	"url":     "https://github.com/hustcer/latinode"
   	},
