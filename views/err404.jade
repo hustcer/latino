@@ -5,15 +5,20 @@
 //- Date:   2012-1-19
 //-
 
-include includes/header
+extends layout
 
-.dw: section.dance-content#list-content
-	.content-header
-		h1.header-title= title 
+block content
 
-		p.none-exist 
-			#{msg}
+	include includes/header
 
-include includes/footer	
+	.dw: section.dance-content#list-content
+		.content-header
+			h1.header-title= title 
 
-script(src='http://style.china.alibaba.com/js/lib/fdev-v4/core/fdev-min.js')
+			p.none-exist 
+				em #{msg}
+
+	include includes/footer	
+
+	script(src='http://style.china.alibaba.com/js/lib/fdev-v4/core/fdev-min.js')
+	script(src='/javascripts/user/header.js')

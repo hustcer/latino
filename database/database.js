@@ -13,7 +13,7 @@ var fs          = require('fs'),
 var confFile    = path.normalize(__dirname + '/../conf/conf.json');
 
 // 数据库配置文件不存在则尝试采用匿名方式访问
-if ( !path.existsSync(confFile) ){
+if ( !fs.existsSync(confFile) ){
 
     console.log('[INFO]----Can not find database config file ' + confFile + ', using default config...');
 

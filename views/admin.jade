@@ -4,245 +4,251 @@
 //-	Author: hustcer
 //- Date: 	2012-2-13 
 //-
+extends layout
 
-include includes/header
+block content
 
-.dw: section.admin-content#admin-content
-	.content-header
-		h1.header-title= title
-	nav.admin-bg-nav
-		ul.admin-links
-			li: a(href="#approve-apply") 报名通过
-			li: a(href="#course-pay") 课程缴费
-			li: a(href="#refuse-apply") 报名拒绝
-			li: a(href="#course-refund") 课程退费
-			li: a(href="#quit-approve") 退课通过
-			li: a(href="#quit-refuse") 退课拒绝
-			li: a(href="#dancer-edit") 会员管理
+	include includes/header
 
-	section.op-container#op-container(dType='#{cCourse.courseType}')
+	.dw: section.admin-content#admin-content
+		.content-header
+			h1.header-title= title
+		nav.admin-bg-nav
+			ul.admin-links
+				li: a(href="#approve-apply") 报名通过
+				li: a(href="#course-pay") 课程缴费
+				li: a(href="#refuse-apply") 报名拒绝
+				li: a(href="#course-refund") 课程退费
+				li: a(href="#quit-approve") 退课通过
+				li: a(href="#quit-refuse") 退课拒绝
+				li: a(href="#dancer-edit") 会员管理
 
-		//---------------------------------------------------------------------
-		.admin-op#approve-apply
-			h3 报名通过
-			span.op-cond * 只有处在'待审核'状态的课程才能被审核通过
-			table
-				tbody
-					tr
-						td.dancerID-cell
-							label 工号：
-							input.dancerID.comm-input(type="text", name="dancerID")
-						td.course-cell	
-							label.fd-left 课程：
-							.course-box
-								select.comm-select(name="course")
-									option(value="") 请选择...
-									each course in courseList
-										option(value="#{course.courseVal}") #{course.courseName}
-						td: button(class="approveBtn comm-button", id="approveBtn") 审核通过
-			p.course-tip.fd-hide
+		section.op-container#op-container(dType='#{cCourse.courseType}')
 
-
-		//---------------------------------------------------------------------
-		.admin-op#course-pay
-			h3 缴费
-			span.op-cond * 只有报名成功的课程才能设置缴费
-			table
-				tbody
-					tr
-						td.dancerID-cell
-							label 工号：
-							input.dancerID.comm-input(type="text", name="dancerID")
-						td.course-cell	
-							label.fd-left 课程：
-							.course-box
-								select.comm-select(name="course")
-									option(value="") 请选择...
-									each course in courseList
-										option(value="#{course.courseVal}") #{course.courseName}
-						td: button(class="payBtn comm-button", id="payBtn") 设置缴费
-			p.course-tip.fd-hide
-
-							
-		//---------------------------------------------------------------------
-		.admin-op#refuse-apply
-			h3 报名拒绝
-			span.op-cond * 只有处在'待审核'状态的课程才能被审核拒绝
-			table
-				tbody
-					tr
-						td.dancerID-cell
-							label 工号：
-							input.dancerID.comm-input(type="text", name="dancerID")
-						td.course-cell	
-							label.fd-left 课程：
-							.course-box
-								select.comm-select(name="course")
-									option(value="") 请选择...
-									each course in courseList
-										option(value="#{course.courseVal}") #{course.courseName}
-						td: button(class="refuseBtn comm-button", id="refuseBtn") 审核拒绝
-			p.course-tip.fd-hide
-
-
-		//---------------------------------------------------------------------
-		.admin-op#course-refund
-			h3 退费
-			span.op-cond * 只有处在'申请退课'状态的课程才能设置退费
-			table
-				tbody
-					tr
-						td.dancerID-cell
-							label 工号：
-							input.dancerID.comm-input(type="text", name="dancerID")
-						td.course-cell	
-							label.fd-left 课程：
-							.course-box
-								select.comm-select(name="course")
-									option(value="") 请选择...
-									each course in courseList
-										option(value="#{course.courseVal}") #{course.courseName}
-						td: button(class="refundBtn comm-button", id="refundBtn") 设置退费
-			p.course-tip.fd-hide
-
-
-		//---------------------------------------------------------------------
-		.admin-op#quit-approve
-			h3 退课通过
-			span.op-cond * 只有处在'申请退课'状态且已经退还费用的课程才能退课审核通过
-			table
-				tbody
-					tr
-						td.dancerID-cell
-							label 工号：
-							input.dancerID.comm-input(type="text", name="dancerID")
-						td.course-cell	
-							label.fd-left 课程：
-							.course-box
-								select.comm-select(name="course")
-									option(value="") 请选择...
-									each course in courseList
-										option(value="#{course.courseVal}") #{course.courseName}
-						td: button(class="quitBtn comm-button", id="quitBtn") 确认退课
-			p.course-tip.fd-hide
-
-
-		//---------------------------------------------------------------------
-		.admin-op#quit-refuse
-			h3 退课拒绝
-			span.op-cond * 只有处在'申请退课'状态的课程才能退课审核拒绝
-			table
-				tbody
-					tr
-						td.dancerID-cell
-							label 工号：
-							input.dancerID.comm-input(type="text", name="dancerID")
-						td.course-cell	
-							label.fd-left 课程：
-							.course-box
-								select.comm-select(name="course")
-									option(value="") 请选择...
-									each course in courseList
-										option(value="#{course.courseVal}") #{course.courseName}
-						td: button(class="quitRefuseBtn comm-button", id="quitRefuseBtn") 拒绝退课
-			p.course-tip.fd-hide
-
-
-		//---------------------------------------------------------------------
-		.admin-op#dancer-edit
-			h3 会员信息管理
-			span.op-cond * 请君慎用管理员权限.
-			
-			#edit-container.edit-container
-		
-				.table-container
-					form(name="editForm", id="editForm", method="post", action="")
-						table.edit-table-a
-							tbody
-								tr.em
-									th: label 工 号：
-									td	
-										input#dancerID.comm-input(type="text", name="dancerID", maxlength="9", data-valid="{required:true}")
-									td.err-tip *
-								tr.row-sep.em
-									th: label 报名班级：
-									td(colspan="2")
-										each course,i in cCourse.courses
-											.course-wrapper
-												input.comm-check(type="checkbox", value="#{course.cValue}", name="course#{i}", id="course#{i}", disabled)
-												label(for="course#{i}")&nbsp;#{course.cName}
-												p.course-tip(id="tip#{i}")
-
-						table.edit-table-b
-							tbody
-								tr
-									th: label 姓 名：
-									td
-										input#dancerName.comm-input(type="text", name="dancerName", maxlength="30", data-valid="{required:true}")
-									td.err-tip *
-								tr
-									th: label 性 别：
-									td
-										.gender-wrapper
-											input.comm-radio(type="radio", id="maleRadio", value="male", name="gender")
-											label(for="maleRadio")&nbsp;男 &nbsp;&nbsp;&nbsp;
-											
-											input.comm-radio(type="radio", id="femaleRadio", value="female", name="gender")
-											label(for="femaleRadio")&nbsp;女
-											
-									td.err-tip *
-								tr
-									th: label 邮 箱：
-									td
-										input#email.comm-input(type="text", name="email", maxlength="30", data-valid="{required:true,type:'email'}")
-									td.err-tip *
-								tr
-									th: label 旺 旺：
-									td
-										input#wangWang.comm-input(type="text", name="wangWang", maxlength="30", data-valid="{required:true}")
-									td.err-tip *
-								tr
-									th: label 分 机：
-									td
-										input#extNumber.comm-input(type="text", name="extNumber", maxlength="12", data-valid="{required:true}")
-									td.err-tip *
-								tr
-									th: label 支 付 宝：
-									td
-										input#alipayID.comm-input(type="text", name="alipayID", maxlength="30", data-valid="{required:true}")
-									td.err-tip *
-								tr
-									th: label VIP等级：
-									td
-										input#vip.comm-input.range-input(type="range", name="vip", min="1", max="5", step="1", value="" )
-										span.rangeVal#vipValue 3
-									td.err-tip 
-								tr
-									th: label 舞蹈水平：
-									td
-										input#level.comm-input.range-input(type="range", name="level", min="1", max="9", step="1", value="")
-										span.rangeVal#levelValue 3
-									td.err-tip 
-								tr
-									th: label 永舞止境：
-									td
-										input#forever.forever(type="checkbox", name="forever")
-										label.forever-label(for="forever") 成为年卡会员，精彩永不错过!
-						
-								tr
-									th: label 部 门：
-									td
-										.depart-select
-									td.err-tip
-							
-					button(class="reset-btn comm-button", id="reset-btn") 重&nbsp;置
-					&nbsp;&nbsp;&nbsp;
-					button(class="confirm-btn comm-button", id="confirm-btn") 确&nbsp;认
-
+			//---------------------------------------------------------------------
+			.admin-op#approve-apply
+				h3 报名通过
+				span.op-cond * 只有处在'待审核'状态的课程才能被审核通过
+				table
+					tbody
+						tr
+							td.dancerID-cell
+								label 工号：
+								input.dancerID.comm-input(type="text", name="dancerID")
+							td.course-cell	
+								label.fd-left 课程：
+								.course-box
+									select.comm-select(name="course")
+										option(value="") 请选择...
+										each course in courseList
+											option(value="#{course.courseVal}") #{course.courseName}
+							td: button(class="approveBtn comm-button", id="approveBtn") 审核通过
 				p.course-tip.fd-hide
 
 
-include includes/footer				
+			//---------------------------------------------------------------------
+			.admin-op#course-pay
+				h3 缴费
+				span.op-cond * 只有报名成功的课程才能设置缴费
+				table
+					tbody
+						tr
+							td.dancerID-cell
+								label 工号：
+								input.dancerID.comm-input(type="text", name="dancerID")
+							td.course-cell	
+								label.fd-left 课程：
+								.course-box
+									select.comm-select(name="course")
+										option(value="") 请选择...
+										each course in courseList
+											option(value="#{course.courseVal}") #{course.courseName}
+							td: button(class="payBtn comm-button", id="payBtn") 设置缴费
+				p.course-tip.fd-hide
 
-script(src='http://style.china.alibaba.com/js/lib/fdev-v4/core/fdev-min.js')
-script(src='/javascripts/user/admin.js')
+								
+			//---------------------------------------------------------------------
+			.admin-op#refuse-apply
+				h3 报名拒绝
+				span.op-cond * 只有处在'待审核'状态的课程才能被审核拒绝
+				table
+					tbody
+						tr
+							td.dancerID-cell
+								label 工号：
+								input.dancerID.comm-input(type="text", name="dancerID")
+							td.course-cell	
+								label.fd-left 课程：
+								.course-box
+									select.comm-select(name="course")
+										option(value="") 请选择...
+										each course in courseList
+											option(value="#{course.courseVal}") #{course.courseName}
+							td: button(class="refuseBtn comm-button", id="refuseBtn") 审核拒绝
+				p.course-tip.fd-hide
+
+
+			//---------------------------------------------------------------------
+			.admin-op#course-refund
+				h3 退费
+				span.op-cond * 只有处在'申请退课'状态的课程才能设置退费
+				table
+					tbody
+						tr
+							td.dancerID-cell
+								label 工号：
+								input.dancerID.comm-input(type="text", name="dancerID")
+							td.course-cell	
+								label.fd-left 课程：
+								.course-box
+									select.comm-select(name="course")
+										option(value="") 请选择...
+										each course in courseList
+											option(value="#{course.courseVal}") #{course.courseName}
+							td: button(class="refundBtn comm-button", id="refundBtn") 设置退费
+				p.course-tip.fd-hide
+
+
+			//---------------------------------------------------------------------
+			.admin-op#quit-approve
+				h3 退课通过
+				span.op-cond * 只有处在'申请退课'状态且已经退还费用的课程才能退课审核通过
+				table
+					tbody
+						tr
+							td.dancerID-cell
+								label 工号：
+								input.dancerID.comm-input(type="text", name="dancerID")
+							td.course-cell	
+								label.fd-left 课程：
+								.course-box
+									select.comm-select(name="course")
+										option(value="") 请选择...
+										each course in courseList
+											option(value="#{course.courseVal}") #{course.courseName}
+							td: button(class="quitBtn comm-button", id="quitBtn") 确认退课
+				p.course-tip.fd-hide
+
+
+			//---------------------------------------------------------------------
+			.admin-op#quit-refuse
+				h3 退课拒绝
+				span.op-cond * 只有处在'申请退课'状态的课程才能退课审核拒绝
+				table
+					tbody
+						tr
+							td.dancerID-cell
+								label 工号：
+								input.dancerID.comm-input(type="text", name="dancerID")
+							td.course-cell	
+								label.fd-left 课程：
+								.course-box
+									select.comm-select(name="course")
+										option(value="") 请选择...
+										each course in courseList
+											option(value="#{course.courseVal}") #{course.courseName}
+							td: button(class="quitRefuseBtn comm-button", id="quitRefuseBtn") 拒绝退课
+				p.course-tip.fd-hide
+
+
+			//---------------------------------------------------------------------
+			.admin-op#dancer-edit
+				h3 会员信息管理
+				span.op-cond * 请君慎用管理员权限.
+				
+				#edit-container.edit-container
+			
+					.table-container
+						form(name="editForm", id="editForm", method="post", action="")
+							table.edit-table-a
+								tbody
+									tr.em
+										th: label 工 号：
+										td	
+											input#dancerID.comm-input(type="text", name="dancerID", maxlength="9", data-valid="{required:true}")
+										td.err-tip *
+									tr.row-sep.em
+										th: label 报名班级：
+										td(colspan="2")
+											each course,i in cCourse.courses
+												.course-wrapper
+													input.comm-check(type="checkbox", value="#{course.cValue}", name="course#{i}", id="course#{i}", disabled)
+													label(for="course#{i}")&nbsp;#{course.cName}
+													p.course-tip(id="tip#{i}")
+
+							table.edit-table-b
+								tbody
+									tr
+										th: label 姓 名：
+										td
+											input#dancerName.comm-input(type="text", name="dancerName", maxlength="30", data-valid="{required:true}")
+										td.err-tip *
+									tr
+										th: label 性 别：
+										td
+											.gender-wrapper
+												input.comm-radio(type="radio", id="maleRadio", value="male", name="gender")
+												label(for="maleRadio")&nbsp;男 &nbsp;&nbsp;&nbsp;
+												
+												input.comm-radio(type="radio", id="femaleRadio", value="female", name="gender")
+												label(for="femaleRadio")&nbsp;女
+												
+										td.err-tip *
+									tr
+										th: label 邮 箱：
+										td
+											input#email.comm-input(type="text", name="email", maxlength="30", data-valid="{required:true,type:'email'}")
+										td.err-tip *
+									tr
+										th: label 旺 旺：
+										td
+											input#wangWang.comm-input(type="text", name="wangWang", maxlength="30", data-valid="{required:true}")
+										td.err-tip *
+									tr
+										th: label 分 机：
+										td
+											input#extNumber.comm-input(type="text", name="extNumber", maxlength="12", data-valid="{required:true}")
+										td.err-tip *
+									tr
+										th: label 支 付 宝：
+										td
+											input#alipayID.comm-input(type="text", name="alipayID", maxlength="30", data-valid="{required:true}")
+										td.err-tip *
+									tr
+										th: label VIP等级：
+										td
+											input#vip.comm-input.range-input(type="range", name="vip", min="1", max="5", step="1", value="" )
+											span.rangeVal#vipValue 3
+										td.err-tip 
+									tr
+										th: label 舞蹈水平：
+										td
+											input#level.comm-input.range-input(type="range", name="level", min="1", max="9", step="1", value="")
+											span.rangeVal#levelValue 3
+										td.err-tip 
+									tr
+										th: label 永舞止境：
+										td
+											input#forever.forever(type="checkbox", name="forever")
+											label.forever-label(for="forever") 成为年卡会员，精彩永不错过!
+							
+									tr
+										th: label 部 门：
+										td
+											.depart-select
+										td.err-tip
+								
+						button(class="reset-btn comm-button", id="reset-btn") 重&nbsp;置
+						&nbsp;&nbsp;&nbsp;
+						button(class="confirm-btn comm-button", id="confirm-btn") 确&nbsp;认
+
+					p.course-tip.fd-hide
+
+
+	include includes/footer				
+
+	script(src='http://style.china.alibaba.com/js/lib/fdev-v4/core/fdev-min.js')
+	script(src='/javascripts/user/admin.js')
+	script(src='/javascripts/user/header.js')
+
+	

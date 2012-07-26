@@ -13,7 +13,9 @@
 
 var express     = require('express');
 
-var app         = module.exports = express.createServer(),
+var path        = require('path'),
+    http        = require('http'),
+    app         = express(),
     db          = require("./database/database.js").db,
     cCourses    = require("./database/course.js").cCourses,
     dancerOp    = require("./database/dancer.js").commonDancerOp;
@@ -29,7 +31,7 @@ app.configure(function(){
 
     app.set('views', __dirname + '/views');
     app.set('view engine', 'jade');
-
+    app.use(express.favicon());
     // app.use(express.logger({ format: ':method :url' }));
     app.use(express.bodyParser());
     app.use(express.methodOverride());
@@ -76,30 +78,36 @@ app.configure('development', function(){
         dumpExceptions: true,
         showStack:      true
     }));
+
     // 静态资源路由
-    app.use(express.static(__dirname + '/public'));
+    app.use(express.static(path.join(__dirname, 'public')));
+
     app.use(app.router);
     setRouters(true);
+    
 });
 
 app.configure('production', function(){
 
     var oneMonth = 1000*60*60*24*30;
     app.use(express.errorHandler());
+
     // 静态资源路由
-    app.use(express.static(__dirname + '/public', { maxAge: oneMonth }));
+    app.use(express.static(path.join(__dirname, 'public'), { maxAge: oneMonth } ));
+
     app.use(app.router);
     setRouters(false);
+    
 });
 
 // 如果控制台传过来的有端口号参数则监听相应端口号，否则监听3000端口
-var portIndex   = process.argv.indexOf('-p'), port = 3000;
+var portIndex  = process.argv.indexOf('-p'), port = 3000;
 
 if (portIndex != -1 && process.argv.length >= portIndex + 2) {
     port = +process.argv[portIndex + 1];
 };
 
-app.listen(port, function(){
-    console.log("\nExpress server listening on port %d in %s mode\n", app.address().port, app.settings.env);
+http.createServer(app).listen(port, function(){
+    console.log("\nExpress server listening on port %d in %s mode\n", port, app.settings.env);
 });
 

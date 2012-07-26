@@ -6,137 +6,143 @@
 //- Date: 	2012-1-12 
 //-
 
-include includes/header
+extends layout
 
-.dw: section.dance-content#list-content(dType='#{cCourse.courseType}')
-	.content-header
-		h1.header-title= title 
+block content
 
-	#dancer-filter.dancer-filter
-		.bread-wrapper
-			.bread-area#bread-area 
-				span.bread-holder &nbsp;
-				span.cond-item.id-cond
-					p  
-					span.close X
-				span.cond-item.dep-cond
-					p  
-					span.close X
-				span.cond-item.gender-cond
-					p  
-					span.close X
-				span.cond-item.cval-cond
-					p  
-					span.close X
-				span.cond-item.cstatus-cond
-					p  
-					span.close X
-				span.cond-item.cpay-cond
-					p  
-					span.close X
-			.op-area: button.email-btn.comm-button 导出邮件列表
-				button.clear-btn.comm-button 清除
+	include includes/header
 
-		form(name="searchForm", id="searchForm", class="search-form")
+	.dw: section.dance-content#list-content(dType='#{cCourse.courseType}')
+		.content-header
+			h1.header-title= title 
+
+		#dancer-filter.dancer-filter
+			.bread-wrapper
+				.bread-area#bread-area 
+					span.bread-holder &nbsp;
+					span.cond-item.id-cond
+						p  
+						span.close X
+					span.cond-item.dep-cond
+						p  
+						span.close X
+					span.cond-item.gender-cond
+						p  
+						span.close X
+					span.cond-item.cval-cond
+						p  
+						span.close X
+					span.cond-item.cstatus-cond
+						p  
+						span.close X
+					span.cond-item.cpay-cond
+						p  
+						span.close X
+				.op-area: button.email-btn.comm-button 导出邮件列表
+					button.clear-btn.comm-button 清除
+
+			form(name="searchForm", id="searchForm", class="search-form")
+				table
+					tr
+						td.dancerID-cell
+							label 工号：
+							input#dancerID.comm-input(type="text", name="dancerID")
+						td.department-cell	
+							label.fd-left 部门：
+							.department-box.filter-combo#department-box
+								select.comm-select(name="department", id="department")
+									option(value="") 请选择...
+									option(value="tech") 技术部
+									option(value="other") 其他部门 	
+						td.gender-cell
+							label 性别：
+							input.comm-radio(type="radio", id="maleRadio", value="male", name="gender")
+							label(for="maleRadio")&nbsp;男 &nbsp; 
+							
+							input.comm-radio(type="radio", id="femaleRadio", value="female", name="gender")
+							label(for="femaleRadio")&nbsp;女
+						td.course-cell	
+							label.fd-left 课程：
+							.course-box.filter-combo#course-box
+								select.comm-select(name="course", id="course")
+									option(value="") 请选择...
+									each course in courseList
+										if (course.courseVal == cCourse.courses[0].cValue)
+											option(value="#{course.courseVal}", selected='selected') #{course.courseName}
+										else
+											option(value="#{course.courseVal}") #{course.courseName}
+
+						td.status-cell	
+							label.fd-left 课程状态：
+							.status-box.filter-combo#status-box
+								select.comm-select(name="status", id="status")
+									option(value="") 请选择...
+									option(value="waiting") 等待审核
+									option(value="approved", selected='selected') 报名通过
+									option(value="refused") 报名拒绝
+									option(value="quitApplied") 申请退课
+									option(value="quit") 已退课
+
+						td.pay-cell
+							label 缴费：
+							input.comm-radio(type="radio", id="paidRadio", value="true", name="paid")
+							label(for="paidRadio")&nbsp;是 &nbsp; 
+							
+							input.comm-radio(type="radio", id="unpayRadio", value="false", name="paid")
+							label(for="unpayRadio")&nbsp;否
+			
+			// 如果查询按钮嵌套在form表单里面会默认执行表单提交操作，所以应当将其移到表单外。						
+			button(class="queryBtn comm-button", id="queryBtn") 查询
+
+		//- →←↑↓↖↗↘↙△▽⊿ ▲ ▼ ◣◤◢◥ 〇○●◎◇◆ 回□
+		#dancer-list.dancer-list
+			span.count-tip 满足条件的会员数: 
+				em.dcount 
+
 			table
-				tr
-					td.dancerID-cell
-						label 工号：
-						input#dancerID.comm-input(type="text", name="dancerID")
-					td.department-cell	
-						label.fd-left 部门：
-						.department-box.filter-combo#department-box
-							select.comm-select(name="department", id="department")
-								option(value="") 请选择...
-								option(value="tech") 技术部
-								option(value="other") 其他部门 	
-					td.gender-cell
-						label 性别：
-						input.comm-radio(type="radio", id="maleRadio", value="male", name="gender")
-						label(for="maleRadio")&nbsp;男 &nbsp; 
-						
-						input.comm-radio(type="radio", id="femaleRadio", value="female", name="gender")
-						label(for="femaleRadio")&nbsp;女
-					td.course-cell	
-						label.fd-left 课程：
-						.course-box.filter-combo#course-box
-							select.comm-select(name="course", id="course")
-								option(value="") 请选择...
-								each course in courseList
-									if (course.courseVal == cCourse.courses[0].cValue)
-										option(value="#{course.courseVal}", selected='selected') #{course.courseName}
-									else
-										option(value="#{course.courseVal}") #{course.courseName}
+				thead
+					tr
+						th.dancerID-header 工号
+							i.i-sort-default ◆
+						th.dancerName-header 姓名
+							i.i-sort-default ◆
+						th.gender-header 性别
+							i.i-sort-default ◆
+						th.course-header 课程信息
+						th.email-header 邮箱
+							i.i-sort-default ◆
+						th.wangWang-header 旺旺
+							i.i-sort-default ◆
+						th.ext-header 分机
+							i.i-sort-default ◆
+						th.dept-header 部门
+							i.i-sort-default ◆
+				tbody
+					tr
+						td.loading(colspan="10")
+							img(src='/images/loading.gif') 
+							p 数据正在加载请稍后...
+					
 
-					td.status-cell	
-						label.fd-left 课程状态：
-						.status-box.filter-combo#status-box
-							select.comm-select(name="status", id="status")
-								option(value="") 请选择...
-								option(value="waiting") 等待审核
-								option(value="approved", selected='selected') 报名通过
-								option(value="refused") 报名拒绝
-								option(value="quitApplied") 申请退课
-								option(value="quit") 已退课
+		ul.paging-a.fd-clr#dancer-list-paging(data-sp="paging-a")
+			li.pagination
+			li 	共
+				em.pagenum 
+				页 到 
+				input.pnum(type="text", maxlength="4", autocomplete="off")
+				页
+			li: a.btn-b(href="javascript:;")
+					span.btn-l
+						em 确定
+					span.btn-r
 
-					td.pay-cell
-						label 缴费：
-						input.comm-radio(type="radio", id="paidRadio", value="true", name="paid")
-						label(for="paidRadio")&nbsp;是 &nbsp; 
-						
-						input.comm-radio(type="radio", id="unpayRadio", value="false", name="paid")
-						label(for="unpayRadio")&nbsp;否
-		
-		// 如果查询按钮嵌套在form表单里面会默认执行表单提交操作，所以应当将其移到表单外。						
-		button(class="queryBtn comm-button", id="queryBtn") 查询
+	include includes/footer	
 
-	//- →←↑↓↖↗↘↙△▽⊿ ▲ ▼ ◣◤◢◥ 〇○●◎◇◆ 回□
-	#dancer-list.dancer-list
-		span.count-tip 满足条件的会员数: 
-			em.dcount 
-
-		table
-			thead
-				tr
-					th.dancerID-header 工号
-						i.i-sort-default ◆
-					th.dancerName-header 姓名
-						i.i-sort-default ◆
-					th.gender-header 性别
-						i.i-sort-default ◆
-					th.course-header 课程信息
-					th.email-header 邮箱
-						i.i-sort-default ◆
-					th.wangWang-header 旺旺
-						i.i-sort-default ◆
-					th.ext-header 分机
-						i.i-sort-default ◆
-					th.dept-header 部门
-						i.i-sort-default ◆
-			tbody
-				tr
-					td.loading(colspan="10")
-						img(src='/images/loading.gif') 
-						p 数据正在加载请稍后...
+	script(src='http://style.china.alibaba.com/js/lib/fdev-v4/core/fdev-min.js')
+	script(src='/javascripts/user/header.js')
+	script(src='http://style.china.alibaba.com/js/lib/fdev-v4/widget/util/date-min.js')
+	script(src='/javascripts/user/dancer-list.js')
+	script(src='/javascripts/lib/widget/paging.js')
+	script(src='/javascripts/lib/module/json-sorter.js')
 				
-
-	ul.paging-a.fd-clr#dancer-list-paging(data-sp="paging-a")
-		li.pagination
-		li 	共
-			em.pagenum 
-			页 到 
-			input.pnum(type="text", maxlength="4", autocomplete="off")
-			页
-		li: a.btn-b(href="javascript:;")
-				span.btn-l
-					em 确定
-				span.btn-r
-
-include includes/footer	
-
-script(src='http://style.china.alibaba.com/js/lib/fdev-v4/core/fdev-min.js')
-script(src='http://style.china.alibaba.com/js/lib/fdev-v4/widget/util/date-min.js')
-script(src='/javascripts/user/dancer-list.js')
-script(src='/javascripts/lib/widget/paging.js')
-script(src='/javascripts/lib/module/json-sorter.js')
 				

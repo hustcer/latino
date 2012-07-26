@@ -6,51 +6,58 @@
 //- Date: 	2012-1-13 
 //-
 
-include includes/header
+extends layout
 
-div.dw: section.dance-content#dance-content
-	.content-header
-		h1.header-title= title 
+block content
 
-	#user-info.table-container
-		table
-			tr
-				th: label 工号：
-				td	
-					#{dancer.dancerID}
-			tr
-				th: label 姓名：
-				td
-					#{dancer.dancerName}
-			tr
-				th: label 性别：
-				td
-					#{dancer.gender}
-			tr
-				th: label 邮箱：
-				td
-					#{dancer.email}
-			tr
-				th: label 旺旺：
-				td
-					#{dancer.wangWang}
-			tr
-				th: label 分机：
-				td
-					#{dancer.extNumber}
-			tr
-				th: label 部门：
-				td
-					#{dancer.department}
-			tr
-				th: label 支付宝：
-				td
-					#{dancer.alipayID}
-			tr
-				th: label 参加的培训：
-				td
-					#{dancer.courses}
+	include includes/header
 
-include includes/footer						
+	div.dw: section.dance-content#dance-content
+		.content-header
+			h1.header-title= title 
 
-script(src='http://style.china.alibaba.com/js/lib/fdev-v4/core/fdev-min.js')
+		#user-info.table-container
+			table
+				tr
+					th: label 工号：
+					td	
+						p #{dancer.dancerID}
+				tr
+					th: label 姓名：
+					td
+						p #{dancer.dancerName}
+				tr
+					th: label 性别：
+					td
+						p #{dancer.gender}
+				tr
+					th: label 邮箱：
+					td
+						p #{dancer.email}
+				tr
+					th: label 旺旺：
+					td
+						p #{dancer.wangWang}
+				tr
+					th: label 分机：
+					td
+						p #{dancer.extNumber}
+				tr
+					th: label 部门：
+					td
+						p #{dancer.department}
+				tr
+					th: label 支付宝：
+					td
+						p #{dancer.alipayID}
+				tr
+					th: label 参加的培训：
+					td
+						p #{dancer.courses}
+
+	include includes/footer						
+
+	script(src='http://style.china.alibaba.com/js/lib/fdev-v4/core/fdev-min.js')
+	script(src='/javascripts/user/header.js')
+
+

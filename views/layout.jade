@@ -1,5 +1,5 @@
 
-!!!5
+doctype 5
 html
   head
     title= title
@@ -9,11 +9,14 @@ html
     // if lte IE 8
       script(src='/javascripts/lib/module/html5.js')
     
-  body!= body
-  // if lt IE 8
-    script(src='/javascripts/user/ie-attention.js')
-  script(src='/javascripts/user/ga.js')
-  script(src='/javascripts/user/header.js')
+  body
+    // if lt IE 8
+      script(src='/javascripts/user/ie-attention.js')
+    script(src='/javascripts/user/ga.js')
+    
+    block content
+  
+
 
   
   
