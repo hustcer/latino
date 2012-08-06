@@ -18,7 +18,7 @@
 	      "name":    "Justin Ma",
 	      "email":   "hustcer(at)gmail.com"
 	    } 
-	],
+	  ],
   	"scripts": 		{
     	"start":   "node app.js"
   	},
