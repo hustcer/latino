@@ -37,22 +37,23 @@ exports.apply = function(req, res){
 	// 邮箱不需要加后缀的，如果用户加了就统一去掉吧，没加也无妨
 	// if (!!req.body.email) { req.body.email = req.body.email.replace(/@alibaba-inc.com/g, ""); };
 
-	var cCourseLength = +req.body.courseLen, 
+	var cCourseLength = + req.body.courseLen, 
 		courseArray	  = [];
+	var rd = req.body;
 
 	var dancerModel   = {
-		dancerID: 	req.body.dancerID,
-		dancerName: req.body.dancerName,
-		gender: 	req.body.gender,
-		email: 		req.body.email,
-		wangWang: 	req.body.wangWang,
-		extNumber: 	req.body.extNumber,
-		alipayID: 	req.body.alipayID,
-		department: req.body.department
+		dancerID: 	(rd.dancerID == null) ? rd.dancerID : rd.dancerID.trim(),
+		dancerName: rd.dancerName, 
+		gender: 	rd.gender,
+		email: 		rd.email,
+		wangWang: 	rd.wangWang,
+		extNumber: 	rd.extNumber,
+		alipayID: 	rd.alipayID,
+		department: rd.department
 	};
 
 	for (var i = 0, l = cCourseLength; i < l; i ++) {
-		courseArray.push(req.body['course' + i]);
+		courseArray.push(rd['course' + i]);
 	};
 
 	dancerModel.courseArray	= courseArray;

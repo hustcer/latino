@@ -16,7 +16,8 @@ var cCourseLatin = {
 	// **************	街舞数据存储在dance数据库中的	hiphop collecion中 		*************
 	courseType : 'latin',
    // 每个课程可以有：cCapacity、locked、autoApprove、manFirst、autoLimit等局部配置，可以覆盖相应的全局配置
-   courses    :[{cValue: "14RE", cName: "伦巴基础班", ps:"上课时间：每周四晚6:30~7:30",locked: false},
+   courses    :[{cValue: "CXL1B", cName: "城西拉丁第1期B班", ps:"上课时间：9月12日起，每周三晚6:30~8:40",locked: true, cCapacity: 24, autoLimit:24 },
+                {cValue: "14RE", cName: "伦巴基础班", ps:"上课时间：每周四晚6:30~7:30",locked: true},
                 {cValue: "14CE", cName: "恰恰基础班", ps:"上课时间：每周四晚7:40~8:40",locked: true}],
    // 课程额定容量，此为全局配置可以被各课程的对应配置所覆盖
    cCapacity  : 15,
@@ -28,7 +29,7 @@ var cCourseLatin = {
    manFirst   : true,
    // 自动审核报名成功的人数限制
    autoLimit  : 15,
-   notice     : '上课地点:公司舞房.每个培训舞种共6次课,本期培训免费,开课时间07.05.如果您13期课程已经报名过不用重复报名,可以直接去上课,之前未报名的需要在此登记.谢谢合作.',
+   notice     : '上课地点：西湖国际D座3楼培训教室.说明：教室、上课时间，若有临时变动，或遇公司活动而调整，我们会尽量了解，并提前联系大家。如发生此类情况，也请大家谅解。有问题请联系 齐竞艳（29476）',
    successMsg : '您好，您的拉丁培训报名申请已经审核通过，请按时上课，若因故不能上课可以取消或者申请退课!',
    quitMsg    : '您好，您的拉丁退课申请已经审核通过，欢迎下次报名!',
    beginDate  : '',
@@ -90,6 +91,7 @@ var cCourseHiphop = {
  * 最后一个大写字母表示课程级别：E: Elementary 基础班;I: Intermediate 中级班; A: Advanced 高级班
  */
 var courseLatinList = [
+      {courseVal:'CXL1B', courseName:'城西拉丁第1期B班'},
       {courseVal:'14RE', courseName:'伦巴基础班(临时)'},
       {courseVal:'14CE', courseName:'恰恰基础班(临时)'},
 		{courseVal:'13SE', courseName:'第13期桑巴基础班'},
