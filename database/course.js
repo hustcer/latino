@@ -16,7 +16,7 @@ var cCourseLatin = {
 	// **************	街舞数据存储在dance数据库中的	hiphop collecion中 		*************
 	courseType : 'latin',
    // 每个课程可以有：cCapacity、locked、autoApprove、manFirst、autoLimit等局部配置，可以覆盖相应的全局配置
-   courses    :[{cValue: "CXL1B", cName: "城西拉丁第1期B班", ps:"上课时间：9月12日起，每周三晚6:30~8:40",locked: true, cCapacity: 24, autoLimit:24 },
+   courses    :[{cValue: "CXL1B", cName: "城西拉丁第1期B班", ps:"上课时间：9月12日起，每周三晚6:30~8:40",locked: true, cCapacity: 24, autoLimit:18 },
                 {cValue: "14RE", cName: "伦巴基础班", ps:"上课时间：每周四晚6:30~7:30",locked: true},
                 {cValue: "14CE", cName: "恰恰基础班", ps:"上课时间：每周四晚7:40~8:40",locked: true}],
    // 课程额定容量，此为全局配置可以被各课程的对应配置所覆盖
