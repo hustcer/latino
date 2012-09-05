@@ -86,8 +86,7 @@ block content
 							tr
 								th: label 邮 箱：
 								td
-									input#email.comm-input(type="text", name="email", maxlength="30", data-valid="{required:true}")
-									span @alibaba-inc.com
+									input#email.comm-input(type="text", name="email", maxlength="30", data-valid="{required:true,type:'email'}")
 								td.err-tip *
 							tr
 								th: label 旺 旺：

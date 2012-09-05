@@ -132,7 +132,7 @@ jQuery(function($){
 	                                msg = '请填写该信息';
 	                                break;
 	                            case 'email':
-	                                msg = '邮箱格式不对';
+	                                msg = '邮箱格式不正确';
 	                                break;
 	                        }
 	                        
@@ -176,7 +176,7 @@ jQuery(function($){
 					// 会员不存在的时候直接返回
 					if (!(data && data.data)) {return false;};
 
-					$('#email').val(data.data.email.replace(/@alibaba-inc.com/, ''));
+					$('#email').val(data.data.email);
 					$('#wangWang').val(data.data.wangWang);
 					$('#alipayID').val(data.data.alipayID);
 					$('#extNumber').val(data.data.extNumber);

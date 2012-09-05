@@ -35,7 +35,7 @@ exports.apply = function(req, res){
 	var col = getCollection(req), cCourse = col.cCourse;
 
 	// 邮箱不需要加后缀的，如果用户加了就统一去掉吧，没加也无妨
-	if (!!req.body.email) { req.body.email = req.body.email.replace(/@alibaba-inc.com/g, ""); };
+	// if (!!req.body.email) { req.body.email = req.body.email.replace(/@alibaba-inc.com/g, ""); };
 
 	var cCourseLength = +req.body.courseLen, 
 		courseArray	  = [];
@@ -44,7 +44,7 @@ exports.apply = function(req, res){
 		dancerID: 	req.body.dancerID,
 		dancerName: req.body.dancerName,
 		gender: 	req.body.gender,
-		email: 		req.body.email + '@alibaba-inc.com',
+		email: 		req.body.email,
 		wangWang: 	req.body.wangWang,
 		extNumber: 	req.body.extNumber,
 		alipayID: 	req.body.alipayID,

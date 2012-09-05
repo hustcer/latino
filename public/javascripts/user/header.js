@@ -54,10 +54,8 @@ jQuery(function($){
         _initHandler : function(){
             
             $('a.dance-btn', 'header.dance-header').on('click', function(){
-   
-                var href    = window.location.href,
-                    dIndex  = href.lastIndexOf('/'),
-                    nref    = href.substring(0, dIndex + 1) + $(this).attr('ddata');
+
+                var nref = window.location.protocol + '//' + window.location.host + '/' + $(this).attr('ddata');
                     
                 window.location.href = nref;
                      
