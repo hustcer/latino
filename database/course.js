@@ -90,13 +90,13 @@ var cCourseHiphop = {
  * 最后一个大写字母表示课程级别：E: Elementary 基础班;I: Intermediate 中级班; A: Advanced 高级班
  */
 var courseLatinList = [
+		{courseVal:'14BRE', courseName:'第14期伦巴基础班'},
+		{courseVal:'14BCE', courseName:'第14期恰恰基础班'},
       {courseVal:'CXL1B', courseName:'城西拉丁第1期B班'},
       {courseVal:'14RE', courseName:'伦巴基础班(临时)'},
       {courseVal:'14CE', courseName:'恰恰基础班(临时)'},
 		{courseVal:'13SE', courseName:'第13期桑巴基础班'},
-		{courseVal:'13CI', courseName:'第13期恰恰中级班'},
-		{courseVal:'14BRE', courseName:'第14期伦巴基础班'},
-		{courseVal:'14BCE', courseName:'第14期恰恰基础班'}
+		{courseVal:'13CI', courseName:'第13期恰恰中级班'}
 	];
 
 /**
