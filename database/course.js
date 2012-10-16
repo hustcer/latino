@@ -1,4 +1,3 @@
-
 /**
  * 培训课程信息
  *
@@ -40,10 +39,10 @@ var cCourseLatin = {
  */
 var cCourseJazz = {
    courseType  : 'jazz', 
-   courses     :[{cValue: "7JZE1", cName: "第7期Jazz基础1班", ps:"上课时间：每周一晚7:40~8:30"},
-	 			     {cValue: "7JZE2", cName: "第7期Jazz基础2班", ps:"上课时间：每周二晚7:40~8:30"},
-	 			     {cValue: "7JZA1", cName: "第7期Jazz提高1班", ps:"上课时间：每周一晚6:40~7:30"},
-	 			     {cValue: "7JZA2", cName: "第7期Jazz提高2班", ps:"上课时间：每周二晚6:40~7:30", cCapacity: 20, autoLimit: 20}],
+   courses     :[{cValue: "8JZE1", cName: "第8期Jazz基础1班", ps:"上课时间：每周一晚7:40~8:30"},
+	 			     {cValue: "8JZE2", cName: "第8期Jazz基础2班", ps:"上课时间：每周二晚7:40~8:30"},
+	 			     {cValue: "8JZA1", cName: "第8期Jazz提高1班", ps:"上课时间：每周一晚6:40~7:30"},
+	 			     {cValue: "8JZA2", cName: "第8期Jazz提高2班", ps:"上课时间：每周二晚6:40~7:30", cCapacity: 20, autoLimit: 20}],
 
    cCapacity   : 20, 
    // 锁定课程状态，禁止报名、退课等操作
@@ -54,7 +53,7 @@ var cCourseJazz = {
    manFirst    : false,
    // 自动审核报名成功的人数限制
    autoLimit   : 20,
-   notice      : '上课地点：公司舞房。每期培训9次课，学费90.00元，胸牌押金10.00元[课程结束后退还胸牌押金退回]。每个班如不足15人取消开课，开课时间8月6日，报名结束后会邮件通知。报名成功后请及时付款到支付宝: https://me.alipay.com/starsun，每周五未付款的报名将被取消。',
+   notice      : '上课地点：公司舞房。每期培训9次课，学费90.00元，胸牌押金10.00元[课程结束后退还胸牌押金退回]。每个班如不足15人取消开课，开课时间11月5日，报名结束后会邮件通知。报名成功后请及时付款到支付宝: https://me.alipay.com/starsun，每周五未付款的报名将被取消。',
    successMsg  : '您好，您的Jazz报名申请已经审核通过，烦请迅速缴费，逾期未付则课程将被取消。敬请谅解!',
    quitMsg     : '您好，您的Jazz退课申请已经审核通过，欢迎下次报名!',
    beginDate   : '',
@@ -105,6 +104,10 @@ var courseLatinList = [
  * 最后一个大写字母表示课程级别：E: Elementary 基础班;I: Intermediate 中级班; A: Advanced 高级班
  */
 var courseJazzList = [
+		{courseVal:'8JZA1', courseName:'第8期Jazz提高1班'},
+		{courseVal:'8JZA2', courseName:'第8期Jazz提高2班'},
+		{courseVal:'8JZE1', courseName:'第8期Jazz基础1班'},
+		{courseVal:'8JZE2', courseName:'第8期Jazz基础2班'},	
 		{courseVal:'7JZA1', courseName:'第7期Jazz提高1班'},
 		{courseVal:'7JZA2', courseName:'第7期Jazz提高2班'},
 		{courseVal:'7JZE1', courseName:'第7期Jazz基础1班'},
