@@ -1,23 +1,23 @@
 
 {
     "name":       "latinode",
-    "version":    "0.2.0beta2",
+    "version":    "0.2.0",
     "author":     "Justin Ma",
     "description":"A Dance Training Management System.",
     "private":    true,
     "main":       "./app.js",
     "dependencies": {
-      "express":  ">= 3.0.0rc1",
-      "jade":     ">= 0.0.1",
-      "mongoskin":">= 0.3.5",
-      "discount": ">= 0.2.3",
-      "nodemailer": ">= 0.3.20"
+      "express":  ">= 3.3.0",
+      "jade":     ">= 0.34.0",
+      "mongoskin":">= 0.6.0",
+      "markdown": ">= 0.5.0",
+      "nodemailer": ">= 0.5.2"
   	},
-  	"contributors": [ 
+  	"contributors": [
 	    {
 	      "name":    "Justin Ma",
 	      "email":   "hustcer(at)gmail.com"
-	    } 
+	    }
 	  ],
   	"scripts": 		{
     	"start":   "node app.js"
