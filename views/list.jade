@@ -3,7 +3,7 @@
 //- User List.
 //-
 //- Author: hustcer
-//- Date: 	2012-1-12 
+//- Date: 	2012-1-12
 //-
 
 extends layout
@@ -14,29 +14,29 @@ block content
 
 	.dw: section.dance-content#list-content(dType='#{cCourse.courseType}')
 		.content-header
-			h1.header-title= title 
+			h1.header-title= title
 
 		#dancer-filter.dancer-filter
 			.bread-wrapper
-				.bread-area#bread-area 
+				.bread-area#bread-area
 					span.bread-holder &nbsp;
 					span.cond-item.id-cond
-						p  
+						p
 						span.close X
 					span.cond-item.dep-cond
-						p  
+						p
 						span.close X
 					span.cond-item.gender-cond
-						p  
+						p
 						span.close X
 					span.cond-item.cval-cond
-						p  
+						p
 						span.close X
 					span.cond-item.cstatus-cond
-						p  
+						p
 						span.close X
 					span.cond-item.cpay-cond
-						p  
+						p
 						span.close X
 				.op-area: button.email-btn.comm-button 导出邮件列表
 					button.clear-btn.comm-button 清除
@@ -47,21 +47,21 @@ block content
 						td.dancerID-cell
 							label 工号：
 							input#dancerID.comm-input(type="text", name="dancerID")
-						td.department-cell	
+						td.department-cell
 							label.fd-left 部门：
 							.department-box.filter-combo#department-box
 								select.comm-select(name="department", id="department")
 									option(value="") 请选择...
 									option(value="tech") 技术部
-									option(value="other") 其他部门 	
+									option(value="other") 其他部门
 						td.gender-cell
 							label 性别：
 							input.comm-radio(type="radio", id="maleRadio", value="male", name="gender")
-							label(for="maleRadio")&nbsp;男 &nbsp; 
-							
+							label(for="maleRadio")&nbsp;男 &nbsp;
+
 							input.comm-radio(type="radio", id="femaleRadio", value="female", name="gender")
 							label(for="femaleRadio")&nbsp;女
-						td.course-cell	
+						td.course-cell
 							label.fd-left 课程：
 							.course-box.filter-combo#course-box
 								select.comm-select(name="course", id="course")
@@ -72,7 +72,7 @@ block content
 										else
 											option(value="#{course.courseVal}") #{course.courseName}
 
-						td.status-cell	
+						td.status-cell
 							label.fd-left 课程状态：
 							.status-box.filter-combo#status-box
 								select.comm-select(name="status", id="status")
@@ -86,18 +86,18 @@ block content
 						td.pay-cell
 							label 缴费：
 							input.comm-radio(type="radio", id="paidRadio", value="true", name="paid")
-							label(for="paidRadio")&nbsp;是 &nbsp; 
-							
+							label(for="paidRadio")&nbsp;是 &nbsp;
+
 							input.comm-radio(type="radio", id="unpayRadio", value="false", name="paid")
 							label(for="unpayRadio")&nbsp;否
-			
-			// 如果查询按钮嵌套在form表单里面会默认执行表单提交操作，所以应当将其移到表单外。						
+
+			// 如果查询按钮嵌套在form表单里面会默认执行表单提交操作，所以应当将其移到表单外。
 			button(class="queryBtn comm-button", id="queryBtn") 查询
 
 		//- →←↑↓↖↗↘↙△▽⊿ ▲ ▼ ◣◤◢◥ 〇○●◎◇◆ 回□
 		#dancer-list.dancer-list
-			span.count-tip 满足条件的会员数: 
-				em.dcount 
+			span.count-tip 满足条件的会员数:
+				em.dcount
 
 			table
 				thead
@@ -120,15 +120,15 @@ block content
 				tbody
 					tr
 						td.loading(colspan="10")
-							img(src='/images/loading.gif') 
+							img(src='/images/loading.gif')
 							p 数据正在加载请稍后...
-					
+
 
 		ul.paging-a.fd-clr#dancer-list-paging(data-sp="paging-a")
 			li.pagination
 			li 	共
-				em.pagenum 
-				页 到 
+				em.pagenum
+				页 到
 				input.pnum(type="text", maxlength="4", autocomplete="off")
 				页
 			li: a.btn-b(href="javascript:;")
@@ -136,7 +136,7 @@ block content
 						em 确定
 					span.btn-r
 
-	include includes/footer	
+	include includes/footer
 
 	script(src='http://style.china.alibaba.com/js/lib/fdev-v4/core/fdev-min.js')
 	script(src='/javascripts/user/header.js')
@@ -144,5 +144,4 @@ block content
 	script(src='/javascripts/user/dancer-list.js')
 	script(src='/javascripts/lib/widget/paging.js')
 	script(src='/javascripts/lib/module/json-sorter.js')
-				
-				
+

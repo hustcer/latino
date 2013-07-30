@@ -4,7 +4,7 @@
  * Ref：http://www.hacksparrow.com/mongoskin-tutorial-with-examples.html
  *
  * Author: 	hustcer
- * Date: 	2012-1-20   
+ * Date: 	2012-1-20
  */
 
 var fs          = require('fs'),
@@ -23,13 +23,22 @@ if ( !fs.existsSync(confFile) ){
 
     console.log('[INFO]----Connect to database using config file ' + confFile);
 
+
     var data        = JSON.parse(fs.readFileSync(confFile));
-    var connection  = 'mongo://' + data.dbAuth.username + ':' + data.dbAuth.password + '@localhost:27017/dance';
-    exports.db      = require('mongoskin').db(connection);
+
+    // NOTICE: 原来认证信息只在admin数据库里面添加就可以了，现在还需要在dance数据库里面添加认证信息，否则会提示：‘MongoError: auth fails’
+    exports.db      = require('mongoskin').db('localhost:27017/dance', {
+        auto_reconnect : true,
+        safe           : true,
+        // 可以省略，省略则跟url里面的数据库相同
+        authSource     : 'dance',
+        username       : data.dbAuth.username,
+        password       : data.dbAuth.password
+    });
 
 }
 
-    
+
 
 
 
