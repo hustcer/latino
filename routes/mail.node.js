@@ -27,7 +27,7 @@ var initSmtpTransport = function(){
     var confFile = path.normalize(__dirname + '/../conf/conf.json');
 
     // 邮箱配置文件不存在则停止发邮件
-    if ( !path.existsSync(confFile) ){
+    if ( !fs.existsSync(confFile) ){
 
         console.error('[ERRO]----Can not find email account config file ' + confFile + ', Stop mail sending...');
         return;
