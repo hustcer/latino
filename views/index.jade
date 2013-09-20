@@ -2,127 +2,127 @@
 //- User Index.
 //-
 //- Author: hustcer
-//- Date: 	2012-1-19
+//- Date:   2012-1-19
 //-
 
 extends layout
 
 block content
 
-	include includes/header
+    include includes/header
 
-	.dw: section.dance-content#dance-content
-		.content-header
-			h1.header-title= title 
-			p.welcome-msg 欢迎参加 #{title}，请您填写报名信息!
+    .dw: section.dance-content#dance-content
+        .content-header
+            h1.header-title= title 
+            p.welcome-msg 欢迎参加 #{title}，请您填写报名信息!
 
-		#apply-container.apply-container(dType='#{cCourse.courseType}')
-			#course-info.course-info
-				p.info-title: em.BD 当前舞蹈培训信息：
-				each course,i in cCourse.courses
-					p
-						em.course-name.BD #{course.cName}
-						if(!!course.cCapacity)
-							span.capacity (限:#{course.cCapacity}人)
-						else
-							span.capacity (限:#{cCourse.cCapacity}人)
+        #apply-container.apply-container(dType='#{cCourse.courseType}')
+            #course-info.course-info
+                p.info-title: em.BD 当前舞蹈培训信息：
+                each course,i in cCourse.courses
+                    p
+                        em.course-name.BD #{course.cName}
+                        if(!!course.cCapacity)
+                            span.capacity (限:#{course.cCapacity}人)
+                        else
+                            span.capacity (限:#{cCourse.cCapacity}人)
 
-					p 已预报名：
-						em(id='waiting#{i}')
-					p 报名成功：
-						em.R(id='approved#{i}')
-					p: em.R #{course.ps}
+                    p 已预报名：
+                        em(id='waiting#{i}')
+                    p 报名成功：
+                        em.R(id='approved#{i}')
+                    p: em.R #{course.ps}
 
-				p.ps: em.B #{cCourse.notice}
+                p.ps: em.B #{cCourse.notice}
 
-			.table-container
-				form(name="applyForm", id="applyForm", method="post", action="")
-					table.apply-table-a
-						tbody
-							tr.em
-								th: label 工 号：
-								td	
-									input#dancerID.comm-input(type="text", name="dancerID", maxlength="9", data-valid="{required:true}")
-								td.err-tip *
-							tr.row-sep.em
-								th: label 报名班级：
-								td(colspan="2")
-									input(type="hidden", name="courseLen", id="courseLen", value="#{cCourse.courses.length}")
-									each course,i in cCourse.courses
-										.course-wrapper
-											if( course.hasOwnProperty('locked') )
-												- var locked = course.locked;
-											else
-												- var locked = cCourse.locked;
-											if( !locked )
-												input.comm-check(type="checkbox", value="#{course.cValue}", name="course#{i}", id="course#{i}")
-												label(for="course#{i}")&nbsp;#{course.cName}
-												a(href="javascript:;", class="course-btn quit-apply", id="quitCourse#{i}")申请退课
-												a(href="javascript:;", class="course-btn cancel-apply", id="cancelCourse#{i}")取消报名
-												p.course-tip(id = "tip#{i}")
-											else
-												span.over-tip #{course.cName}(课程锁定)
-								
-					//.hr-line
+            .table-container
+                form(name="applyForm", id="applyForm", method="post", action="")
+                    table.apply-table-a
+                        tbody
+                            tr.em
+                                th: label 工 号：
+                                td  
+                                    input#dancerID.comm-input(type="text", name="dancerID", maxlength="9", data-valid="{required:true}")
+                                td.err-tip *
+                            tr.row-sep.em
+                                th: label 报名班级：
+                                td(colspan="2")
+                                    input(type="hidden", name="courseLen", id="courseLen", value="#{cCourse.courses.length}")
+                                    each course,i in cCourse.courses
+                                        .course-wrapper
+                                            if( course.hasOwnProperty('locked') )
+                                                - var locked = course.locked;
+                                            else
+                                                - var locked = cCourse.locked;
+                                            if( !locked )
+                                                input.comm-check(type="checkbox", value="#{course.cValue}", name="course#{i}", id="course#{i}")
+                                                label(for="course#{i}")&nbsp;#{course.cName}
+                                                a(href="javascript:;", class="course-btn quit-apply", id="quitCourse#{i}")申请退课
+                                                a(href="javascript:;", class="course-btn cancel-apply", id="cancelCourse#{i}")取消报名
+                                                p.course-tip(id = "tip#{i}")
+                                            else
+                                                span.over-tip #{course.cName}(课程锁定)
+                                
+                    //.hr-line
 
-					table.apply-table-b
-						tbody
-							tr
-								th: label 姓 名：
-								td
-									input#dancerName.comm-input(type="text", name="dancerName", maxlength="30", data-valid="{required:true}")
-								td.err-tip *
-							tr
-								th: label 性 别：
-								td
-									.gender-wrapper
-										input.comm-radio(type="radio", id="maleRadio", value="male", name="gender")
-										label(for="maleRadio")&nbsp;男 &nbsp;&nbsp;&nbsp;
-										
-										input.comm-radio(type="radio", id="femaleRadio", checked, value="female", name="gender")
-										label(for="femaleRadio")&nbsp;女
-										span.gender-tip提交后不能修改
-								td.err-tip *
-							tr
-								th: label 邮 箱：
-								td
-									input#email.comm-input(type="text", name="email", maxlength="90", data-valid="{required:true,type:'email'}")
-								td.err-tip *
-							tr
-								th: label 旺 旺：
-								td
-									input#wangWang.comm-input(type="text", name="wangWang", maxlength="30", data-valid="{required:true}")
-								td.err-tip *
-							tr
-								th: label 分 机：
-								td
-									input#extNumber.comm-input(type="text", name="extNumber", maxlength="12", data-valid="{required:true}")
-								td.err-tip *
-							tr
-								th: label 支付宝：
-								td
-									input#alipayID.comm-input(type="text", name="alipayID", maxlength="30", data-valid="{required:true}")
-								td.err-tip *
-							tr
-								th: label 部 门：
-								td
-									.depart-select
-								td.err-tip
-						
+                    table.apply-table-b
+                        tbody
+                            tr
+                                th: label 姓 名：
+                                td
+                                    input#dancerName.comm-input(type="text", name="dancerName", maxlength="30", data-valid="{required:true}")
+                                td.err-tip *
+                            tr
+                                th: label 性 别：
+                                td
+                                    .gender-wrapper
+                                        input.comm-radio(type="radio", id="maleRadio", value="male", name="gender")
+                                        label(for="maleRadio")&nbsp;男 &nbsp;&nbsp;&nbsp;
+                                        
+                                        input.comm-radio(type="radio", id="femaleRadio", checked, value="female", name="gender")
+                                        label(for="femaleRadio")&nbsp;女
+                                        span.gender-tip提交后不能修改
+                                td.err-tip *
+                            tr
+                                th: label 邮 箱：
+                                td
+                                    input#email.comm-input(type="text", name="email", maxlength="90", data-valid="{required:true,type:'email'}")
+                                td.err-tip *
+                            tr
+                                th: label 旺 旺：
+                                td
+                                    input#wangWang.comm-input(type="text", name="wangWang", maxlength="30", data-valid="{required:true}")
+                                td.err-tip *
+                            tr
+                                th: label 分 机：
+                                td
+                                    input#extNumber.comm-input(type="text", name="extNumber", maxlength="12", data-valid="{required:true}")
+                                td.err-tip *
+                            tr
+                                th: label 支付宝：
+                                td
+                                    input#alipayID.comm-input(type="text", name="alipayID", maxlength="30", data-valid="{required:true}")
+                                td.err-tip *
+                            tr
+                                th: label 部 门：
+                                td
+                                    .depart-select
+                                td.err-tip
+                        
 
-				button(class="reset-btn comm-button", id="reset-btn") 重&nbsp;置
-				button(class="apply-btn comm-button", id="apply-btn") 提&nbsp;交
+                button(class="reset-btn comm-button", id="reset-btn") 重&nbsp;置
+                button(class="apply-btn comm-button", id="apply-btn") 提&nbsp;交
 
 
-				if (!!showDancerLink)
-					.operation-info#operation-info
-						p 您的操作已经成功 
-							a(href="/user/#{cCourse.courseType}/" + dancerID,id="user-info-link")点此
-							&nbsp;查看个人详情, 或者
-							a(href="/",id="home-link")返回
+                if (!!showDancerLink)
+                    .operation-info#operation-info
+                        p 您的操作已经成功 
+                            a(href="/user/#{cCourse.courseType}/" + dancerID,id="user-info-link")点此
+                            &nbsp;查看个人详情, 或者
+                            a(href="/",id="home-link")返回
 
-	include includes/footer	
+    include includes/footer 
 
-	script(src='/javascripts/user/dance-index-merge.js')
-	script(src='/javascripts/user/header.js')
+    script(src='/javascripts/user/dance-index-merge.js')
+    script(src='/javascripts/user/header.js')
 

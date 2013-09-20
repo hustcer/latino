@@ -3,8 +3,8 @@
  * 数据库配置信息
  * Ref：http://www.hacksparrow.com/mongoskin-tutorial-with-examples.html
  *
- * Author: 	hustcer
- * Date: 	2012-1-20
+ * Author:  hustcer
+ * Date:    2012-1-20
  */
 
 var fs          = require('fs'),

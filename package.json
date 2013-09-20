@@ -12,26 +12,26 @@
       "mongoskin":">= 0.6.0",
       "marked": ">= 0.2.9",
       "nodemailer": ">= 0.5.2"
-  	},
-  	"contributors": [
-	    {
-	      "name":    "Justin Ma",
-	      "email":   "hustcer(at)gmail.com"
-	    }
-	  ],
-  	"scripts": 		{
-    	"start":   "node app.js"
-  	},
+    },
+    "contributors": [
+      {
+        "name":    "Justin Ma",
+        "email":   "hustcer(at)gmail.com"
+      }
+    ],
+    "scripts":    {
+      "start":   "node app.js"
+    },
     "engines":    { "node": ">= 0.8.0" },
-  	"repository": {
-    	"type":    "git",
-    	"url":     "https://github.com/hustcer/latinode"
-  	},
-  	"keywords": [
-	    "mongodb",
-	    "nodejs",
-	    "latin",
+    "repository": {
+      "type":    "git",
+      "url":     "https://github.com/hustcer/latinode"
+    },
+    "keywords": [
+      "mongodb",
+      "nodejs",
+      "latin",
       "dance"
-  	],
-  	"license":   "MIT"
+    ],
+    "license":   "MIT"
 }

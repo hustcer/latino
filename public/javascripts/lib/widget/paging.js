@@ -25,42 +25,42 @@ Paging.prototype = {
 
         // Valid Page Number
         var pnReg = /^[1-9]\d*$/, pnCache = '', scope = this;
-		
-    	function vPn(){
+        
+        function vPn(){
             if ($(this).val()) {
                 if (pnReg.test($(this).val())) {
                     pnCache = $(this).val();
                 }
                 else $(this).val(pnCache);
             }
-        	else pnCache = '';
+            else pnCache = '';
         }
-		
-		this.pagenum.bind("focus", function(){
-			this.select();
-		});
-		
+        
+        this.pagenum.bind("focus", function(){
+            this.select();
+        });
+        
         this.pagenum.bind("keydown", function(e){
-		   	if (e.keyCode && e.keyCode === 13) {
+            if (e.keyCode && e.keyCode === 13) {
                 scope.pagesubmit.click();
                 this.select();
-	        }
-	    });
-		
-		this.pagenum.bind("keyup", vPn);
-		this.pagenum.bind("blur", vPn);
+            }
+        });
+        
+        this.pagenum.bind("keyup", vPn);
+        this.pagenum.bind("blur", vPn);
         // Jump To Event Handler
         // 在绑定翻页之前要先清除之前绑定的事件
         this.pagesubmit.unbind('click.paging').bind("click.paging", function(e){
-	   		e.preventDefault();
+            e.preventDefault();
             if (!scope.pagenum.val())
                 return;
             var num = ( scope.pagenum.val() || 0 ) * 1, max = scope.pagenum.max * 1;
             if (num > max)
                 num = max;
             scope.render.call(scope, num, max);
-			if(max <= 1){return;}
-			scope.customClick( num );
+            if(max <= 1){return;}
+            scope.customClick( num );
         });
         // Render
         this.render(cur, total);
@@ -71,7 +71,7 @@ Paging.prototype = {
      *   @param  total       total page number from 1
      */
     render: function(cur, total){
-		
+        
         if (cur < 1)
             cur = 1;
         if (total < 1)
@@ -81,8 +81,8 @@ Paging.prototype = {
         var html = [], pre, next, scope = this;
         // Total Page
         this.pagem.html( total );
-    	this.pagenum.max = total; 
-		
+        this.pagenum.max = total; 
+        
         if (cur === 1) {
             html.push('<a target="_self" class="pre-disabled" href="javascript:;"> </a>');
             html.push('<a target="_self" class="current" href="javascript:;">1</a>');
@@ -95,7 +95,7 @@ Paging.prototype = {
             if (cur > 4 && total > 7)
                 html.push('<a target="_self" class="omit" href="javascript:;">...</a>');
             // cur==1?
-        	if (cur < 3) {
+            if (cur < 3) {
                 pre = 0;
                 next = cur === 1 ? 5 : 4;
                 if (cur + next > total)
@@ -138,7 +138,7 @@ Paging.prototype = {
         else {
             html.push('<a target="_self" class="next" href="#" page="' + (cur + 1) + '">下一页</a>');
         }
-		
+        
         this.pagination.html(html.join(''));
         // Trigger onRender
         if (this.configs.onRender)
@@ -146,20 +146,20 @@ Paging.prototype = {
         // Set Normal
         if ( this.pagenum.val() && this.pagenum.val() * 1 > total )
             this.pagenum.val(cur);
-		$('a[page]', this.pagination).bind("click", function(e){
+        $('a[page]', this.pagination).bind("click", function(e){
 
-			e.preventDefault();
+            e.preventDefault();
             var page = $(this).attr('page') * 1;
             scope.render(page, total);
-			scope.customClick(page);
+            scope.customClick(page);
         });
     },
     /**
      * 自定义事件
      */
-	customClick:function( page ){
-		
-	}
+    customClick:function( page ){
+        
+    }
 };
 
 DAA.Paging = Paging;

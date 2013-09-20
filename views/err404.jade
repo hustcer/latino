@@ -9,16 +9,16 @@ extends layout
 
 block content
 
-	include includes/header
+    include includes/header
 
-	.dw: section.dance-content#list-content
-		.content-header
-			h1.header-title= title 
+    .dw: section.dance-content#list-content
+        .content-header
+            h1.header-title= title 
 
-			p.none-exist 
-				em #{msg}
+            p.none-exist 
+                em #{msg}
 
-	include includes/footer	
+    include includes/footer 
 
-	script(src='http://style.china.alibaba.com/js/lib/fdev-v4/core/fdev-min.js')
-	script(src='/javascripts/user/header.js')
+    script(src='http://style.china.alibaba.com/js/lib/fdev-v4/core/fdev-min.js')
+    script(src='/javascripts/user/header.js')

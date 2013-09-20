@@ -2,8 +2,8 @@
 /**
  * GET and render markdown pages.
  *
- * Author: 	hustcer
- * Date: 	2012-05-22
+ * Author:  hustcer
+ * Date:    2012-05-22
  */
 
 var fs          = require('fs'),

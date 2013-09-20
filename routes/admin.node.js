@@ -1,24 +1,24 @@
 /**
  * GET 404 page.
  *
- * Author: 	hustcer
- * Date: 	2012-2-13   
+ * Author:  hustcer
+ * Date:    2012-2-13   
  */
 
 // 取得课程值以及对应的中文描述映射信息
-var cList  			= require("../database/course.js").cCoursesList;
-var nodeMsg 		= require("../conf/nodemsg.node.js").nodeMessages;
-var getCollection 	= require("./util.node.js").getCollection;
-var sendMail 		= require("./mail.node.js").sendMail;
+var cList           = require("../database/course.js").cCoursesList;
+var nodeMsg         = require("../conf/nodemsg.node.js").nodeMessages;
+var getCollection   = require("./util.node.js").getCollection;
+var sendMail        = require("./mail.node.js").sendMail;
 
 exports.man = function(req, res, nlolext){
 
-	var col = getCollection(req);
+    var col = getCollection(req);
 
-	res.render('admin', {
-        title: 		'管理员后台',
+    res.render('admin', {
+        title:      '管理员后台',
         courseList: cList[col.cCourse.courseType + 'List'],
-        cCourse: 	col.cCourse
+        cCourse:    col.cCourse
     });
 
 };
@@ -30,18 +30,18 @@ exports.man = function(req, res, nlolext){
  */
 exports.pay = function(req, res){
 
-	var col = getCollection(req);
+    var col = getCollection(req);
 
-	console.log("[INFO]----Set paid for user with ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
-	
-	checkCourseStatus(req, res, 'approved', function(){
-		col.updateDancerPayStatus(req.params.id, req.query.courseVal, true, function(err, result) {
-		    if (err) throw err;
+    console.log("[INFO]----Set paid for user with ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
+    
+    checkCourseStatus(req, res, 'approved', function(){
+        col.updateDancerPayStatus(req.params.id, req.query.courseVal, true, function(err, result) {
+            if (err) throw err;
 
-		    res.contentType('application/json');
-		    res.send({success:true});
-		});
-	});
+            res.contentType('application/json');
+            res.send({success:true});
+        });
+    });
 };
 
 /*
@@ -50,19 +50,19 @@ exports.pay = function(req, res){
  */
 exports.unpay = function(req, res){
 
-	var col = getCollection(req);
+    var col = getCollection(req);
 
-	console.log("[INFO]----Set unpaid for user with ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
-	
-	checkCourseStatus(req, res, 'quitApplied', function(){
+    console.log("[INFO]----Set unpaid for user with ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
+    
+    checkCourseStatus(req, res, 'quitApplied', function(){
 
-		col.updateDancerPayStatus(req.params.id, req.query.courseVal, false, function(err, result) {
-		    if (err) throw err;
+        col.updateDancerPayStatus(req.params.id, req.query.courseVal, false, function(err, result) {
+            if (err) throw err;
 
-		    res.contentType('application/json');
-		    res.send({success:true});
-		});
-	});
+            res.contentType('application/json');
+            res.send({success:true});
+        });
+    });
 };
 
 /*
@@ -71,23 +71,23 @@ exports.unpay = function(req, res){
  */
 exports.approve = function(req, res){
 
-	var col = getCollection(req);
+    var col = getCollection(req);
 
-	console.log("[INFO]----Approve course with ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
-	checkCourseStatus(req, res, 'waiting', function(){
+    console.log("[INFO]----Approve course with ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
+    checkCourseStatus(req, res, 'waiting', function(){
 
-		col.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'approved', function(err, result) {
-		    if (err) throw err;
+        col.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'approved', function(err, result) {
+            if (err) throw err;
 
-		    col.findDancerEmailByID(req.params.id, function(err, dancer){
-		    	if (err) throw err;
-		    	sendMail(dancer.email, '您的报名申请已审核通过', col.cCourse.successMsg + '课程代码：' + req.query.courseVal);
-		    });
+            col.findDancerEmailByID(req.params.id, function(err, dancer){
+                if (err) throw err;
+                sendMail(dancer.email, '您的报名申请已审核通过', col.cCourse.successMsg + '课程代码：' + req.query.courseVal);
+            });
 
-		    res.contentType('application/json');
-		    res.send({success:true});
-		});
-	});
+            res.contentType('application/json');
+            res.send({success:true});
+        });
+    });
 };
 
 /*
@@ -96,20 +96,20 @@ exports.approve = function(req, res){
  */
 exports.refuse = function(req, res){
 
-	var col = getCollection(req);
+    var col = getCollection(req);
 
-	console.log("[INFO]----Refuse course with ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
+    console.log("[INFO]----Refuse course with ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 
-	checkCourseStatus(req, res, 'waiting', function(){
+    checkCourseStatus(req, res, 'waiting', function(){
 
-		col.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'refused', function(err, result) {
-		    if (err) throw err;
+        col.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'refused', function(err, result) {
+            if (err) throw err;
 
-		    res.contentType('application/json');
-		    res.send({success:true});
-		});
-	});
-	
+            res.contentType('application/json');
+            res.send({success:true});
+        });
+    });
+    
 };
 
 
@@ -119,28 +119,28 @@ exports.refuse = function(req, res){
  */
 exports.quit = function(req, res){
 
-	var col = getCollection(req);
+    var col = getCollection(req);
 
-	console.log("[INFO]----Quit course with dancerID: "+ req.params.id + " courseVal: " + req.query.courseVal)
+    console.log("[INFO]----Quit course with dancerID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 
-	checkCourseStatus(req, res, 'quitApplied', function(){
+    checkCourseStatus(req, res, 'quitApplied', function(){
 
-		checkPayStatus(req, res, false, function(){
-			col.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'quit', function(err, result) {
-			    if (err) throw err;
+        checkPayStatus(req, res, false, function(){
+            col.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'quit', function(err, result) {
+                if (err) throw err;
 
-			    col.findDancerEmailByID(req.params.id, function(err, dancer){
-			    	if (err) throw err;
-			    	sendMail(dancer.email, '您的退课申请已审核通过', col.cCourse.quitMsg + '课程代码：' + req.query.courseVal);
-			    });
+                col.findDancerEmailByID(req.params.id, function(err, dancer){
+                    if (err) throw err;
+                    sendMail(dancer.email, '您的退课申请已审核通过', col.cCourse.quitMsg + '课程代码：' + req.query.courseVal);
+                });
 
-			    res.contentType('application/json');
-			    res.send({success:true});
-			});
-		});
-		
-	});
-	
+                res.contentType('application/json');
+                res.send({success:true});
+            });
+        });
+        
+    });
+    
 };
 
 /*
@@ -149,21 +149,21 @@ exports.quit = function(req, res){
  */
 exports.quitRefuse = function(req, res){
 
-	var col = getCollection(req);
+    var col = getCollection(req);
 
-	console.log("[INFO]----Refuse quiting with dancerID: "+ req.params.id + " courseVal: " + req.query.courseVal)
+    console.log("[INFO]----Refuse quiting with dancerID: "+ req.params.id + " courseVal: " + req.query.courseVal)
 
-	checkCourseStatus(req, res, 'quitApplied', function(){
+    checkCourseStatus(req, res, 'quitApplied', function(){
 
-		col.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'approved', function(err, result) {
-		    if (err) throw err;
+        col.updateDancerCourseStatus(req.params.id, req.query.courseVal, 'approved', function(err, result) {
+            if (err) throw err;
 
-		    res.contentType('application/json');
-		    res.send({success:true});
-		});
-		
-	});
-	
+            res.contentType('application/json');
+            res.send({success:true});
+        });
+        
+    });
+    
 };
 
 /*
@@ -171,41 +171,41 @@ exports.quitRefuse = function(req, res){
  * 
  */
 exports.editDancer = function(req, res){
-	var col = getCollection(req);
+    var col = getCollection(req);
 
-	var dancerModel = {
-		dancerID: 	req.body.dancerID,
-		dancerName: req.body.dancerName,
-		gender: 	req.body.gender,
-		email: 		req.body.email,
-		wangWang: 	req.body.wangWang,
-		extNumber: 	req.body.extNumber,
-		alipayID: 	req.body.alipayID,
-		vip: 		req.body.vip,
-		level: 		req.body.level,
-		forever: 	req.body.forever,
-		department: req.body.department
-	};
+    var dancerModel = {
+        dancerID:   req.body.dancerID,
+        dancerName: req.body.dancerName,
+        gender:     req.body.gender,
+        email:      req.body.email,
+        wangWang:   req.body.wangWang,
+        extNumber:  req.body.extNumber,
+        alipayID:   req.body.alipayID,
+        vip:        req.body.vip,
+        level:      req.body.level,
+        forever:    req.body.forever,
+        department: req.body.department
+    };
 
-	col.findDancerByID( dancerModel.dancerID, function(err, result) {
-	    if (err) throw err;
-	    
-	    // 之所以要把新插入会员和更新会员信息分开处理而不采用upsert模式，
-	    // 一方面是要设置会员创建时间，另一方面是为了明确操作逻辑，避免意外
-	    // 会员存在则更新会员信息
-	    if (!!result) {
-	    	col.updateDancerByAdmin(dancerModel.dancerID, dancerModel, function(err) {
-	    		if (err) throw err;
+    col.findDancerByID( dancerModel.dancerID, function(err, result) {
+        if (err) throw err;
+        
+        // 之所以要把新插入会员和更新会员信息分开处理而不采用upsert模式，
+        // 一方面是要设置会员创建时间，另一方面是为了明确操作逻辑，避免意外
+        // 会员存在则更新会员信息
+        if (!!result) {
+            col.updateDancerByAdmin(dancerModel.dancerID, dancerModel, function(err) {
+                if (err) throw err;
 
-	    		// 表单提交成功后返回首页, 没有错误消息就是好消息
-	    		res.send();
-	    		// res.redirect('back');
-	    		// res.send({success:true, msg:'Dancer Information Updated Successfully!'});
-	    	});
-			
-	    }
+                // 表单提交成功后返回首页, 没有错误消息就是好消息
+                res.send();
+                // res.redirect('back');
+                // res.send({success:true, msg:'Dancer Information Updated Successfully!'});
+            });
+            
+        }
 
-	});
+    });
 
 };
 
@@ -214,82 +214,82 @@ exports.editDancer = function(req, res){
  * 这里的查询条件还要加上对应的课程，否则result.courses.status 未定义
  * 检查会员课程状态
  * @param req.query.courseVal query字符串中要有course的值
- * @param status 	期望的状态
- * @param callback 	满足期望状态后执行的回调
+ * @param status    期望的状态
+ * @param callback  满足期望状态后执行的回调
  */
 var checkCourseStatus = function(req, res, status, callback){
 
-	var col = getCollection(req);
+    var col = getCollection(req);
 
-	col.findDancerByID(req.params.id, function(err, result){
-		if (err) throw err;
-		var satisfied = false;
+    col.findDancerByID(req.params.id, function(err, result){
+        if (err) throw err;
+        var satisfied = false;
 
-		// 会员不存在或者没有报名任何课程
-		if (!(!!result && !!result.courses && result.courses.length > 0)){
-			res.send({success:false, msg:nodeMsg.notExist});
-			// 如果不return后面for block会继续被执行
-			return;
-		}
+        // 会员不存在或者没有报名任何课程
+        if (!(!!result && !!result.courses && result.courses.length > 0)){
+            res.send({success:false, msg:nodeMsg.notExist});
+            // 如果不return后面for block会继续被执行
+            return;
+        }
 
-		for (var i = result.courses.length - 1; i >= 0; i--) {
-			if (result.courses[i].courseVal === req.query.courseVal &&
-				result.courses[i].status === status) {
+        for (var i = result.courses.length - 1; i >= 0; i--) {
+            if (result.courses[i].courseVal === req.query.courseVal &&
+                result.courses[i].status === status) {
 
-				satisfied = true;
-				// console.log("[INFO]----Course Status Satisfied With Status: " + status, ',For Dancer With ID:', req.params.id);
-				
-				callback();
-				break;
-			};
-		};
-		
-		if (!satisfied) {
-			res.send({success:false, msg:nodeMsg.condUnMeet});
-		};
-		
-	});
+                satisfied = true;
+                // console.log("[INFO]----Course Status Satisfied With Status: " + status, ',For Dancer With ID:', req.params.id);
+                
+                callback();
+                break;
+            };
+        };
+        
+        if (!satisfied) {
+            res.send({success:false, msg:nodeMsg.condUnMeet});
+        };
+        
+    });
 };
 
 /*
  * 这里的查询条件还要加上对应的课程，否则result.courses.isPaid 未定义
  * 检查会员缴费状态
  * @param req.query.courseVal query字符串中要有course的值
- * @param isPaid 	期望的缴费状态
- * @param callback 	满足期望状态后执行的回调
+ * @param isPaid    期望的缴费状态
+ * @param callback  满足期望状态后执行的回调
  */
 var checkPayStatus = function(req, res, isPaid, callback){
 
-	var col = getCollection(req);
+    var col = getCollection(req);
 
-	col.findDancerByID(req.params.id, function(err, result){
-		if (err) throw err;
-		var satisfied = false;
+    col.findDancerByID(req.params.id, function(err, result){
+        if (err) throw err;
+        var satisfied = false;
 
-		// 会员不存在或者没有报名任何课程
-		if (!(!!result && result.courses && result.courses.length > 0)){
-			res.send({success:false, msg:nodeMsg.notExist});
-			// 如果不return后面for block会继续被执行
-			return;
-		}
+        // 会员不存在或者没有报名任何课程
+        if (!(!!result && result.courses && result.courses.length > 0)){
+            res.send({success:false, msg:nodeMsg.notExist});
+            // 如果不return后面for block会继续被执行
+            return;
+        }
 
-		for (var i = result.courses.length - 1; i >= 0; i--) {
-			
-			if (result.courses[i].courseVal === req.query.courseVal &&
-				result.courses[i].paid === isPaid) {
+        for (var i = result.courses.length - 1; i >= 0; i--) {
+            
+            if (result.courses[i].courseVal === req.query.courseVal &&
+                result.courses[i].paid === isPaid) {
 
-				satisfied = true;
-				// console.log("[INFO]----Pay Status Satisfied With Status: " + isPaid, ', For Dancer With ID:', req.params.id);
-				
-				callback();
-				break;
-			};
-		};
-		
-		if (!satisfied) {
-			res.send({success:false, msg:nodeMsg.payUnMeet});
-		};
-		
-	});
+                satisfied = true;
+                // console.log("[INFO]----Pay Status Satisfied With Status: " + isPaid, ', For Dancer With ID:', req.params.id);
+                
+                callback();
+                break;
+            };
+        };
+        
+        if (!satisfied) {
+            res.send({success:false, msg:nodeMsg.payUnMeet});
+        };
+        
+    });
 };
 

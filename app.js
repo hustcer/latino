@@ -21,7 +21,7 @@ var path        = require('path'),
     dancerOp    = require("./database/dancer.js").commonDancerOp;
 
 var gRouterMap  = require('./routes/router.node.js').gRouter,
-	pRouterMap  = require('./routes/router.node.js').pRouter,
+    pRouterMap  = require('./routes/router.node.js').pRouter,
     agRouterMap = require('./routes/router.node.js').adminRouter,
     apRouterMap = require('./routes/router.node.js').adminPostRouter;
     
