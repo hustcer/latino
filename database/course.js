@@ -2,7 +2,7 @@
  * 培训课程信息
  *
  * Author:  hustcer
- * Date:    2012-1-19  
+ * Date:    2012-1-19
  */
 
 /**
@@ -38,13 +38,13 @@ var cCourseLatin = {
  * 当前开课情况:Jazz
  */
 var cCourseJazz = {
-   courseType  : 'jazz', 
+   courseType  : 'jazz',
    courses     :[{cValue: "8JZE1", cName: "第8期Jazz基础1班", ps:"上课时间：每周一晚7:40~8:30"},
                  {cValue: "8JZE2", cName: "第8期Jazz基础2班", ps:"上课时间：每周二晚7:40~8:30"},
                  {cValue: "8JZA1", cName: "第8期Jazz提高1班", ps:"上课时间：每周一晚6:40~7:30"},
                  {cValue: "8JZA2", cName: "第8期Jazz提高2班", ps:"上课时间：每周二晚6:40~7:30", cCapacity: 20, autoLimit: 20}],
 
-   cCapacity   : 20, 
+   cCapacity   : 20,
    // 锁定课程状态，禁止报名、退课等操作
    locked      : false,
    // 是否开启报名自动审核
@@ -64,10 +64,10 @@ var cCourseJazz = {
  * 当前开课情况:Hiphop
  */
 var cCourseHiphop = {
-   courseType  : 'hiphop', 
+   courseType  : 'hiphop',
    courses     :[{cValue: "6HPI", cName: "第6期HipHop中级班", ps:"上课时间：每周一晚7:40~8:30", cCapacity: 24, autoLimit: 24}
                  ],
-   cCapacity   : 24, 
+   cCapacity   : 24,
    // 锁定课程状态，禁止报名、退课等操作
    locked      : false,
    // 是否开启报名自动审核
@@ -100,14 +100,14 @@ var courseLatinList = [
 
 /**
  * 课程命名方法：前面的数字代表培训期次编号，紧随其后的大写字母表示舞种:
- * JZ:jazz; 
+ * JZ:jazz;
  * 最后一个大写字母表示课程级别：E: Elementary 基础班;I: Intermediate 中级班; A: Advanced 高级班
  */
 var courseJazzList = [
       {courseVal:'8JZA1', courseName:'第8期Jazz提高1班'},
       {courseVal:'8JZA2', courseName:'第8期Jazz提高2班'},
       {courseVal:'8JZE1', courseName:'第8期Jazz基础1班'},
-      {courseVal:'8JZE2', courseName:'第8期Jazz基础2班'},  
+      {courseVal:'8JZE2', courseName:'第8期Jazz基础2班'},
       {courseVal:'7JZA1', courseName:'第7期Jazz提高1班'},
       {courseVal:'7JZA2', courseName:'第7期Jazz提高2班'},
       {courseVal:'7JZE1', courseName:'第7期Jazz基础1班'},
@@ -120,7 +120,7 @@ var courseJazzList = [
 
 /**
  * 课程命名方法：前面的数字代表培训期次编号，紧随其后的大写字母表示舞种:
- * HP:hiphop; 
+ * HP:hiphop;
  * 最后一个大写字母表示课程级别：E: Elementary 基础班;I: Intermediate 中级班; A: Advanced 高级班
  */
 var courseHiphopList = [
@@ -128,8 +128,8 @@ var courseHiphopList = [
     ];
 
 
-exports.cCourses        = {cLatin:cCourseLatin, cJazz:cCourseJazz, cHiphop:cCourseHiphop};
-exports.cCoursesList    = {latinList:courseLatinList, jazzList:courseJazzList, hiphopList:courseHiphopList};
+exports.cCourses     = {cLatin:cCourseLatin, cJazz:cCourseJazz, cHiphop:cCourseHiphop};
+exports.cCoursesList = {latinList:courseLatinList, jazzList:courseJazzList, hiphopList:courseHiphopList};
 
 
 

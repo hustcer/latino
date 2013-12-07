@@ -2,23 +2,23 @@
  * GET 404 page.
  *
  * Author:  hustcer
- * Date:    2012-2-13   
+ * Date:    2012-2-13
  */
 
 // 取得课程值以及对应的中文描述映射信息
-var cList           = require("../database/course.js").cCoursesList;
-var nodeMsg         = require("../conf/nodemsg.node.js").nodeMessages;
-var getCollection   = require("./util.node.js").getCollection;
-var sendMail        = require("./mail.node.js").sendMail;
+var cList         = require("../database/course.js").cCoursesList;
+var nodeMsg       = require("../conf/nodemsg.node.js").nodeMessages;
+var getCollection = require("./util.node.js").getCollection;
+var sendMail      = require("./mail.node.js").sendMail;
 
 exports.man = function(req, res, nlolext){
 
     var col = getCollection(req);
 
     res.render('admin', {
-        title:      '管理员后台',
-        courseList: cList[col.cCourse.courseType + 'List'],
-        cCourse:    col.cCourse
+        title      : '管理员后台',
+        courseList : cList[col.cCourse.courseType + 'List'],
+        cCourse    : col.cCourse
     });
 
 };
@@ -33,7 +33,7 @@ exports.pay = function(req, res){
     var col = getCollection(req);
 
     console.log("[INFO]----Set paid for user with ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
-    
+
     checkCourseStatus(req, res, 'approved', function(){
         col.updateDancerPayStatus(req.params.id, req.query.courseVal, true, function(err, result) {
             if (err) throw err;
@@ -53,7 +53,7 @@ exports.unpay = function(req, res){
     var col = getCollection(req);
 
     console.log("[INFO]----Set unpaid for user with ID: "+ req.params.id + " courseVal: " + req.query.courseVal)
-    
+
     checkCourseStatus(req, res, 'quitApplied', function(){
 
         col.updateDancerPayStatus(req.params.id, req.query.courseVal, false, function(err, result) {
@@ -109,7 +109,7 @@ exports.refuse = function(req, res){
             res.send({success:true});
         });
     });
-    
+
 };
 
 
@@ -138,9 +138,9 @@ exports.quit = function(req, res){
                 res.send({success:true});
             });
         });
-        
+
     });
-    
+
 };
 
 /*
@@ -161,35 +161,35 @@ exports.quitRefuse = function(req, res){
             res.contentType('application/json');
             res.send({success:true});
         });
-        
+
     });
-    
+
 };
 
 /*
  * 管理员修改保存会员信息. eg:http://localhost:3000/man/editDancer/latin
- * 
+ *
  */
 exports.editDancer = function(req, res){
     var col = getCollection(req);
 
     var dancerModel = {
-        dancerID:   req.body.dancerID,
-        dancerName: req.body.dancerName,
-        gender:     req.body.gender,
-        email:      req.body.email,
-        wangWang:   req.body.wangWang,
-        extNumber:  req.body.extNumber,
-        alipayID:   req.body.alipayID,
-        vip:        req.body.vip,
-        level:      req.body.level,
-        forever:    req.body.forever,
-        department: req.body.department
+        dancerID   : req.body.dancerID,
+        dancerName : req.body.dancerName,
+        gender     : req.body.gender,
+        email      : req.body.email,
+        wangWang   : req.body.wangWang,
+        extNumber  : req.body.extNumber,
+        alipayID   : req.body.alipayID,
+        vip        : req.body.vip,
+        level      : req.body.level,
+        forever    : req.body.forever,
+        department : req.body.department
     };
 
     col.findDancerByID( dancerModel.dancerID, function(err, result) {
         if (err) throw err;
-        
+
         // 之所以要把新插入会员和更新会员信息分开处理而不采用upsert模式，
         // 一方面是要设置会员创建时间，另一方面是为了明确操作逻辑，避免意外
         // 会员存在则更新会员信息
@@ -202,7 +202,7 @@ exports.editDancer = function(req, res){
                 // res.redirect('back');
                 // res.send({success:true, msg:'Dancer Information Updated Successfully!'});
             });
-            
+
         }
 
     });
@@ -238,16 +238,16 @@ var checkCourseStatus = function(req, res, status, callback){
 
                 satisfied = true;
                 // console.log("[INFO]----Course Status Satisfied With Status: " + status, ',For Dancer With ID:', req.params.id);
-                
+
                 callback();
                 break;
             };
         };
-        
+
         if (!satisfied) {
             res.send({success:false, msg:nodeMsg.condUnMeet});
         };
-        
+
     });
 };
 
@@ -274,22 +274,22 @@ var checkPayStatus = function(req, res, isPaid, callback){
         }
 
         for (var i = result.courses.length - 1; i >= 0; i--) {
-            
+
             if (result.courses[i].courseVal === req.query.courseVal &&
                 result.courses[i].paid === isPaid) {
 
                 satisfied = true;
                 // console.log("[INFO]----Pay Status Satisfied With Status: " + isPaid, ', For Dancer With ID:', req.params.id);
-                
+
                 callback();
                 break;
             };
         };
-        
+
         if (!satisfied) {
             res.send({success:false, msg:nodeMsg.payUnMeet});
         };
-        
+
     });
 };
 

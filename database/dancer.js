@@ -5,7 +5,7 @@
  * Ref：http://www.hacksparrow.com/mongoskin-tutorial-with-examples.html
  *
  * Author:  hustcer
- * Date:    2012-1-20  
+ * Date:    2012-1-20
  */
 var sendMail        = require("../routes/mail.node.js").sendMail;
 
@@ -20,7 +20,7 @@ exports.commonDancerOp = {
         var courseAddArray = [], logMsg = '', courseStatus = 'waiting';
 
         if( !!dancerModel.courseArray ) {
-            
+
             for(var i = 0, l = dancerModel.courseArray.length; i < l; i ++){
                 if( !!dancerModel.courseArray[i] ) {
                     // 新插入数据库的学员如果报名课程的话根据规则设置报名状态,且未付款
@@ -43,7 +43,7 @@ exports.commonDancerOp = {
         dancerModel.gmtModified = new Date();
 
         this.insert(dancerModel, fn);
-        console.info('[INFO]----New dancer added, with dancerID:', dancerModel.dancerID, 
+        console.info('[INFO]----New dancer added, with dancerID:', dancerModel.dancerID,
             ', DancerName:', dancerModel.dancerName, ", Courses:", (logMsg ? logMsg: 'NONE') );
     },
     /**
@@ -59,7 +59,7 @@ exports.commonDancerOp = {
         var courseAddArray = [], self = this, logMsg = '', courseStatus = 'waiting';
 
         if( !!dancerModel.courseArray ) {
-            
+
             for(var i = 0, l = dancerModel.courseArray.length; i < l; i ++){
                 if( !!dancerModel.courseArray[i] ) {
                     courseAddArray.push( dancerModel.courseArray[i] );
@@ -88,7 +88,7 @@ exports.commonDancerOp = {
                 exist = false;
                 // 找到则更新相应课程，比如之前报过名的后来状态又变更为quit或者refused的课程
                 for (var i = result.courses.length - 1; i >= 0; i--) {
-                
+
                     if (result.courses[i].courseVal === courseAddArray[j]) {
 
                         result.courses[i].status            = courseStatus;
@@ -101,11 +101,11 @@ exports.commonDancerOp = {
                 // 未找到则插入数据
                 if ( !exist ) {
                     // 新插入数据库的课程根据规则设置报名状态,且未付款
-                    result.courses.push( {  courseVal:          courseAddArray[j], 
+                    result.courses.push( {  courseVal:          courseAddArray[j],
                                             status:             courseStatus,
-                                            gmtStatusChanged:   new Date(), 
-                                            applyTime:          new Date(), 
-                                            paid:               false 
+                                            gmtStatusChanged:   new Date(),
+                                            applyTime:          new Date(),
+                                            paid:               false
                                         } );
                 };
             };
@@ -117,7 +117,7 @@ exports.commonDancerOp = {
                             ', DancerName:', dancerModel.dancerName, ", Updated courses:", (logMsg ? logMsg: 'NONE') );
 
         });
-        
+
     },
     /**
      * Admin更新会员dancerID的相关信息
@@ -161,7 +161,7 @@ exports.commonDancerOp = {
                             ', DancerName:', dancerModel.dancerName, ', at', new Date() );
 
         });
-        
+
     },
     /**
      * 根据一定的判断原则决定该会员初始报名的时候是否可以自动被审核通过
@@ -170,7 +170,7 @@ exports.commonDancerOp = {
     autoApprove: function(dancerModel){
 
         if( !!dancerModel.courseArray ) {
-            
+
             for(var i = 0, l = dancerModel.courseArray.length; i < l; i ++){
                 if( !!dancerModel.courseArray[i] ) {
 
@@ -212,7 +212,7 @@ exports.commonDancerOp = {
             // -------------------Rule NO.1-----------------------------------
             // 如果当前报名成功的会员数目小于允许的自动审核限额则自动审核通过
             if( count < autoLimit ){
-                console.info('[INFO]----Auto approved according to rule NO.1: dancerID-', dancerModel.dancerID, 
+                console.info('[INFO]----Auto approved according to rule NO.1: dancerID-', dancerModel.dancerID,
                     ', DancerName-', dancerModel.dancerName, ', Course-', courseVal);
                 self.updateDancerCourseStatus(dancerModel.dancerID, courseVal, 'approved', function(){
 
@@ -225,7 +225,7 @@ exports.commonDancerOp = {
                 // 每条自动审核规则执行完后都要return，否则会继续执行下面的规则，下同。
                 return;
             }
-            
+
             // 如果当前报名成功的会员数目小于课程总容量则继续下面的审核规则，否则不再继续审核
             if( count < cCapacity ){
 
@@ -235,7 +235,7 @@ exports.commonDancerOp = {
                     // -------------------Rule NO.2-----------------------------------
                     // 如果该舞种报名男士优先则直接审核通过
                     if ( !!result && result.gender === 'male' && manFirst ) {
-                        console.info('[INFO]----Auto approved according to rule NO.2: dancerID-', dancerModel.dancerID, 
+                        console.info('[INFO]----Auto approved according to rule NO.2: dancerID-', dancerModel.dancerID,
                             ', DancerName-', dancerModel.dancerName, ', Course-', courseVal);
 
                         self.updateDancerCourseStatus(dancerModel.dancerID, courseVal, 'approved', function(){
@@ -250,7 +250,7 @@ exports.commonDancerOp = {
                     // -------------------Rule NO.3-----------------------------------
                     if ( !!result && ( result.level >= 3 || result.vip >= 2 || result.forever ) ) {
 
-                        console.info('[INFO]----Auto approved according to rule NO.3: dancerID-', dancerModel.dancerID, 
+                        console.info('[INFO]----Auto approved according to rule NO.3: dancerID-', dancerModel.dancerID,
                             ', DancerName-', dancerModel.dancerName, ', Course-', courseVal);
 
                         self.updateDancerCourseStatus(dancerModel.dancerID, courseVal, 'approved', function(){
@@ -271,7 +271,7 @@ exports.commonDancerOp = {
     /**
      * 取得courseVal 相应属性的有效 value，局部 value 可以覆盖全局 value
      * @param courseVal     需要查询的课程值
-     * @param propName      需要获得其值的属性名          
+     * @param propName      需要获得其值的属性名
      */
     _getPropValue: function(courseVal, propName){
 
@@ -367,6 +367,6 @@ exports.commonDancerOp = {
 
         }, fn);
     }
-    
+
 };
 

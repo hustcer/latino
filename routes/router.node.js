@@ -2,7 +2,7 @@
  * 路径映射
  *
  * Author:  hustcer
- * Date:    2012-1-19  
+ * Date:    2012-1-19
  */
 var gRouter = exports.gRouter              = {};
 
@@ -54,7 +54,7 @@ pRouter["/search/:dType"]                  = pRouter["/search"];                
  */
 var adminPostRouter = exports.adminPostRouter  = {};
 
-adminPostRouter["/man/editDancer/:dType"]  = require("./admin.node.js").editDancer; 
+adminPostRouter["/man/editDancer/:dType"]  = require("./admin.node.js").editDancer;
 
 
 

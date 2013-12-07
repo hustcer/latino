@@ -3,7 +3,7 @@
  * Ref：http://www.hacksparrow.com/mongoskin-tutorial-with-examples.html
  *
  * Author:  hustcer
- * Date:    2012-2-13 
+ * Date:    2012-2-13
  */
 
 
@@ -22,7 +22,7 @@ exports.user = function(req, res, next){
     col.findOne( {dancerID: req.params.id}, function(err, result) {
 
         if (result) {
-            
+
             // 将课程的value替换成对应的易于阅读的中文描述
             if (result.courses && result.courses.length > 0) {
                 var courseNames = [];
@@ -41,9 +41,9 @@ exports.user = function(req, res, next){
             result.courses = courseNames;
 
             res.render('user', {
-                title:      '舞者信息',
-                cCourse:    col.cCourse,
-                dancer:     result
+                title   : '舞者信息',
+                cCourse : col.cCourse,
+                dancer  : result
             });
 
         } else {

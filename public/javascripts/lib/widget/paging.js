@@ -1,12 +1,12 @@
 /**
  * 分页JS
  * Imported by hustcer
- * 
+ *
  * (从fdev3的代码片段中修改产生)
  * 修改点:   1：YUI实现改成jquery实现
  *          2：增加点击页码后的自定义事件提供给外部使用
  */
-jQuery.namespace('dance.at.alibaba');  
+jQuery.namespace('dance.at.alibaba');
 
 (function($, DAA) {
 
@@ -25,7 +25,7 @@ Paging.prototype = {
 
         // Valid Page Number
         var pnReg = /^[1-9]\d*$/, pnCache = '', scope = this;
-        
+
         function vPn(){
             if ($(this).val()) {
                 if (pnReg.test($(this).val())) {
@@ -35,18 +35,18 @@ Paging.prototype = {
             }
             else pnCache = '';
         }
-        
+
         this.pagenum.bind("focus", function(){
             this.select();
         });
-        
+
         this.pagenum.bind("keydown", function(e){
             if (e.keyCode && e.keyCode === 13) {
                 scope.pagesubmit.click();
                 this.select();
             }
         });
-        
+
         this.pagenum.bind("keyup", vPn);
         this.pagenum.bind("blur", vPn);
         // Jump To Event Handler
@@ -71,7 +71,7 @@ Paging.prototype = {
      *   @param  total       total page number from 1
      */
     render: function(cur, total){
-        
+
         if (cur < 1)
             cur = 1;
         if (total < 1)
@@ -81,8 +81,8 @@ Paging.prototype = {
         var html = [], pre, next, scope = this;
         // Total Page
         this.pagem.html( total );
-        this.pagenum.max = total; 
-        
+        this.pagenum.max = total;
+
         if (cur === 1) {
             html.push('<a target="_self" class="pre-disabled" href="javascript:;"> </a>');
             html.push('<a target="_self" class="current" href="javascript:;">1</a>');
@@ -118,14 +118,14 @@ Paging.prototype = {
                 if (cur - pre < 2)
                     pre = cur - 2;
             }
-             
+
             for ( var i = pre; 0 < i; i-- )
                 html.push('<a target="_self" href="#" page="' + (cur - i) + '">' + (cur - i) + '</a>');
             if ( cur > 1 )
                 html.push('<a target="_self" class="current" href="javascript:;">' + cur + '</a>');
             for (var i = 1; i < next + 1; i++)
                 html.push('<a target="_self" href="#" page="' + (cur + i) + '">' + (cur + i) + '</a>');
-             
+
             if ( cur + next < total - 1 ) {
                 html.push('<a target="_self" class="omit" href="javascript:;">...</a>');
                 html.push('<a target="_self" href="#" page="' + total + '">' + total + '</a>');
@@ -138,7 +138,7 @@ Paging.prototype = {
         else {
             html.push('<a target="_self" class="next" href="#" page="' + (cur + 1) + '">下一页</a>');
         }
-        
+
         this.pagination.html(html.join(''));
         // Trigger onRender
         if (this.configs.onRender)
@@ -158,7 +158,7 @@ Paging.prototype = {
      * 自定义事件
      */
     customClick:function( page ){
-        
+
     }
 };
 

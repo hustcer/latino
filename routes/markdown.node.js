@@ -6,9 +6,9 @@
  * Date:    2012-05-22
  */
 
-var fs          = require('fs'),
-    md          = require('marked'),
-    path        = require('path');
+var fs   = require('fs'),
+    md   = require('marked'),
+    path = require('path');
 
 exports.mdrender= function(req, res){
 

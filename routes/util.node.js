@@ -3,12 +3,12 @@
  * Get Mongo DB Collection Instance.
  *
  * Author:  hustcer
- * Date:    2012-05-27  
+ * Date:    2012-05-27
  */
 var db = require("../database/database.js").db;
 
 exports.getCollection = function(req, res){
-    
+
     switch (req.params.dType){
 
         case '':

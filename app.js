@@ -8,7 +8,7 @@
  * App's Main Start Script, Usage:
  * node app.js -p 8024; '-p' stands for the port number;
  * Author:  hustcer
- * Date:    2012-1-19 
+ * Date:    2012-1-19
  */
 
 var express     = require('express');
@@ -24,7 +24,7 @@ var gRouterMap  = require('./routes/router.node.js').gRouter,
     pRouterMap  = require('./routes/router.node.js').pRouter,
     agRouterMap = require('./routes/router.node.js').adminRouter,
     apRouterMap = require('./routes/router.node.js').adminPostRouter;
-    
+
 
 // Configuration
 app.configure(function(){
@@ -84,7 +84,7 @@ app.configure('development', function(){
 
     app.use(app.router);
     setRouters(true);
-    
+
 });
 
 app.configure('production', function(){
@@ -97,7 +97,7 @@ app.configure('production', function(){
 
     app.use(app.router);
     setRouters(false);
-    
+
 });
 
 // 如果控制台传过来的有端口号参数则监听相应端口号，否则监听3000端口
@@ -106,6 +106,8 @@ var portIndex  = process.argv.indexOf('-p'), port = 3000;
 if (portIndex != -1 && process.argv.length >= portIndex + 2) {
     port = +process.argv[portIndex + 1];
 };
+
+console.log(port);
 
 http.createServer(app).listen(port, function(){
     console.log("\nExpress server listening on port %d in %s mode\n", port, app.settings.env);

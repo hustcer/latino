@@ -1,8 +1,8 @@
 /**
- * Dancer index 
+ * Dancer index
  *
  * Author:  hustcer
- * Date:    2012-1-19   
+ * Date:    2012-1-19
  */
 
 var getCollection   = require("./util.node.js").getCollection;
@@ -20,11 +20,11 @@ exports.index = function(req, res){
     }
 
     res.render('index', {
-        title:          'Alibaba 舞蹈培训',
-        cCourse:        col.cCourse,
-        showDancerLink: false
+        title          : 'Alibaba 舞蹈培训',
+        cCourse        : col.cCourse,
+        showDancerLink : false
     });
-    
+
 };
 
 /*
@@ -37,19 +37,19 @@ exports.apply = function(req, res){
     // 邮箱不需要加后缀的，如果用户加了就统一去掉吧，没加也无妨
     // if (!!req.body.email) { req.body.email = req.body.email.replace(/@alibaba-inc.com/g, ""); };
 
-    var cCourseLength = + req.body.courseLen, 
+    var cCourseLength = + req.body.courseLen,
         courseArray   = [];
     var rd = req.body;
 
     var dancerModel   = {
-        dancerID:   (rd.dancerID == null) ? rd.dancerID : rd.dancerID.trim(),
-        dancerName: rd.dancerName, 
-        gender:     rd.gender,
-        email:      rd.email,
-        wangWang:   rd.wangWang,
-        extNumber:  rd.extNumber,
-        alipayID:   rd.alipayID,
-        department: rd.department
+        dancerID   : (rd.dancerID == null) ? rd.dancerID : rd.dancerID.trim(),
+        dancerName : rd.dancerName,
+        gender     : rd.gender,
+        email      : rd.email,
+        wangWang   : rd.wangWang,
+        extNumber  : rd.extNumber,
+        alipayID   : rd.alipayID,
+        department : rd.department
     };
 
     for (var i = 0, l = cCourseLength; i < l; i ++) {
@@ -60,7 +60,7 @@ exports.apply = function(req, res){
 
     col.findDancerByID( dancerModel.dancerID, function(err, result) {
         if (err) throw err;
-        
+
         // 之所以要把新插入会员和更新会员信息分开处理而不采用upsert模式，
         // 一方面是要设置会员创建时间，另一方面是为了明确操作逻辑，避免意外
         // 会员存在则更新会员信息
@@ -73,7 +73,7 @@ exports.apply = function(req, res){
                     col.autoApprove(dancerModel);
                 }
             });
-            
+
         // 会员不存在则插入会员信息
         }else{
             col.insertDancer(dancerModel, function(err, addResult) {
@@ -94,14 +94,14 @@ exports.apply = function(req, res){
         // 表单提交成功后返回首页
         // res.redirect('back');
         res.render('index', {
-            title:          'Alibaba 舞蹈培训',
-            cCourse:        cCourse,
-            showDancerLink: true,
-            dancerID:       dancerModel.dancerID
+            title          : 'Alibaba 舞蹈培训',
+            cCourse        : cCourse,
+            showDancerLink : true,
+            dancerID       : dancerModel.dancerID
         });
 
     });
-    
+
 };
 
 /*
@@ -121,7 +121,7 @@ exports.queryDancer = function(req, res){
         }else{
             res.send({data:null});
         }
-        
+
     });
 
 };
@@ -132,12 +132,12 @@ exports.queryDancer = function(req, res){
 exports.queryCourseInfo = function(req, res){
     var col = getCollection(req), cCourse = col.cCourse;
     var courseInfoList = [], counter = 0;
-    
+
     for (var i = 0, l = cCourse.courses.length; i < l; i ++) {
 
         (function(){
             // NOTICE: courseInfo不能放在for循环外面定义，否则三个异步查询的回调都会修改同一个courseInfo引用，造成前面查询的结果被覆盖
-            var courseVal = cCourse.courses[i].cValue, courseInfo = {}, 
+            var courseVal = cCourse.courses[i].cValue, courseInfo = {},
                 // 申请退课但尚未审核批准的也算报名成功的
                 cond1     = { courses:{$elemMatch: {'courseVal':courseVal,'status':'waiting'}}  },
                 cond2     = { courses:{$elemMatch: {'courseVal':courseVal,'status':{$in: ['approved', 'quitApplied']} }} };
@@ -184,7 +184,7 @@ exports.quitCourse = function(req, res){
 
         res.contentType('application/json');
         res.send({success:true});
-        
+
     });
 
 };
@@ -202,7 +202,7 @@ exports.cancelCourse = function(req, res){
         if (err) throw err;
         res.contentType('application/json');
         res.send({success:true});
-        
+
     });
 
 };
@@ -219,16 +219,16 @@ exports.initdata = function(req, res){
 
         var insertDancer = function(i){
             dancerModel = {
-                dancerID:   'IIM9' + i,
-                dancerName: 'D.M.' + i,
-                gender:     Math.random() >= 0.5 ? 'male':'female',
-                email:      'dancer' + i + '@alibaba-inc.com',
-                wangWang:   'dancer' + i,
-                extNumber:  'NA00' + i,
-                alipayID:   'dancerno' + i + '@gmail.com',
-                department: Math.random() >= 0.5 ? 'tech':'other',
-                vip:        Math.ceil(Math.random()*5), 
-                level:      Math.ceil(Math.random()*9)  
+                dancerID   : 'IIM9' + i,
+                dancerName : 'D.M.' + i,
+                gender     : Math.random() >= 0.5 ? 'male':'female',
+                email      : 'dancer' + i + '@alibaba-inc.com',
+                wangWang   : 'dancer' + i,
+                extNumber  : 'NA00' + i,
+                alipayID   : 'dancerno' + i + '@gmail.com',
+                department : Math.random() >= 0.5 ? 'tech':'other',
+                vip        : Math.ceil(Math.random()*5),
+                level      : Math.ceil(Math.random()*9)
             };
 
             var courseArray   = [];
@@ -236,7 +236,7 @@ exports.initdata = function(req, res){
             // Math.ceil(Math.random()*3) + 'CI',
             courseArray.push('13CI');
             courseArray.push('13SE');
-            
+
             dancerModel.courseArray = courseArray;
 
             col.insertDancer(dancerModel, function(err, addResult) {
@@ -259,6 +259,6 @@ exports.initdata = function(req, res){
         insertDancer(i);
 
     };
-    
+
     res.send({success:true});
 };

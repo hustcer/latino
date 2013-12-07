@@ -3,12 +3,12 @@
  * 头部导航相关公用js.
  *
  * Author:  hustcer
- * Date:    2012-06-03   
+ * Date:    2012-06-03
  */
 
 
 
-jQuery.namespace('dance.at.alibaba');             
+jQuery.namespace('dance.at.alibaba');
 
 jQuery(function($){
 
@@ -16,12 +16,12 @@ jQuery(function($){
 
     // Begin Module Definition
     var module = NS.header = {
-                    
+
         /**
          * 静态模块的初始化入口
          */
         init: function(){
-        
+
             this._initUI();
             this._initHandler();
         },
@@ -44,26 +44,26 @@ jQuery(function($){
                     $('a.dance-btn', 'header.dance-header').removeClass('current-d');
                     $('#' + dType + '-btn').addClass('current-d');
                 });
-                
+
             });
-            
+
         },
         /**
          * 舞种导航相关事件处理
          */
         _initHandler : function(){
-            
+
             $('a.dance-btn', 'header.dance-header').on('click', function(){
 
                 var nref = window.location.protocol + '//' + window.location.host + '/' + $(this).attr('ddata');
-                    
+
                 window.location.href = nref;
-                     
+
             });
         }
     };
     // End Module Definition
-    
+
     /**
      * 对模块进行初始化。如果模块挂在命名空间下，则可以在外部进行模块初始化，在闭包内则不需要再执行init函数。
      */

@@ -2,7 +2,7 @@
  * Dancer list page
  *
  * Author:  hustcer
- * Date:    2012-2-12   
+ * Date:    2012-2-12
  */
 
 var getCollection   = require("./util.node.js").getCollection;
@@ -17,11 +17,11 @@ exports.list = function(req, res){
         courseList  = cList[col.cCourse.courseType + 'List'];
 
     res.render('list', {
-        title:      '课程报名信息',
-        courseList: courseList,
-        cCourse:    col.cCourse     
+        title      : '课程报名信息',
+        courseList : courseList,
+        cCourse    : col.cCourse
     });
-    
+
 };
 
 /*

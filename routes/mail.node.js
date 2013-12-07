@@ -3,7 +3,7 @@
  * Mail sending page.
  *
  * Author:  hustcer
- * Date:    2012-1-19   
+ * Date:    2012-1-19
  */
 
 var fs          = require('fs'),
@@ -17,8 +17,8 @@ exports.mail = function(req, res){
     sendMail('hustcer@gmail.com', "toAddress", "mail content");
 
     res.render('mail', {
-        title:   'Dance @ Alibaba',
-        msg:     'Sending Mails'
+        title : 'Dance @ Alibaba',
+        msg   : 'Sending Mails'
     });
 };
 
@@ -86,7 +86,7 @@ var sendMail = exports.sendMail = function(toAddress, title, msg){
         }
 
         // if you don't want to use this transport object anymore, uncomment following line
-        // smtpTransport.close(); 
+        // smtpTransport.close();
         // shut down the connection pool, no more messages
 
     });

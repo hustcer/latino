@@ -4,11 +4,11 @@
         "username"  : "",
         "password"  : ""
     },
-    
+
     "mailAuth"  :{
         "mailSupplier"  : "Gmail",
         "email"         : "",
         "password"      : ""
     }
-    
+
 }

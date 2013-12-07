@@ -2,15 +2,15 @@
  * Author:  hustcer
  * Date:    20120215
 */
-jQuery.namespace('json.array');             
+jQuery.namespace('json.array');
 
 jQuery(function($){
 
     var NS      = json.array;
-    
+
     // Begin Module Definition
     var module  = NS.util = {
-        
+
         /**
          * Json数组排序方法
          * @param arrayData 需要排序的Json数组
@@ -20,27 +20,27 @@ jQuery(function($){
         sortOrder: function(arrayData, index, order){
 
             if(order > 0)
-                return arrayData.sort(function(a, b){ 
+                return arrayData.sort(function(a, b){
                     if (a[index] === b[index]) {
                         return 0;
                     }
                     if( typeof a[index] === typeof b[index]){
-                        return a[index] > b[index] ? 1 : -1; 
+                        return a[index] > b[index] ? 1 : -1;
                     }
-                    return typeof a[index] > typeof b[index] ? 1 : -1; 
+                    return typeof a[index] > typeof b[index] ? 1 : -1;
                 });
             else
-                return arrayData.sort(function(a, b){ 
+                return arrayData.sort(function(a, b){
                     if (a[index] === b[index]) {
                         return 0;
                     }
                     if( typeof a[index] === typeof b[index]){
-                        return a[index] > b[index] ? -1 : 1; 
+                        return a[index] > b[index] ? -1 : 1;
                     }
-                    return typeof a[index] > typeof b[index] ? -1 : 1; 
+                    return typeof a[index] > typeof b[index] ? -1 : 1;
                 });
         }
 
     } // End Module Definition
-    
+
 });
