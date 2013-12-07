@@ -2,6 +2,8 @@
  * For More Reference about Package Format, Please Visit: http://package.json.nodejitsu.com/
  */
 
+// This is just a copy of app.js
+
 /**
  * App's Main Start Script, Usage:
  * Author:  hustcer
@@ -97,7 +99,7 @@ app.configure('production', function(){
 
 });
 
-var port = process.env.port || 3000;
+var port = process.env.PORT || 3000;
 
 http.createServer(app).listen(port, function(){
     console.log("\nExpress server listening on port %d in %s mode\n", port, app.settings.env);

@@ -1,8 +1,0 @@
-[{
-    "name"      : "latino",
-    "script"    : "app.js",
-    "instances" : "max",
-    "exec_mode" : "cluster_mode",
-    "args"      : "['-p', '6000']",
-    "NODE_ENV"  : "development"
-}]
